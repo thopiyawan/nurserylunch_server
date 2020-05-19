@@ -1,0 +1,86 @@
+// Import Google font
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+
+// Color list
+$color-navy-blue:#34495e;
+$color-violet:#9b59b6;
+$color-blue:#3498db;
+$color-green:#62cb31;
+$color-yellow:#ffb606;
+$color-orange:#e67e22;
+$color-red:#e74c3c;
+$color-red-deep:#c0392b;
+
+// Additional colors
+$color-text: #6a6c6f;
+$color-bright: #f7f9fa;
+$color-background: #f1f3f6;
+$color-background-boxed: lighten($color-background, 3%);
+$border-color: #e4e5e7;
+
+// Additional variables
+$menu-width: 180px;
+$main-transition: all 0.1s ease-out 0s;
+
+// Import all styles
+
+// Components
+@import "components/modal";
+@import "components/progress_bar";
+@import "components/badge";
+@import "components/checkbox_radio";
+@import "components/inputs";
+@import "components/loader";
+@import "components/splash";
+@import "components/timeline";
+@import "components/dropdown";
+@import "components/buttons";
+@import "components/lists";
+@import "components/panels";
+@import "components/tabs";
+@import "components/tooltip";
+
+// Pages
+@import "pages/analytics";
+@import "pages/app_plans";
+@import "pages/chat";
+@import "pages/projects";
+@import "pages/social_board";
+@import "pages/blog";
+@import "pages/forum";
+@import "pages/mailbox";
+@import "pages/contact";
+@import "pages/file_manager";
+@import "pages/login";
+@import "pages/notes";
+@import "pages/search";
+
+// Plugins
+@import "plugins/sweetalert";
+@import "plugins/notify";
+@import "plugins/toastr";
+@import "plugins/tour";
+@import "plugins/calendar";
+@import "plugins/codemirror";
+@import "plugins/flot";
+@import "plugins/text_editor";
+@import "plugins/nestable";
+@import "plugins/icheck";
+@import "plugins/ui_sortable";
+
+// Utilities
+@import "utilities/backgrounds";
+@import "utilities/borders";
+@import "utilities/colors";
+@import "utilities/margins";
+@import "utilities/layout";
+@import "utilities/grid";
+@import "utilities/heights_widths";
+@import "utilities/fonts";
+@import "utilities/various";
+
+// Skins
+@import "skins/light_shadow";
+
+// Styles for landing page
+@import "pages/landing";
