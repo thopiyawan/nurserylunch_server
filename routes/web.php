@@ -21,4 +21,5 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('');
 Route::get('kids', function () {return view('kids');});
 Route::get('download', function () {return view('download');});
+Route::get('setting', function () {return view('setting');});
 

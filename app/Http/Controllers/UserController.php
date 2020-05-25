@@ -11,4 +11,5 @@ class UserController extends Controller				// Define the class name
         $users = User::all();
         return view('users.list', ['users' => $users]);	// Return response to client
     }
+    
 }
