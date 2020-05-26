@@ -13,6 +13,8 @@
     --font-size-m1: 0.9rem;
     --font-size-p1: 1.1rem;
     --font-size-p2: 1.2rem;
+    --font-size-p3: 1.3rem;
+    --font-size-p4: 1.4rem;
 }
 body{
     color: var(--dark);
@@ -33,6 +35,20 @@ a.link :hover{
 a.text-highlight:hover{
     color: var(--primary-fade);
 }
+h1{ font-size: var(--font-size-p4);}
+h2{ font-size: var(--font-size-p3);}
+h3{ font-size: var(--font-size-p2);}
+h4{ font-size: var(--font-size-p1);}
+
+#aside-menu {
+    float: left;
+    left: 0;
+    padding: 20px 20px 0 20px;
+    position: absolute;
+    top: 62px;
+    transition: none !important;
+    width: 240px;
+}
 #header{
     height: 62px;
 }
@@ -46,11 +62,19 @@ a.text-highlight:hover{
 #logo.light-version {
 	background: white;
 }
+#searchMenu {
+   /* font-family: 'Kanit', 'Font Awesome 5 Free';
+    font-weight: 900;*/
+}
 #wrapper{
 	background: white;
+    margin-left: 240px;
+    padding: 20px;
+    position: relative !important;
 	transition: none !important;
 	min-height: 704px;
 }
+
 .btn{
     border-radius: 6px;
 }
@@ -70,6 +94,33 @@ a.text-highlight:hover{
     background-color:var(--primary-fade);
     border-color: var(--primary-fade);
 }
+.in-group-select{
+    width: 100% !important;
+}
+.btn-select-picker{
+    background-color:var(--primary);
+    border-color: var(--primary);
+    color: white;
+    height: 34px;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+}
+.btn-select-picker:hover{
+    background-color:var(--primary-fade);
+    border-color: var(--primary-fade);
+    color: white;
+}
+.bs-placeholder.btn-select-picker{
+    background-color: white;
+    border-color: #e0e0e0;  
+    height: 34px;
+    padding: 6px 12px;
+}
+.btn-select-picker.bs-placeholder{
+    color: #484a4c !important;
+    font-weight: 300;
+    font-family: 'Kanit', 'FontAwesome';
+}
 .dropdown-menu {
     margin: 0;
     font-size: var(--font-size-m1);
@@ -82,6 +133,9 @@ a.text-highlight:hover{
 /*.fa{
     font-family: 'FontAwesome', sans-serif;
 }*/
+.form-control {
+    font-weight: 200;
+}
 .hr-line-dashed {
     border-top: 1px dotted #d8d8d8;
 }

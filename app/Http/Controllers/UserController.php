@@ -12,4 +12,5 @@ class UserController extends Controller				// Define the class name
         return view('users.list', ['users' => $users]);	// Return response to client
     }
     
+    
 }

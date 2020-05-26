@@ -9,6 +9,7 @@ class IngredientGroup extends Model
     //
 
     public function contains(){
-    	return $this->hasMany(Ingredient::class);
+    	
+    	return $this->hasMany(Ingredient::class)->get();
     }
 }
