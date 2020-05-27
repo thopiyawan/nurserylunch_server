@@ -1,16 +1,7 @@
 console.log("in js");
 $(function(){
+
     // --- MEAL PLAN ----
-
-    //$(".in-group-select").selectpicker({});
-    //var meat_select = $(".meat-select");
- //    $(".meat-select").selectpicker().on('loaded.bs.select', function (e, clickedIndex, isSelected, previousValue) {
- //  		if (this.value == ""){
- //  			addIconToSelect(".meat-select");
- //  		}
-	// });
-
-
     $(".meat-select").selectpicker().on('loaded.bs.select', addIconToSelect(".meat-select", "")).on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue){
     	addIconToSelect (".meat-select", this.value);
     }); 
@@ -41,10 +32,26 @@ $(function(){
 			inner.append(icon + title);
 		}else{
 			var inner = $(className + " .filter-option-inner-inner");
-			// inner.empty();
-			//$( "<i class='fas fa-users'></i>" ).insertBefore(inner);
 			inner.prepend(icon);
 		}
     }
+
+
+
+
+    // var element = ".ui-sortable";
+    // // var items = ".ui-sortable-item";
+    // var connect = ".ui-sortable";
+    // // var connect = "[class*=ui-sortable2]";
+    // $(element).sortable({
+    //     cancel: ".ui-state-disabled",
+    //     connectWith: connect,
+    //     cursor: "move",
+    //     cursorAt: { top:5, left: 5 }, 
+    //     dropOnEmpty: false
+    // }).disableSelection();
+
+    $( ".ui-sortable" ).sortable();
+    console.log("end sortable");
 
 });

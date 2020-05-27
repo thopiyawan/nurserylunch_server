@@ -47,7 +47,7 @@ h4{ font-size: var(--font-size-p1);}
     position: absolute;
     top: 62px;
     transition: none !important;
-    width: 240px;
+    width: 260px;
 }
 #header{
     height: 62px;
@@ -68,7 +68,7 @@ h4{ font-size: var(--font-size-p1);}
 }
 #wrapper{
 	background: white;
-    margin-left: 240px;
+    margin-left: 260px;
     padding: 20px;
     position: relative !important;
 	transition: none !important;
@@ -207,4 +207,13 @@ h4{ font-size: var(--font-size-p1);}
 }
 .navbar-right {
     float: right !important;
+}
+
+.ui-sortable .menu-body{
+    background-color: white; 
+    border: 1px solid #e0e0e0;  
+    border-radius: 8px;
+    cursor: move;
+    padding: 4px 12px;
+    margin-bottom: 4px;
 }
