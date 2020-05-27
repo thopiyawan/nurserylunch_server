@@ -18,7 +18,7 @@ Route::get('user', 'UserController@index');
 
 
 Auth::routes();
-Route::get('/', 'MealplanController@index');
+Route::get('/', 'MealplanController@index')->middleware('auth');
 Route::get('kids', function () {return view('kids');});
 Route::get('download', function () {return view('download');});
 Route::get('setting', function () {return view('setting');});
