@@ -8,7 +8,7 @@ class Ingredient extends Model
 {
     //
 
-    public function belongs(){
+    public function ingredientGroup(){
     	return $this->belongsTo(IngredientGroup::class);
     }
 }

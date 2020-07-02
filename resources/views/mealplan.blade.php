@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<aside id="aside-menu">
+<aside id="aside-menu" class="center">
 
     <!-- SER|ARCH SECTION  -->
     <div class="m-b">
@@ -20,7 +20,7 @@
         <h4 class="">ตัวกรอง</h4>
         @foreach($in_groups as $ig)
             <select id="" class="{{$ig->ingredient_group_eng_name}}-select in-group-select" multiple="multiple" data-style="btn-select-picker">
-                @foreach($ig->contains() as $in)
+                @foreach($ig->ingredients()->get() as $in)
                     {{ $in->ingredient_name }}
                     <option value="{{ $in->ingredient_name }}" data-icon="">{{ $in->ingredient_name }}</option>
                 @endforeach

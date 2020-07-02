@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\User;
+use App\School;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -17,13 +17,15 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(School::class, function (Faker $faker) {
     return [
         // 'name' => $faker->name,
         'name' => 'ศูนย์อนามัยท่ี 5/ วัดเทพประสิทธิ์คณาวาส',
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '12345678', // password
-        'remember_token' => Str::random(10),
+        'school_number' => '4-66-192-2201',
+        'address' => '15/6',
+        'tumbol' => 'omnoi',
+        'amper' => 'kratumban',
+        'province' => 'Samt Sakhon',
+        'post_number' => '74130',
     ];
 });

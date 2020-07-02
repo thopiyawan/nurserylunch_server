@@ -5,6 +5,7 @@
     --darkgray: #61696f;
     --primary : #EE5A24;
     /*--primary-fade : #f76d3a;*/
+    --primary-bg : #fbebe5;
     --primary-fade : #f97b4d;
     --lightgray : #dee2e6;
     --lightgray-fade : #eaeaea;
@@ -43,11 +44,14 @@ h4{ font-size: var(--font-size-p1);}
 #aside-menu {
     float: left;
     left: 0;
-    padding: 20px 20px 0 20px;
+    padding: 20px 0px 0 0px;
     position: absolute;
     top: 62px;
     transition: none !important;
     width: 260px;
+}
+#aside-menu.center{
+    padding: 20px 20px 0 20px;
 }
 #header{
     height: 62px;
@@ -97,6 +101,12 @@ h4{ font-size: var(--font-size-p1);}
 .in-group-select{
     width: 100% !important;
 }
+.border{
+    border-color: var(--primary-fade);
+    border-radius: 6px; 
+    padding: 16px;
+    margin: 8px 12px; 
+}
 .btn-select-picker{
     background-color:var(--primary);
     border-color: var(--primary);
@@ -121,6 +131,14 @@ h4{ font-size: var(--font-size-p1);}
     font-weight: 300;
     font-family: 'Kanit', 'FontAwesome';
 }
+.checkbox-inline {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 0;
+    vertical-align: middle;
+    width: 130px;
+}
 .dropdown-menu {
     margin: 0;
     font-size: var(--font-size-m1);
@@ -135,6 +153,10 @@ h4{ font-size: var(--font-size-p1);}
 }*/
 .form-control {
     font-weight: 200;
+}
+.form-horizontal .control-label{
+    text-align: right;
+
 }
 .hr-line-dashed {
     border-top: 1px dotted #d8d8d8;
@@ -209,6 +231,36 @@ h4{ font-size: var(--font-size-p1);}
     float: right !important;
 }
 
+.nav-tabs>li{
+    border-top: 1px solid #eaeaea;
+    height: 46px;
+    /*border-bottom: 1px solid #eaeaea;*/
+}
+.nav-tabs>li>a{
+    display: block;
+    height: 46px;
+    padding: 12px 20px;
+}
+.nav-tabs>li>a:hover{
+    background-color: var(--lightgray-fade);
+  /*  color: var(--primary);*/
+}
+.nav-tabs>li>a.active{
+    border: none;
+    background-color: var(--primary-bg);
+    color: var(--primary);
+    font-weight: 400;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+    border: none;
+}
+.school-i{
+    color: var(--lightgray);
+    font-size: 90px;
+    padding-left: 40px;
+    /*margin-left: 10px;*/
+}
 .ui-sortable .menu-body{
     background-color: white; 
     border: 1px solid #e0e0e0;  

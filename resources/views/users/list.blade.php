@@ -4,8 +4,10 @@
         <h1>All users</h1>
         <ul>
         @foreach($users as $user)
-            <li>{{ $user->name }} / {{ $user->email }}</li>
+            <li>{{ $user->name }} / {{ $user->email }} //  {{ $user->setting->is_weekday }}</li>
+
         @endforeach
         </ul>
     </body>
 </html>
+

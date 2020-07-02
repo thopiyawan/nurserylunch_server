@@ -23,7 +23,7 @@ class IngredientSeeder extends Seeder
 
         foreach ($group as $key => $value) {
             $g = new App\IngredientGroup;
-            $g->ingredient_group_eng_name = $key;
+            $g->ingredient_group_eng_name = $key;  
             $g->ingredient_group_name = $value;
             $g->save();
             $temp = array();
@@ -33,7 +33,7 @@ class IngredientSeeder extends Seeder
                 $i->ingredient_name = $ingredient;
                 array_push($temp, $i);
             }
-            $g = $g->contains()->saveMany($temp);
+            $g->ingredients()->saveMany($temp);
         }
 
         // $ingredient_group = new App\IngredientGroup;

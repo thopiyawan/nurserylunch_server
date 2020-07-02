@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class IngredientGroup extends Model
 {
     //
+    
 
-    public function contains(){
+    public function ingredients(){
     	
-    	return $this->hasMany(Ingredient::class)->get();
+    	return $this->hasMany(Ingredient::class);
     }
 }
