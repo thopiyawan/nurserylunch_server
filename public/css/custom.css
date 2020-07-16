@@ -93,6 +93,7 @@ h4{ font-size: var(--font-size-p1);}
 .btn-primary{
     background-color:var(--primary);
     border-color: var(--primary);
+    color: white !important;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
     background-color:var(--primary-fade);
@@ -255,11 +256,17 @@ h4{ font-size: var(--font-size-p1);}
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
     border: none;
 }
+.menu-block{
+    padding: 20px; 
+}
 .school-i{
     color: var(--lightgray);
     font-size: 90px;
     padding-left: 40px;
     /*margin-left: 10px;*/
+}
+.table thead th {
+    font-weight: 500;
 }
 .ui-sortable .menu-body{
     background-color: white; 

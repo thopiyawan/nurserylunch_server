@@ -23,6 +23,7 @@ class School extends Model
     }
 
     public function kids(){
-        return $this->hasMany(Kids::class);
+        return $this->hasMany(Kid::class);
     }
 }
+

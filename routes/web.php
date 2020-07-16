@@ -19,10 +19,22 @@ Route::get('user', 'UserController@index');
 
 Auth::routes();
 Route::get('/', 'MealplanController@index')->middleware('auth');
-Route::get('kids', function () {return view('kids');})->middleware('auth');
-Route::get('download', function () {return view('download');})->middleware('auth');
-Route::get('setting', 'UserController@setting')->middleware('auth');
+Route::get('/kids', 'KidController@showClassroom')->middleware('auth');
+Route::get('/download', function () {return view('download');})->middleware('auth');
+Route::get('/setting', 'UserController@setting')->middleware('auth');
 
-Route::post('setting', 'UserController@updateSetting');
+
+
+Route::post('/setting', 'UserController@updateSetting');
+
+Route::get('/classroom/{id}', 'KidController@showClassroom')->middleware('auth');
+Route::post('/classroom/create', 'KidController@createClassroom')->name('classroom.create');
+Route::post('/classroom/edit/{id}', 'KidController@editClassroom')->name('classroom.edit');
+Route::get('/classroom/toggle/{id}', 'KidController@toggleClassroom')->name('classroom.toggle');
+Route::get('/classroom/delete/{id}', 'KidController@deleteClassroom')->name('classroom.delete');
+
+Route::post('/kid/create', 'KidController@createKid')->name('kid.create');
+Route::get('/kid/{id}', 'KidController@showKid')->name('kid.show');
+
 
 
