@@ -9,21 +9,160 @@
             @if ($classroom == null)
                 <div>ยังไม่มีห้องเรียน</div>
             @else
-                <h1>ห้อง {{$classroom->class_name}}</h1>
-               
+                <h1 class="page-title">ห้อง {{$classroom->class_name}}</h1>
             @endif
         </div>
-        <div class="col-md-6 pull-right">
-            <a class="btn btn-default" data-toggle="modal" data-target="#editClassroomForm"> 
-                <span> <i class="far fa-edit"></i> แก้ไขชื่อห้องเรียน</span>
-            </a>
-            <a class="btn btn-default" href="/classroom/toggle/{{$classroom->id}}">                 
-                <span> <i class="fas fa-minus-circle"></i> {{($classroom->active?'ปิดห้องเรียนชั่วคราว':'เปิดห้องเรียน')}}</span>
-            </a>
-             <a class="btn btn-default" href="/classroom/delete/{{$classroom->id}}">                 
-                <span> <i class="far fa-trash-alt"></i> ลบห้องเรียนถาวร</span>
-            </a>
+        <div class="col-md-6">
+            <div class="pull-right">
+                <a class="btn btn-default" data-toggle="modal" data-target="#editClassroomForm"> 
+                    <span> <i class="far fa-edit"></i> แก้ไขชื่อห้องเรียน</span>
+                </a>
+                <a class="btn btn-default" href="/classroom/toggle/{{$classroom->id}}">                 
+                    <span> <i class="fas fa-minus-circle"></i> {{($classroom->active?'ปิดห้องเรียนชั่วคราว':'เปิดห้องเรียน')}}</span>
+                </a>
+                 <a class="btn btn-default" href="/classroom/delete/{{$classroom->id}}">                 
+                    <span> <i class="far fa-trash-alt"></i> ลบห้องเรียนถาวร</span>
+                </a>
+            </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="hpanel kid-panel">
+                <div class="panel-body">
+                    <h4 class="title"> ข้อมูลโดยรวม </h4>
+                    <div class="row m-b">
+                        <div class="col-lg-5 text-right">
+                            <i class="light-icon fas fa-child fa-3x"></i>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="">จำนวนเด็ก</div>
+                            <div class="text-extra">20 <span>คน</span></div>
+                        </div>
+                    </div>
+                    <div class="row m-b">
+                        <div class="col-lg-5 text-right">
+                            เด็กสุด
+                        </div>
+                        <div class="col-lg-7">
+                            0 ปี 11 เดือน
+                        </div>
+                    </div>
+                    <div class="row m-b">
+                        <div class="col-lg-5 text-right">
+                            โตสุด
+                        </div>
+                        <div class="col-lg-7">
+                            1 ปี 11 เดือน
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="hpanel kid-panel">
+                <div class="panel-body">
+                    <h4 class="title"> การเจริญเติบโต </h4>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row m-b">
+                                <div class="col-lg-5 text-right">
+                                    <i class="light-icon fas fa-ruler-vertical fa-3x"></i>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="">ส่วนสูงโดยเฉลี่ย</div>
+                                    <div class="text-extra">80.2 <span>ซม.</span></div>
+                                </div>
+                            </div>
+                            <div class="row m-b">
+                                <div class="col-lg-5 text-right">
+                                    ค่าสูงสุด
+                                </div>
+                                <div class="col-lg-7">
+                                    85.2 ซม.
+                                </div>
+                            </div>
+                            <div class="row m-b">
+                                <div class="col-lg-5 text-right">
+                                    ค่าต่ำสุด
+                                </div>
+                                <div class="col-lg-7">
+                                    79.0 ซม.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row m-b">
+                                <div class="col-lg-5 text-right">
+                                    <i class="light-icon fas fa-weight fa-3x"></i>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="">น้ำหนักโดยเฉลี่ย</div>
+                                    <div class="text-extra">11.5 <span>กก.</span></div>
+                                </div>
+                            </div>
+                            <div class="row m-b">
+                                <div class="col-lg-5 text-right">
+                                    ค่าสูงสุด
+                                </div>
+                                <div class="col-lg-7">
+                                    15.2 กก.
+                                </div>
+                            </div>
+                            <div class="row m-b">
+                                <div class="col-lg-5 text-right">
+                                    ค่าต่ำสุด
+                                </div>
+                                <div class="col-lg-7">
+                                    9.2 กก.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="hpanel kid-panel">
+                <div class="panel-body">
+                    <h4 class="title"> การดื่มนม </h4>
+                    <div class="row m-b">
+                        <div class="col-lg-5 text-right">
+                            <i class="light-icon fas fas fa-prescription-bottle fa-3x"></i>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="">ดื่มนมโดยเฉลี่ย</div>
+                            <div class="text-extra">120 <span>มล.</span></div>
+                        </div>
+                    </div>
+                    <div class="text-center m-b">
+                        <span>คิดเป็นนมกล่อง </span>
+                        <span> 3 กล่อง </span>
+                    </div>
+                    <div class="text-center m-b">
+                        <span>คิดเป็นออนซ์ </span>
+                        <span> 300 ออนซ์ </span>
+                    </div>
+                    <!-- <div class="row m-b">
+                        <div class="col-lg-4 text-right">
+                            คิดเ
+                        </div>
+                        <div class="col-lg-8">
+                            0 ปี 11 เดือน
+                        </div>
+                    </div>
+                    <div class="row m-b">
+                        <div class="col-lg-4 text-right">
+                            โตสุด
+                        </div>
+                        <div class="col-lg-8">
+                            1 ปี 11 เดือน
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        
     </div>
     <div>
     <h3>ข้อมูลเด็กในห้อง</h3>
@@ -37,23 +176,27 @@
                 <th>อายุ</th>
                 <th>ส่วนสูง</th>
                 <th>น้ำหนัก</th>
+                <th>อาหาร</th>
                 <th>ดื่มนมต่อวัน</th>
                 <th>จัดการ</th>
             </tr>
             </thead>
             <tbody>
-            @foreach ($kids as $k)
-                <tr>
-                    <td><a href="/kid/{{$k->id}}" class="">{{$k->firstname.' '.$k->lastname}}</a></td>
-                    <td>{{$k->nickname}}</td>
-                    <td>{{$k->sex}}</td>
-                    <td>{{$k->birthday}}</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            @endforeach
+                @if($all_kids->has($classroom->id))
+                    @foreach ($all_kids[$classroom->id] as $k)
+                        <tr>
+                            <td><a href="/kid/1" class="">{{$k->firstname.' '.$k->lastname}}</a></td>
+                            <td>{{$k->nickname}}</td>
+                            <td>{{$k->sex}}</td>
+                            <td>{{$k->birthday}}</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </div>

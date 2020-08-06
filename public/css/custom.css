@@ -7,6 +7,7 @@
     /*--primary-fade : #f76d3a;*/
     --primary-bg : #fbebe5;
     --primary-fade : #f97b4d;
+    --gray : #909090;
     --lightgray : #dee2e6;
     --lightgray-fade : #eaeaea;
 
@@ -41,6 +42,12 @@ h2{ font-size: var(--font-size-p3);}
 h3{ font-size: var(--font-size-p2);}
 h4{ font-size: var(--font-size-p1);}
 
+h1.page-title{
+    /*color: var(--darkgray);*/
+    font-weight: 400;
+    margin-bottom: 40px;
+}
+
 #aside-menu {
     float: left;
     left: 0;
@@ -53,6 +60,9 @@ h4{ font-size: var(--font-size-p1);}
 #aside-menu.center{
     padding: 20px 20px 0 20px;
 }
+/*#aside-menu .nav-second-level li{
+    padding: 10px 10px 10px 30px;
+}*/
 #header{
     height: 62px;
 }
@@ -73,7 +83,7 @@ h4{ font-size: var(--font-size-p1);}
 #wrapper{
 	background: white;
     margin-left: 260px;
-    padding: 20px;
+    padding: 40px 40px;
     position: relative !important;
 	transition: none !important;
 	min-height: 704px;
@@ -157,10 +167,41 @@ h4{ font-size: var(--font-size-p1);}
 }
 .form-horizontal .control-label{
     text-align: right;
-
 }
 .hr-line-dashed {
     border-top: 1px dotted #d8d8d8;
+}
+.kid-panel .kid-name{
+    color: var(--primary);
+    font-size: var( --font-size-p2);
+    font-weight: 400; 
+}
+.kid-panel .panel-label{
+    font-weight: 400;
+
+}
+.kid-panel .panel-text{
+    margin-bottom: 10px;
+
+}
+.kid-panel .light-icon{
+    color: var(--lightgray);
+}
+.kid-panel .title{
+    color: var(--darkgray);
+    font-weight: 500; 
+    margin-bottom: 5px;
+}
+.kid-panel .text-extra{
+    font-size: var(--font-size-p4);
+    font-weight: 400;
+    margin-top: -8px;
+}
+.kid-panel .update{
+    color: var(--gray);
+    font-weight: 200;
+    font-size: var( --font-size-m1);
+    margin-bottom: 15px;
 }
 .login-panel{
     min-height: 100vh;
@@ -170,10 +211,10 @@ h4{ font-size: var(--font-size-p1);}
 }
 .login-panel.left img{
     display: block;
+    position: absolute;
     height: 70vh;
     margin-top: 20vh;
-    margin-left: auto;
-    margin-right: auto;
+    left: 5%;
 }
 
 .login-panel.right{
@@ -181,6 +222,26 @@ h4{ font-size: var(--font-size-p1);}
 }
 .login-panel.right form{
     margin-bottom: 50px;
+}
+.login-image{
+    
+}
+.login-title{
+    background-color: var(--primary);
+    color: white;
+    font-size: var(--font-size-p2);
+    font-weight: 400;
+    position: absolute;
+    padding: 15px 35px;
+    top: 47%;
+    left: 50%;
+}
+.login-desc{
+    background-color:  var(--lightgray-fade);
+    position: absolute;
+    padding: 14px;
+    top: 54%;
+    left: 57%;
 }
 .nav {
     display: block;
@@ -231,33 +292,47 @@ h4{ font-size: var(--font-size-p1);}
 .navbar-right {
     float: right !important;
 }
-
-.nav-tabs>li{
+.nav-tab.main-level{
+    margin-top: 34px;
+}
+.nav-tab .class-name{
+    font-weight: 400;
+}
+.nav-tab .kid-name{
+    padding-left: 24px;
+}
+.nav-tab>li{
     border-top: 1px solid #eaeaea;
-    height: 46px;
+    /*height: 46px;*/
     /*border-bottom: 1px solid #eaeaea;*/
 }
-.nav-tabs>li>a{
+.nav-tab>li>a{
     display: block;
-    height: 46px;
+    height: 48px;
     padding: 12px 20px;
 }
-.nav-tabs>li>a:hover{
+.nav-tab>li>a:hover{
     background-color: var(--lightgray-fade);
   /*  color: var(--primary);*/
 }
-.nav-tabs>li>a.active{
+.nav-tab>li>a.active{
     border: none;
     background-color: var(--primary-bg);
     color: var(--primary);
     font-weight: 400;
 }
 
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+.nav-tab>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
     border: none;
 }
 .menu-block{
     padding: 20px; 
+}
+.pull-right{
+    float: right !important;
+}
+.pull-left{
+    float: left !important;
 }
 .school-i{
     color: var(--lightgray);

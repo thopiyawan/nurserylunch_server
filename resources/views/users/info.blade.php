@@ -1,4 +1,4 @@
-<h1>ข้อมูลผู้ใช้งาน</h1>
+<h1 class="page-title">ข้อมูลผู้ใช้งาน</h1>
 <form method="POST" action="/setting" class="form-horizontal">   
 @csrf 
     <div class="row form-group">

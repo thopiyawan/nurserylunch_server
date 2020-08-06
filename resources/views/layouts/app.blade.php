@@ -19,6 +19,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/homerstyle.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/metismenu/dist/metisMenu.min.css">
 
 </head>
 <body class="fixed-navbar sidebar-scroll">
@@ -26,9 +27,9 @@
         @include('layouts.navbar')
         @yield('content')
     </div>
-
-
     <script src="{{ asset('js/app.js') }}" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/metismenu"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
+    
 </body>
 </html>

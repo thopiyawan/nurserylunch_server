@@ -1,41 +1,38 @@
-<ul class="nav nav-tabs">
-<!--     <li class="">
-        <a data-toggle="tab" href="#system" aria-expanded="true" class="active">
-            <i class="fas fa-cog"></i> <span>ตั้งค่าระบบ</span>
-        </a>
-    </li>
-    <li class="">
-        <a data-toggle="tab" href="#school" aria-expanded="false">
-            <i class="fas fa-school"></i> <span>ข้อมูลโรงเรียน</span>
-        </a>
-    </li>
-    <li class="">
-        <a data-toggle="tab" href="#user" aria-expanded="false">
-            <i class="fas fa-user-circle"></i> <span>ข้อมูลผู้ใช้งาน</span>
-        </a>
-    </li> -->
+<ul class="nav nav-tab main-level" id="">
     @foreach($classrooms as $c)
-        <li class="">
-            <a  href="/classroom/{{ $c->id }}" aria-expanded="false"  class="{{(Request::instance()->id == $c->id ? 'active':'')}}">
-                <span>{{ $c->class_name }}</span>
+        <li>
+            <a  href="#">
+                <span class="class-name">ห้อง {{$c->class_name }}</span>
                 @if (!$c->active)
                     <span>ปิดชั่วคราว</span>
                 @endif
+                <span class="fa arrow"></span>
             </a>
+            <ul class="nav nav-tab nav-second-level" aria-expanded="false">
+                @if($all_kids->has($c->id))
+                    @foreach ($all_kids[$c->id] as $k)
+                        @if ($k)
+                            <li class="kid-name">
+                                <a href="/kid/{{$k->id}}">
+                                    <span><i class="far fa-user"></i></span>
+                                    {{$k->firstname.' '.$k->lastname}}
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
+                @else
+                    <li><a href="#" class="">ไม่มีนักเรียนในห้องเรียนนี้</a></li>
+                @endif
+            </ul>
         </li>
     @endforeach
     <li>
         <a href="" data-toggle="modal" data-target="#newClassroomForm"> 
-            <span> <i class="far fa-plus-square"></i> เพิ่มห้องเรียนใหม่ </span> 
+            <span> <i class="fas fa-plus"></i> เพิ่มห้องเรียนใหม่ </span> 
         </a>
     </li>
 </ul>
 
-<!-- <a class="btn btn-default btn-block" href="https://school.kiddiary.in.th/registers" target="_blank">สร้างบัญชีใหม่</a> -->
-
-<!-- <a class="btn btn-default btn-block" data-toggle="modal" data-target="#newClassroomForm"> 
-    + เพิ่มชั้นเรียนใหม่
-</a> -->
 <div class="menu-block">
     <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#newKidForm"> 
         <span><i class="fas fa-user-plus"></i> เพิ่มนักเรียนใหม่ </span>

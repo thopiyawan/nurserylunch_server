@@ -1,4 +1,4 @@
-<h1>ตั้งค่าระบบจัดสำรับ</h1>
+<h1 class="page-title">ตั้งค่าระบบจัดสำรับ</h1>
 <form method="POST" action="/setting" class="form-horizontal">   
 @csrf 
     <div class="form-group">

@@ -1,4 +1,4 @@
-<h1>ข้อมูลโรงเรียน</h1>
+<h1 class="page-title">ข้อมูลโรงเรียน</h1>
 <form method="POST" action="/setting" class="form-horizontal">   
 @csrf 
     <div class="row form-group">

@@ -4,6 +4,13 @@
 <div class="row" id="login-wrapper">
     <div class="col-md-6 login-panel left">
         <img src="{{ asset('images/login-img.png') }}" class="animate__animated animate__fadeInDown login-image">
+        
+        <div class="animate__animated animate__fadeInRight login-desc"> 
+            ผู้ช่วยระดับโภชนาการในการาแนะนำอาหารกลางวันเด็กเล็กแบบอัตโนมัติ
+        </div>
+        <div class="animate__animated animate__fadeInLeft login-title">
+            THAI NURSERY LUNCH
+        </div>
     </div>
     <div class="col-md-6 login-panel right">
         <h3 class="font-normal text-highlight">เข้าสู่ระบบ</h3>

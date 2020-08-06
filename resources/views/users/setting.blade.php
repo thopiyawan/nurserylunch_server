@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <aside id="aside-menu">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tab main-level">
         <li class="">
             <a data-toggle="tab" href="#system" aria-expanded="true" class="active">
                 <i class="fas fa-cog"></i> <span>ตั้งค่าระบบ</span>
@@ -20,24 +20,21 @@
     </ul>
 </aside>
 <div id="wrapper">
-    <div class="row justify-content-center">
-        <div class="tab-content col-md-11">  
-                         
-                <div id="system" class="tab-pane active">
-                    <div class="panel-body">
-                        @include('users.system')
-                    </div>
-                </div>
-                <div id="school" class="tab-pane">
-                    <div class="panel-body">
-                        @include('users.school')
-                    </div>
-                </div>
-                <div id="user" class="tab-pane">
-                    <div class="panel-body">
-                        @include('users.info')
-                    </div>
-                </div>
+    <div class="tab-content">
+        <div id="system" class="tab-pane active">
+            <div class="panel-body">
+                @include('users.system')
+            </div>
+        </div>
+        <div id="school" class="tab-pane">
+            <div class="panel-body">
+                @include('users.school')
+            </div>
+        </div>
+        <div id="user" class="tab-pane">
+            <div class="panel-body">
+                @include('users.info')
+            </div>
         </div>
     </div>
 </div>

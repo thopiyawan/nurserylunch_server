@@ -1,5 +1,7 @@
 console.log("in js");
 $(function(){
+    //---- side menu
+    $('#aside-menu').metisMenu();
 
     // --- MEAL PLAN ----
     $(".meat-select").selectpicker().on('loaded.bs.select', addIconToSelect(".meat-select", "")).on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue){
@@ -16,13 +18,13 @@ $(function(){
     	var icon = "";
     	var title = "";
     	if (className == ".meat-select"){
-    		icon = "<i class='fas fa-users'></i> ";
+    		icon = "<i class='fas fa-piggy-bank'></i> ";
     		title = "เนื้อสัตว์";
     	}else if (className == ".vegetable-select"){
-    		icon = "<i class='fas fa-search'></i> ";
+    		icon = "<i class='fas fa-carrot'></i> ";
     		title = "ผัก";
     	}else if (className == ".protein-select"){
-    		icon = "<i class='fas fa-comment'></i> ";
+    		icon = "<i class='fas fa-egg'></i> ";
     		title = "โปรตีน";
     	}
 

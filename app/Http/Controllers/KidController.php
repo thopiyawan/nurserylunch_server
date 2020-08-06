@@ -17,6 +17,14 @@ class KidController extends Controller
      *
      * @return void
      */
+    public function getAllKids($school_id)
+    {
+        $all_kids = Kid::where('school_id', $school_id)->get()->groupBy('classroom_id');
+        
+
+        return $all_kids;
+    }
+
     public function __construct()
     {
 
@@ -37,8 +45,8 @@ class KidController extends Controller
             $classroom = Classroom::where('id', $id)->first();
         }
 
-        $kids = Kid::where('classroom_id', $classroom->id)->get();
-        return view('kids.classroom', ['classrooms' => $classrooms, 'classroom'=> $classroom, 'kids'=> $kids]);
+        $all_kids = self::getAllKids($user->school_id);
+        return view('kids.classroom', ['classrooms' => $classrooms, 'classroom'=> $classroom, 'all_kids'=> $all_kids]);
     }
 
     public function createClassroom(Request $request)
@@ -94,9 +102,10 @@ class KidController extends Controller
         //$kids = Kid::where('classroom_id', $classroom->id)->get();
         $kid = Kid::where('id', $id)->first();
         $classroom = Classroom::where('id', $kid->classroom_id)->first();
+        $all_kids = self::getAllKids($user->school_id);
 
         
-        return view('kids.kid', ['classrooms' => $classrooms, 'classroom'=> $classroom, 'kid'=> $kid]);
+        return view('kids.profile', ['classrooms' => $classrooms, 'classroom'=> $classroom, 'kid'=> $kid, 'all_kids'=> $all_kids]);
     }
 
     public function createKid(Request $request)
@@ -118,5 +127,7 @@ class KidController extends Controller
         return redirect('classroom/'.$request['classroom_id']);
 
     }
+    
+
 }
 

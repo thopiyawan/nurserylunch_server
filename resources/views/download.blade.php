@@ -5,7 +5,7 @@
 <div id="wrapper">
     <div class="row justify-content-center">
         <div class="col-md-11">
-            <h1>รายงาน</h1>
+            <h1 class="page-title">รายงาน</h1>
             <div class="card">
                 <div class="card-header">รายงาน</div>
 
