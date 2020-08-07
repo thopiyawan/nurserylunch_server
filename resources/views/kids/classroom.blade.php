@@ -211,7 +211,7 @@
         <div class="modal-content">
             <!-- <div class="color-line "></div>             -->
             <div class="modal-body">
-                <h4 class="modal-title">เพิ่มห้องเรียนใหม่</h4>
+                <h4 class="modal-title">แก้ไขห้องเรียน</h4>
                 <form method="POST" action="/classroom/edit/{{$classroom->id}}" class="form-horizontal">   
                     @csrf 
                     <div class="row form-group">

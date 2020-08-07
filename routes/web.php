@@ -35,6 +35,11 @@ Route::get('/classroom/delete/{id}', 'KidController@deleteClassroom')->name('cla
 
 Route::post('/kid/create', 'KidController@createKid')->name('kid.create');
 Route::get('/kid/{id}', 'KidController@showKid')->name('kid.show');
+Route::post('/kid/edit/{id}', 'KidController@editKid')->name('kid.edit');
+Route::post('/kid/editnotes/{id}', 'KidController@editNotes')->name('kid.editnotes');
+Route::post('/kid/createrestriction/{id}', 'KidController@createRestriction')->name('kid.createrestriction');
+Route::post('/kid/editrestrictions/{id}', 'KidController@editRestrictions')->name('kid.editrestrictions');
+Route::post('/kid/deleterestriction/{id}', 'KidController@deleteRestriction')->name('kid.deleterestriction');
 
 
 

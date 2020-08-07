@@ -7,6 +7,7 @@ use App\User;
 use App\School;
 use App\Classroom;
 use App\Kid;
+use App\FoodRestriction;
 
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class KidController extends Controller
     public function getAllKids($school_id)
     {
         $all_kids = Kid::where('school_id', $school_id)->get()->groupBy('classroom_id');
-        
+
 
         return $all_kids;
     }
@@ -127,7 +128,64 @@ class KidController extends Controller
         return redirect('classroom/'.$request['classroom_id']);
 
     }
+    public function editKid(Request $request, $id = null)
+    {
     
+        $kid = Kid::where('id', $id)->first();
+        $kid->firstname = $request->input("firstname");
+        $kid->lastname = $request->input("lastname");
+        $kid->nickname = $request->input("nickname");
+        $kid->sex = $request->input("sex");
+        $birthday = $request['b-year'].'-'.$request['b-month'].'-'.$request['b-day'];
+        $kid->birthday = date("Y-m-d", strtotime($birthday));
+        $kid->active_level = $request->input("active_level");
+        
+        $kid->save();
+        
+        return redirect('kid/'.$id);
+
+    }
+    public function editNotes(Request $request, $id = null)
+    {
+    
+        $kid = Kid::where('id', $id)->first();
+        $kid->notes = $request->input("notes");
+        $kid->save();
+        
+        return redirect('kid/'.$id);
+
+    }
+    public function createRestriction(Request $request, $id = null)
+    {
+        
+        if ($request['detail'] == "no")
+        {
+            return redirect('kid/'.$id);
+        }
+        $kid = Kid::where('id', $id)->first();
+        $type = "alergy";
+        if ($request['type'] == 'muslim' or $request['type'] == 'vege' or $request['type'] == 'vegan')
+        {
+            $type = "special";
+        }
+        $type = $request['detail'];
+        $rest = FoodRestriction::create([
+            'type' => $type,
+            'detail' => $request['detail'],
+        ]);
+        $kid->food_restrictions()->save($rest);
+        return redirect('kid/'.$id);
+    }
+    public function deleteRestriction(Request $request, $id = null)
+    {
+    
+        $rest = FoodRestriction::where('id', $id)->first();
+
+        $rest->delete();
+        
+        return redirect('kid/'.$request['kid_id']);
+
+    }
 
 }
 
