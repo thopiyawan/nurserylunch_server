@@ -38,22 +38,30 @@ $(function(){
 		}
     }
 
-
-
-
-    // var element = ".ui-sortable";
-    // // var items = ".ui-sortable-item";
-    // var connect = ".ui-sortable";
-    // // var connect = "[class*=ui-sortable2]";
-    // $(element).sortable({
-    //     cancel: ".ui-state-disabled",
-    //     connectWith: connect,
-    //     cursor: "move",
-    //     cursorAt: { top:5, left: 5 }, 
-    //     dropOnEmpty: false
-    // }).disableSelection();
-
     $( ".ui-sortable" ).sortable();
     console.log("end sortable");
 
+
+
+    //------- KID PROFILE
+    var input_ml = $("#milk-input-ml").on("keyup", updateMilkInput);
+    var input_oz = $("#milk-input-oz").on("keyup", updateMilkInput);
+    var input_box = $("#milk-input-box").on("keyup", updateMilkInput);
+
+    function updateMilkInput(event){
+        var changeId = event.target.id;
+        if(changeId == "milk-input-ml"){
+            var ml_val = input_ml.val();
+            input_oz.val((ml_val/29.574).toFixed(2));            
+            input_box.val((ml_val/180).toFixed(1));
+        }else if(changeId == "milk-input-oz"){
+            var oz_val = input_oz.val();
+            input_ml.val((oz_val*29.574).toFixed(2));
+            input_box.val((oz_val*29.574/180).toFixed(1));
+        }else{
+            var box_val = input_box.val();
+            input_ml.val((box_val*180));
+            input_oz.val((box_val*180/29.574).toFixed(2));
+        }
+    }
 });

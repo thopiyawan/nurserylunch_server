@@ -26,7 +26,7 @@
                                     </div>
                                 </div>
                                 <h4 class="title"> ข้อมูลส่วนตัว </h4>
-                                <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div>
+                                <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
                                 <div class="row">
                                     <div class="col-lg-2 panel-label">อายุ</div>
                                     <div class="col-lg-10 panel-text">
@@ -60,7 +60,7 @@
                         <div class="row">
                             <div class="col-lg-8">
                                 <h4 class="title"> บันทึกจากผู้ดูแล </h4>
-                                <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div>
+                                <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
                             </div>
                             <div class="col-lg-4">
                                 <a class="pull-right" data-toggle="modal" data-target="#editNotesForm">
@@ -82,12 +82,9 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <h4 class="title"> ข้อจำกัดอาหาร </h4>
-                            <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div>
+                            <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
                         </div>
                         <div class="col-lg-4">
-                            <a class="pull-right" data-toggle="modal" data-target="#createRestrictionForm">
-                                <span> <i class="fas fa-plus"></i> เพิ่ม</span>
-                            </a>
                         </div>
                     </div>
                     
@@ -95,20 +92,20 @@
                         <div class="">ไม่มีข้อมูลการแพ้อาหาร</div>
                     @endif
 
-                    <div class="row m-t">
+                    <div class="row">
                         @foreach ($kid->getRestrictions() as $rest)
-                            <div class="col-lg-6">
+                            <div class="restriction-group">
                                 <div class="row">
                                     <div class="col-lg-3">
                                         <i class="light-icon fas fa-exclamation-circle fa-3x"></i>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-7">
                                         <div class="text-danger">
                                             {{$rest["type"]}}
                                         </div>
                                         <div class="text-extra">{{$rest["detail"]}}</div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-2 pull-right">
                                         <a class="" data-toggle="modal" data-target="#deleteRestriction{{$rest['id']}}">
                                             <span> <i class="fas fa-times"></i></span> 
                                         </a>
@@ -116,6 +113,13 @@
                                 </div>
                             </div>
                         @endforeach
+                        <div class="restriction-group add-restriction text-center">
+                            <div>
+                                <a class="add-form" data-toggle="modal" data-target="#createRestrictionForm">
+                                    <span> <i class="fas fa-plus"></i> เพิ่มข้อกำจัดอาหาร </span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -124,25 +128,32 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <h4 class="title"> การดื่มนม </h4>
-                            <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div>
+                            <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
                         </div>
                         <div class="col-lg-4">
-                            <a class="pull-right" data-toggle="modal" data-target="#editKidForm">
+                            <a class="pull-right" data-toggle="modal" data-target="#editMilkForm">
                                 <span> <i class="fas fa-pen"></i> แก้ไข</span>
                             </a>
                         </div>
                     </div>
-                    <div class="row m-t">
-                        <div class="col-lg-6">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <i class="light-icon fas fa-exclamation-circle fa-3x"></i>
-                                </div>
-                                <div class="col-lg-9">
-                                    <div class="">การดื่มนม (มล. / ต่อวัน)</div>
-                                    <div class="text-extra">200</div>
-                                </div>
-                            </div>
+                    <div class="row">
+                        <div class="col-lg-2 text-center">
+                            <i class="light-icon fas fa-prescription-bottle fa-3x"></i>
+                        </div>
+                        <div class="col-lg-3 text-center">
+                            <div class="">คิดเป็น</div>
+                            <div class="text-extra">200</div>
+                            <div class="">มล. / ต่อวัน</div>
+                        </div>
+                        <div class="col-lg-3 text-center">
+                            <div class="">คิดเป็น</div>
+                            <div class="text-extra">200</div>
+                            <div class="">ออนซ์. / ต่อวัน</div>
+                        </div>
+                        <div class="col-lg-3 text-center">
+                            <div class="">คิดเป็น</div>
+                            <div class="text-extra">200</div>
+                            <div class="">กล่อง / ต่อวัน</div>
                         </div>
                     </div>
                 </div>
@@ -350,7 +361,6 @@
                         <div class="">
                             <input type="hidden" id="" name="id" value="new">
                             <select  name="detail" class="form-control">
-                                <option value="no"> ไม่ระบุ </option>
                                 <option value="muslim"> อาหารมุสลิม </option>
                                 <option value="vege"> อาหารมังสวิรัติ </option>
                                 <option value="vegan"> อาหารเจ </option>
@@ -374,6 +384,41 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="editMilkForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="color-line "></div>             -->
+            <div class="modal-body"> 
+                <h4 class="modal-title">แก้ไขปริมาณการดื่มนม</h4>
+                <form method="POST" action="/kid/editmilk/{{$kid->id}}" class="form-horizontal">   
+                    @csrf
+                    <input type="hidden" id="" name="id" value="{{$rest->id}}">
+                    <div class="form-group">
+                        <label class="control-label">คิดเป็นมิลลิตร (มล.)</label>
+                        <div class="">
+                            <input type="number" min="0" id="milk-input-ml" name="ml" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">คิดเป็นออนซ์</label>
+                        <div class="">
+                            <input type="number" min="0" id="milk-input-oz" name="ml" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">คิดเป็นนมกล่อง (180 มล.)</label>
+                        <div class="">
+                            <input type="number" min="0" id="milk-input-box" name="ml" value="" class="form-control">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @foreach ($kid->getRestrictions() as $rest)
 <div class="modal fade" id="deleteRestriction{{$rest['id']}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">

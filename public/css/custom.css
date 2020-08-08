@@ -334,10 +334,29 @@ h1.page-title{
 .pull-left{
     float: left !important;
 }
+.restriction-group{
+    border: 1px solid var(--lightgray);
+    border-radius: 12px;
+    padding: 14px;
+    margin: 6px 0px 6px 12px;
+    width: 46%;
+}
+.restriction-group.add-restriction{
+    border-style: dotted;
+    border-width: 2px;
+    padding: 0;
+}
+.restriction-group .add-form{
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    line-height: 78px;
+}
 .school-i{
     color: var(--lightgray);
     font-size: 90px;
     padding-left: 40px;
+  
     /*margin-left: 10px;*/
 }
 .table thead th {
