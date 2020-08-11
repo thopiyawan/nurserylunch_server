@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\School;
+use App\Classroom;
 use App\Setting;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -76,6 +77,10 @@ class RegisterController extends Controller
         $school = factory(School::class)->make();
         $school->save();
         $school->setting()->save(factory(Setting::class)->make());
+
+        $classroom = factory(Classroom::class)->make();
+        $school->classrooms()->save($classroom);
+
 
         $user = User::create([
             'name' => $data['name'],

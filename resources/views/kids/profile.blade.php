@@ -56,6 +56,45 @@
             </div>
             <div class="hpanel kid-panel">
                 <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h4 class="title"> การดื่มนม </h4>
+                            <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
+                        </div>
+                        <div class="col-lg-4">
+                            <a class="pull-right" data-toggle="modal" data-target="#editMilkForm">
+                                <span> <i class="fas fa-pen"></i> แก้ไข</span>
+                            </a>
+                        </div>
+                    </div>
+                    @if($kid->milk_oz == null)
+                        <div>ยังไม่มีข้อมูลการดื่มนม</div>
+                    @else
+                        <div class="row">
+                            <div class="col-lg-2 text-center">
+                                <i class="light-icon fas fa-prescription-bottle fa-3x"></i>
+                            </div>
+                            <div class="col-lg-3 text-center">
+                                <div class="">คิดเป็น</div>
+                                <div class="text-extra">{{$kid->getMilk('ml')}}</div>
+                                <div class="">มล. / ต่อวัน</div>
+                            </div>
+                            <div class="col-lg-3 text-center">
+                                <div class="">คิดเป็น</div>
+                                <div class="text-extra">{{$kid->getMilk('oz')}}</div>
+                                <div class="">ออนซ์. / ต่อวัน</div>
+                            </div>
+                            <div class="col-lg-3 text-center">
+                                <div class="">คิดเป็น</div>
+                                <div class="text-extra">{{$kid->getMilk('box')}}</div>
+                                <div class="">กล่อง / ต่อวัน</div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <div class="hpanel kid-panel">
+                <div class="panel-body">
                     <div class="">
                         <div class="row">
                             <div class="col-lg-8">
@@ -127,47 +166,12 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-8">
-                            <h4 class="title"> การดื่มนม </h4>
-                            <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
-                        </div>
-                        <div class="col-lg-4">
-                            <a class="pull-right" data-toggle="modal" data-target="#editMilkForm">
-                                <span> <i class="fas fa-pen"></i> แก้ไข</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2 text-center">
-                            <i class="light-icon fas fa-prescription-bottle fa-3x"></i>
-                        </div>
-                        <div class="col-lg-3 text-center">
-                            <div class="">คิดเป็น</div>
-                            <div class="text-extra">200</div>
-                            <div class="">มล. / ต่อวัน</div>
-                        </div>
-                        <div class="col-lg-3 text-center">
-                            <div class="">คิดเป็น</div>
-                            <div class="text-extra">200</div>
-                            <div class="">ออนซ์. / ต่อวัน</div>
-                        </div>
-                        <div class="col-lg-3 text-center">
-                            <div class="">คิดเป็น</div>
-                            <div class="text-extra">200</div>
-                            <div class="">กล่อง / ต่อวัน</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hpanel kid-panel">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-8">
                             <h4 class="title"> การเจริญเติบโต </h4>
                             <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div>
                         </div>
                         <div class="col-lg-4">
-                            <a class="pull-right" data-toggle="modal" data-target="#editKidForm">
-                                <span> <i class="fas fa-pen"></i> แก้ไข</span>
+                            <a class="pull-right" data-toggle="modal" data-target="#createGrowthForm">
+                                <span> <i class="fas fa-plus"></i> เพิ่มการเจริญเติบโต </span>
                             </a>
                         </div>
                     </div>
@@ -178,24 +182,22 @@
                                     <th>วันที่</th>
                                     <th>ส่วนสูง (ซม.)</th>
                                     <th>น้ำหนัก (กก.)</th>
+                                    <th>จัดการ</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($kid->getGrowthEntries() as $entry)
                                     <tr>
-                                        <td>25/03/63</td>
-                                        <td>105</td>
-                                        <td>16</td>
+                                        <td>{{$entry->datestring}}</td>
+                                        <td>{{$entry->height}}</td>
+                                        <td>{{$entry->weight}}</td>
+                                        <td>
+                                            <a class="" data-toggle="modal" data-target="#editGrowthForm{{$entry->id}}">
+                                                <span> <i class="fas fa-pen"></i> แก้ไข</span>
+                                            </a>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td>25/03/63</td>
-                                        <td>105</td>
-                                        <td>16</td>
-                                    </tr>
-                                    <tr>
-                                        <td>25/03/63</td>
-                                        <td>105</td>
-                                        <td>16</td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -392,23 +394,22 @@
                 <h4 class="modal-title">แก้ไขปริมาณการดื่มนม</h4>
                 <form method="POST" action="/kid/editmilk/{{$kid->id}}" class="form-horizontal">   
                     @csrf
-                    <input type="hidden" id="" name="id" value="{{$rest->id}}">
                     <div class="form-group">
                         <label class="control-label">คิดเป็นมิลลิตร (มล.)</label>
                         <div class="">
-                            <input type="number" min="0" id="milk-input-ml" name="ml" value="" class="form-control">
+                            <input type="number" min="0" id="milk-input-ml" name="ml" step=".01" value="{{$kid->getMilk('ml')}}" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">คิดเป็นออนซ์</label>
                         <div class="">
-                            <input type="number" min="0" id="milk-input-oz" name="ml" value="" class="form-control">
+                            <input type="number" min="0" id="milk-input-oz" name="oz" step=".01" value="{{$kid->getMilk('oz')}}" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">คิดเป็นนมกล่อง (180 มล.)</label>
                         <div class="">
-                            <input type="number" min="0" id="milk-input-box" name="ml" value="" class="form-control">
+                            <input type="number" min="0" id="milk-input-box" step=".1" name="box" value="{{$kid->getMilk('box')}}" class="form-control">
                         </div>
                     </div>
                     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
@@ -445,5 +446,74 @@
 </div>
 @endforeach
 
+<div class="modal fade" id="createGrowthForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="color-line "></div>             -->
+            <div class="modal-body"> 
+                <h4 class="modal-title">เพิ่มข้อมูลการเจริญเติบโต</h4>
+                <form method="POST" action="/kid/creategrowth/{{$kid->id}}" class="form-horizontal">   
+                    @csrf
+                    <div class="form-group">
+                        <label class="control-label">วันที่</label>
+                        <div class="">
+                            <input type="date" id="" name="date" value="" class="form-control" placeholder="วว/ดด/ปปปป">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">ส่วนสูง (ซม.)</label>
+                        <div class="">
+                            <input type="number" id="" name="height" step=".1" value="" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">น้ำหนัก (กก.)</label>
+                        <div class="">
+                            <input type="number" id="" name="weight" step=".1" value="" class="form-control">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach ($kid->getGrowthEntries() as $entry)
+<div class="modal fade" id="editGrowthForm{{$entry->id}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body"> 
+                <h4 class="modal-title"> แก้ไขข้อมูลการเจริญเติบโต </h4>
+                <form method="POST" action="/kid/editgrowth/{{$kid->id}}" class="form-horizontal">   
+                    @csrf
+                    <input type="hidden" id="" name="growth_id" value="{{$entry->id}}">
+                    <div class="form-group">
+                        <label class="control-label">วันที่</label>
+                        <div class="">
+                            <input type="date" id="" name="date" value="{{$entry->date}}" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"> ส่วนสูง (ซม.) </label>
+                        <div class="">
+                            <input type="number" id="" name="height" step=".1" value="{{$entry->height}}" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"> น้ำหนัก (กก.) </label>
+                        <div class="">
+                            <input type="number" id="" name="weight" step=".1" value="{{$entry->weight}}" class="form-control">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 
 @endsection

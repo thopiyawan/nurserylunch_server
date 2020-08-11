@@ -14,7 +14,7 @@ class CreateKidsTable extends Migration
     public function up()
     {
         Schema::create('kids', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->timestamps();
             $table->integer('school_id')->unsigned()->nullable();
             $table->foreign('school_id')->references('id')->on('schools');

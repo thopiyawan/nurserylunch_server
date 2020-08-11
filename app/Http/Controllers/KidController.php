@@ -8,6 +8,7 @@ use App\School;
 use App\Classroom;
 use App\Kid;
 use App\FoodRestriction;
+use App\GrowthEntry;
 
 use Illuminate\Http\Request;
 
@@ -186,6 +187,43 @@ class KidController extends Controller
         return redirect('kid/'.$request['kid_id']);
 
     }
+        public function editMilk(Request $request, $id = null)
+    {
+    
+        $kid = Kid::where('id', $id)->first();
+        $kid->milk_oz = $request->input("oz");
+        $kid->save();
+        
+        return redirect('kid/'.$id);
 
+    }
+    public function createGrowth(Request $request, $id = null)
+    {
+        $date = date("Y-m-d", strtotime($request["date"]));
+        $entry = GrowthEntry::create([
+            'date' => $date,
+            'height' => $request['height'],
+            'weight' => $request['weight'],
+        ]);
+
+        $kid->growth_entries()->save($entry);
+        return redirect('kid/'.$id);
+    }
+    public function editGrowth(Request $request, $id = null)
+    {
+        $kid_id = $id;
+        
+        $kid = Kid::where('id', $kid_id)->first();
+        $entry = GrowthEntry::where('id', $request['growth_id'])->first();
+        
+        $date = date('Y-m-d', strtotime($request['date']));
+        $entry->date = $date;
+        $entry->weight = $request['weight'];
+        $entry->height = $request['height'];
+
+        $entry->save();
+
+        return redirect('kid/'.$kid_id);
+    }
 }
 

@@ -14,7 +14,9 @@ class Kid extends Model
     public function food_restrictions(){
         return $this->hasMany(FoodRestriction::class);
     }
-
+	public function growth_entries(){
+        return $this->hasMany(GrowthEntry::class);
+    }
     public function getAge()
     {
 		$age = \Carbon\Carbon::parse($this->birthday)->diff(\Carbon\Carbon::now())->format('%y ปี %m เดือน %d วัน');
@@ -96,6 +98,28 @@ class Kid extends Model
     public function getFullName()
     {
     	return $this->firstname." ".$this->lastname." ( น้อง".$this->nickname." )";
+    }
+    public function getGrowthEntries()
+    {
+    	$entries = GrowthEntry::where('kid_id', $this->id)->orderBy('date', 'ASC')->get();
+    	foreach ($entries as $en) {
+    		$en->datestring = date('d/m/Y', strtotime($en->date));
+    	}
+    	return $entries;
+    }
+    public function getMilk($type)
+    {
+    	if($type == "ml")
+    	{
+    		return number_format($this->milk_oz*29.574, 2);
+
+    	}
+    	elseif($type == "box")
+    	{
+    		return number_format($this->milk_oz*29.574/180, 1);
+
+    	}
+    	return $this->milk_oz;
     }
     public function getSex()
     {
