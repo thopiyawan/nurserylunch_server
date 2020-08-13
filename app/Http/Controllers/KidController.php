@@ -19,13 +19,6 @@ class KidController extends Controller
      *
      * @return void
      */
-    public function getAllKids($school_id)
-    {
-        $all_kids = Kid::where('school_id', $school_id)->get()->groupBy('classroom_id');
-
-
-        return $all_kids;
-    }
 
     public function __construct()
     {
@@ -37,6 +30,10 @@ class KidController extends Controller
     {
         $user = auth()->user();
         $classrooms = Classroom::where('school_id', $user->school_id)->get();
+        foreach($classrooms as $c)
+        {
+            $c->init();
+        }
 
         if ($id == null){
             $classroom = Classroom::where('school_id', $user->school_id)->first();//$classroom = null;
@@ -46,9 +43,9 @@ class KidController extends Controller
         }else{
             $classroom = Classroom::where('id', $id)->first();
         }
+        $classroom->init();
 
-        $all_kids = self::getAllKids($user->school_id);
-        return view('kids.classroom', ['classrooms' => $classrooms, 'classroom'=> $classroom, 'all_kids'=> $all_kids]);
+        return view('kids.classroom', ['classrooms' => $classrooms, 'classroom'=> $classroom]);
     }
 
     public function createClassroom(Request $request)
@@ -104,10 +101,9 @@ class KidController extends Controller
         //$kids = Kid::where('classroom_id', $classroom->id)->get();
         $kid = Kid::where('id', $id)->first();
         $classroom = Classroom::where('id', $kid->classroom_id)->first();
-        $all_kids = self::getAllKids($user->school_id);
-
+        $classroom->init();
         
-        return view('kids.profile', ['classrooms' => $classrooms, 'classroom'=> $classroom, 'kid'=> $kid, 'all_kids'=> $all_kids]);
+        return view('kids.profile', ['classrooms' => $classrooms, 'classroom'=> $classroom, 'kid'=> $kid, ]);
     }
 
     public function createKid(Request $request)
@@ -199,6 +195,7 @@ class KidController extends Controller
     }
     public function createGrowth(Request $request, $id = null)
     {
+        $kid = Kid::where('id', $id)->first();
         $date = date("Y-m-d", strtotime($request["date"]));
         $entry = GrowthEntry::create([
             'date' => $date,

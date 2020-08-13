@@ -99,6 +99,11 @@ class Kid extends Model
     {
     	return $this->firstname." ".$this->lastname." ( น้อง".$this->nickname." )";
     }
+    public function getLastestGrowth()
+    {
+        $lastest =  GrowthEntry::where('kid_id', $this->id)->latest('date')->first();
+        return $lastest;
+    }
     public function getGrowthEntries()
     {
     	$entries = GrowthEntry::where('kid_id', $this->id)->orderBy('date', 'ASC')->get();

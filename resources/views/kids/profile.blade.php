@@ -58,68 +58,6 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-8">
-                            <h4 class="title"> การดื่มนม </h4>
-                            <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
-                        </div>
-                        <div class="col-lg-4">
-                            <a class="pull-right" data-toggle="modal" data-target="#editMilkForm">
-                                <span> <i class="fas fa-pen"></i> แก้ไข</span>
-                            </a>
-                        </div>
-                    </div>
-                    @if($kid->milk_oz == null)
-                        <div>ยังไม่มีข้อมูลการดื่มนม</div>
-                    @else
-                        <div class="row">
-                            <div class="col-lg-2 text-center">
-                                <i class="light-icon fas fa-prescription-bottle fa-3x"></i>
-                            </div>
-                            <div class="col-lg-3 text-center">
-                                <div class="">คิดเป็น</div>
-                                <div class="text-extra">{{$kid->getMilk('ml')}}</div>
-                                <div class="">มล. / ต่อวัน</div>
-                            </div>
-                            <div class="col-lg-3 text-center">
-                                <div class="">คิดเป็น</div>
-                                <div class="text-extra">{{$kid->getMilk('oz')}}</div>
-                                <div class="">ออนซ์. / ต่อวัน</div>
-                            </div>
-                            <div class="col-lg-3 text-center">
-                                <div class="">คิดเป็น</div>
-                                <div class="text-extra">{{$kid->getMilk('box')}}</div>
-                                <div class="">กล่อง / ต่อวัน</div>
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div>
-            <div class="hpanel kid-panel">
-                <div class="panel-body">
-                    <div class="">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <h4 class="title"> บันทึกจากผู้ดูแล </h4>
-                                <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
-                            </div>
-                            <div class="col-lg-4">
-                                <a class="pull-right" data-toggle="modal" data-target="#editNotesForm">
-                                    <span> <i class="fas fa-pen"></i> แก้ไข</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="note-card">
-                            {{$kid->notes? $kid->notes: 'ยังไม่มีข้อความบันทึก'}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="hpanel kid-panel">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-8">
                             <h4 class="title"> ข้อจำกัดอาหาร </h4>
                             <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
                         </div>
@@ -158,6 +96,68 @@
                                     <span> <i class="fas fa-plus"></i> เพิ่มข้อกำจัดอาหาร </span>
                                 </a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hpanel kid-panel">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h4 class="title"> การดื่มนม </h4>
+                            <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
+                        </div>
+                        <div class="col-lg-4">
+                            <a class="pull-right" data-toggle="modal" data-target="#editMilkForm">
+                                <span> <i class="fas fa-pen"></i> แก้ไข</span>
+                            </a>
+                        </div>
+                    </div>
+                    @if($kid->milk_oz == null)
+                        <div>ยังไม่มีข้อมูลการดื่มนม</div>
+                    @else
+                        <div class="row">
+                            <div class="col-lg-2 text-center">
+                                <i class="light-icon fas fa-prescription-bottle fa-3x"></i>
+                            </div>
+                            <div class="col-lg-3 text-center">
+                                <div class="">คิดเป็น</div>
+                                <div class="text-extra">{{$kid->getMilk('ml')}}</div>
+                                <div class="">มล. / ต่อวัน</div>
+                            </div>
+                            <div class="col-lg-3 text-center">
+                                <div class="">คิดเป็น</div>
+                                <div class="text-extra">{{$kid->getMilk('oz')}}</div>
+                                <div class="">ออนซ์. / ต่อวัน</div>
+                            </div>
+                            <div class="col-lg-3 text-center">
+                                <div class="">คิดเป็น</div>
+                                <div class="text-extra">{{$kid->getMilk('box')}}</div>
+                                <div class="">กล่อง / ต่อวัน</div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="hpanel kid-panel">
+                <div class="panel-body">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h4 class="title"> บันทึกจากผู้ดูแล </h4>
+                                <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
+                            </div>
+                            <div class="col-lg-4">
+                                <a class="pull-right" data-toggle="modal" data-target="#editNotesForm">
+                                    <span> <i class="fas fa-pen"></i> แก้ไข</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="note-card">
+                            {{$kid->notes? $kid->notes: 'ยังไม่มีข้อความบันทึก'}}
                         </div>
                     </div>
                 </div>

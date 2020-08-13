@@ -9,19 +9,17 @@
                 <span class="fa arrow"></span>
             </a>
             <ul class="nav nav-tab nav-second-level" aria-expanded="false">
-                @if($all_kids->has($c->id))
-                    @foreach ($all_kids[$c->id] as $k)
-                        @if ($k)
-                            <li class="kid-name">
-                                <a href="/kid/{{$k->id}}">
-                                    <span><i class="far fa-user"></i></span>
-                                    {{$k->firstname.' '.$k->lastname}}
-                                </a>
-                            </li>
-                        @endif
-                    @endforeach
-                @else
+                @if($c->getKids() == null)
                     <li><a href="#" class="">ไม่มีนักเรียนในห้องเรียนนี้</a></li>
+                @else
+                     @foreach ($c->getKids() as $k)
+                        <li class="kid-name">
+                            <a href="/kid/{{$k->id}}">
+                                <span><i class="far fa-user"></i></span>
+                                {{$k->firstname.' '.$k->lastname}}
+                            </a>
+                        </li>
+                    @endforeach
                 @endif
             </ul>
         </li>

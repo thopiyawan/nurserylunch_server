@@ -32,28 +32,28 @@
                 <div class="panel-body">
                     <h4 class="title"> ข้อมูลโดยรวม </h4>
                     <div class="row m-b">
-                        <div class="col-lg-5 text-right">
+                        <div class="col-lg-4 text-right">
                             <i class="light-icon fas fa-child fa-3x"></i>
                         </div>
-                        <div class="col-lg-7">
+                        <div class="col-lg-8">
                             <div class="">จำนวนเด็ก</div>
-                            <div class="text-extra">20 <span>คน</span></div>
+                            <div class="text-extra">{{$classroom->getKidCount()}} <span>คน</span></div>
                         </div>
                     </div>
                     <div class="row m-b">
-                        <div class="col-lg-5 text-right">
+                        <div class="col-lg-4 text-right">
                             เด็กสุด
                         </div>
-                        <div class="col-lg-7">
-                            0 ปี 11 เดือน
+                        <div class="col-lg-8">
+                            {{$classroom->getMinAge()}}
                         </div>
                     </div>
                     <div class="row m-b">
-                        <div class="col-lg-5 text-right">
+                        <div class="col-lg-4 text-right">
                             โตสุด
                         </div>
-                        <div class="col-lg-7">
-                            1 ปี 11 เดือน
+                        <div class="col-lg-8">
+                            {{$classroom->getMaxAge()}}
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <div class="">ส่วนสูงโดยเฉลี่ย</div>
-                                    <div class="text-extra">80.2 <span>ซม.</span></div>
+                                    <div class="text-extra">{{$classroom->getAverageHeight()}} <span>ซม.</span></div>
                                 </div>
                             </div>
                             <div class="row m-b">
@@ -79,7 +79,7 @@
                                     ค่าสูงสุด
                                 </div>
                                 <div class="col-lg-7">
-                                    85.2 ซม.
+                                    {{$classroom->getMaxHeight()}}
                                 </div>
                             </div>
                             <div class="row m-b">
@@ -87,7 +87,7 @@
                                     ค่าต่ำสุด
                                 </div>
                                 <div class="col-lg-7">
-                                    79.0 ซม.
+                                    {{$classroom->getMinHeight()}}
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <div class="">น้ำหนักโดยเฉลี่ย</div>
-                                    <div class="text-extra">11.5 <span>กก.</span></div>
+                                    <div class="text-extra">{{$classroom->getAverageWeight()}} <span>กก.</span></div>
                                 </div>
                             </div>
                             <div class="row m-b">
@@ -106,7 +106,7 @@
                                     ค่าสูงสุด
                                 </div>
                                 <div class="col-lg-7">
-                                    15.2 กก.
+                                    {{$classroom->getMaxWeight()}}
                                 </div>
                             </div>
                             <div class="row m-b">
@@ -114,7 +114,7 @@
                                     ค่าต่ำสุด
                                 </div>
                                 <div class="col-lg-7">
-                                    9.2 กก.
+                                    {{$classroom->getMinWeight()}}
                                 </div>
                             </div>
                         </div>
@@ -132,16 +132,16 @@
                         </div>
                         <div class="col-lg-7">
                             <div class="">ดื่มนมโดยเฉลี่ย</div>
-                            <div class="text-extra">120 <span>มล.</span></div>
+                            <div class="text-extra"> {{$classroom->getMilkMl()}} <span>มล.</span></div>
                         </div>
                     </div>
                     <div class="text-center m-b">
                         <span>คิดเป็นนมกล่อง </span>
-                        <span> 3 กล่อง </span>
+                        <span> {{$classroom->getMilkBox()}} กล่อง </span>
                     </div>
                     <div class="text-center m-b">
                         <span>คิดเป็นออนซ์ </span>
-                        <span> 300 ออนซ์ </span>
+                        <span> {{$classroom->getMilkOz()}} ออนซ์ </span>
                     </div>
                     <!-- <div class="row m-b">
                         <div class="col-lg-4 text-right">
@@ -174,29 +174,32 @@
                 <th>ชื่อเล่น</th>
                 <th>เพศ</th>
                 <th>อายุ</th>
-                <th>ส่วนสูง</th>
-                <th>น้ำหนัก</th>
+                <th>ส่วนสูง (ซม.)</th>
+                <th>น้ำหนัก (กก.)</th>
                 <th>อาหาร</th>
-                <th>ดื่มนมต่อวัน</th>
+                <th>ดื่มนมต่อวัน (มล.)</th>
                 <th>จัดการ</th>
             </tr>
             </thead>
             <tbody>
-                @if($all_kids->has($classroom->id))
-                    @foreach ($all_kids[$classroom->id] as $k)
-                        <tr>
-                            <td><a href="/kid/1" class="">{{$k->firstname.' '.$k->lastname}}</a></td>
-                            <td>{{$k->nickname}}</td>
-                            <td>{{$k->sex}}</td>
-                            <td>{{$k->birthday}}</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                    @endforeach
-                @endif
+                @foreach ($classroom->getKids() as $k)
+                    <tr>
+                        <td><a href="/kid/{{$k->id}}" class="">{{$k->firstname.' '.$k->lastname}}</a></td>
+                        <td>{{$k->nickname}}</td>
+                        <td>{{$k->getSex()}}</td>
+                        <td>{{$k->getAge()}}</td>
+                        <td>{{$k->getLastestGrowth()->height}}</td>
+                        <td>{{$k->getLastestGrowth()->weight}}</td>
+                        <td>
+                        @foreach ($k->getRestrictions() as $rest)
+                            <div class="text-danger">{{$rest['type']}}</div>
+                            <div class="">{{$rest['detail']}}</div>
+                        @endforeach
+                        </td>
+                        <td>{{$k->getMilk('ml')}} </td>
+                        <td>-</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
