@@ -21,9 +21,9 @@
                 <input type="text"  title="กรุณาใส่ชื่อผู้ใช้งาน" placeholder="ชื่อผู้ใช้งาน" required="" value="" name="username" id="username" class="form-control font-light">
             </div> -->
             <div class="form-group">
-                <label for="email" class="control-label">{{ __('ชื่อผู้ใช้งาน') }}</label>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                @error('email')
+                <label class="control-label">{{ __('ชื่อผู้ใช้งาน') }}</label>
+                <input id="username" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
+                @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>"ชื่อผู้ใช้งานไม่ถูกต้อง"</strong>
                     </span>
