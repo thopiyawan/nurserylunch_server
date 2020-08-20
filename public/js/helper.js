@@ -64,4 +64,32 @@ $(function(){
             input_oz.val((box_val*180/29.574).toFixed(2));
         }
     }
+
+
+    //------- SETTING CHECKBOX
+    $('.for_small_select').select2();
+    // var for_small = $(".for_small");
+    // var for_big = $(".for_big");
+    // updateDisableCheckbox("for_small");
+    // updateDisableCheckbox("for_big");
+    // $("#for_small").on("change", updateDisableCheckbox);
+    // $("#for_big").on("change", updateDisableCheckbox);
+
+    // function updateDisableCheckbox(type){
+    //     console.log("on change", this.checked);
+    //     var id = this.id;
+    //     var inputs = for_small;
+
+    //     if(type == "for_big" || id == "for_big"){
+    //         inputs = for_big;
+    //     }
+    //     for (var i = 0; i < inputs.length; i++) {
+    //         inputs[i].disabled = !this.checked;
+    //     }
+    // }
+
 });
+
+
+
+

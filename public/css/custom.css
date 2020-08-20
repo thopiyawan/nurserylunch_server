@@ -48,6 +48,17 @@ h1.page-title{
     margin-bottom: 40px;
 }
 
+input[type=checkbox] {
+    box-sizing: border-box;
+    margin-right: 6px;
+    height: 16px;
+    width: 16px;
+}
+
+.checkbox input[type=checkbox]:checked + label::before{
+    background-color: var(--primary);
+}
+
 #aside-menu {
     float: left;
     left: 0;
@@ -109,6 +120,8 @@ h1.page-title{
     background-color:var(--primary-fade);
     border-color: var(--primary-fade);
 }
+
+
 .in-group-select{
     width: 100% !important;
 }
@@ -351,6 +364,9 @@ h1.page-title{
     vertical-align: middle;
     width: 100%;
     line-height: 78px;
+}
+.select-tag{
+    width: 100%;
 }
 .school-i{
     color: var(--lightgray);
