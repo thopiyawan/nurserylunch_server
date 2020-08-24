@@ -43,6 +43,23 @@ $(function(){
 
 
 
+    //------- CLASSROOM & KID SIDE MENU
+    var path = window.location.pathname.split("/");
+    var type = path[1];
+    var id = path[2];
+    if (type == "classroom"){
+        var target = $("#"+type+id);
+        target.addClass("active");
+        target.parent().addClass("mm-active");
+        target.next().addClass("mm-show");
+    }else{
+        var target = $("#"+type+id);
+        target.addClass("active");
+        var classroom = target.parent().parent().addClass("mm-show");
+        classroom.parent().addClass("mm-active");
+    }
+
+
     //------- KID PROFILE
     var input_ml = $("#milk-input-ml").on("keyup", updateMilkInput);
     var input_oz = $("#milk-input-oz").on("keyup", updateMilkInput);

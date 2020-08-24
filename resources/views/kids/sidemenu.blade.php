@@ -1,20 +1,20 @@
 <ul class="nav nav-tab main-level" id="">
     @foreach($classrooms as $c)
-        <li>
-            <a  href="#">
-                <span class="class-name">ห้อง {{$c->class_name }}</span>
+        <li class="">
+            <a  href="/classroom/{{$c->id}}" class="" id="classroom{{$c->id}}" aria-expanded="false" aria-disabled="true">
+                <span class="class-name">ห้อง {{$c->class_name}}</span>
                 @if (!$c->active)
                     <span>ปิดชั่วคราว</span>
                 @endif
                 <span class="fa arrow"></span>
             </a>
-            <ul class="nav nav-tab nav-second-level" aria-expanded="false">
-                @if($c->getKids() == null)
-                    <li><a href="#" class="">ไม่มีนักเรียนในห้องเรียนนี้</a></li>
+            <ul class="nav nav-tab nav-second-level" >
+                @if(count($c->getKids()) == 0)
+                    <li class="kid-name"><a href="#">ไม่มีนักเรียนในห้องเรียนนี้</a></li>
                 @else
-                     @foreach ($c->getKids() as $k)
+                    @foreach ($c->getKids() as $k)
                         <li class="kid-name">
-                            <a href="/kid/{{$k->id}}">
+                            <a href="/kid/{{$k->id}}" id="kid{{$k->id}}" class="">
                                 <span><i class="far fa-user"></i></span>
                                 {{$k->firstname.' '.$k->lastname}}
                             </a>
@@ -30,7 +30,6 @@
         </a>
     </li>
 </ul>
-
 <div class="menu-block">
     <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#newKidForm"> 
         <span><i class="fas fa-user-plus"></i> เพิ่มนักเรียนใหม่ </span>
@@ -59,7 +58,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="newKidForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">

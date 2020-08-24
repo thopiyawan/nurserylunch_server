@@ -26,6 +26,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-lg-3">
             <div class="hpanel kid-panel">
@@ -188,8 +189,16 @@
                         <td>{{$k->nickname}}</td>
                         <td>{{$k->getSex()}}</td>
                         <td>{{$k->getAge()}}</td>
-                        <td>{{$k->getLastestGrowth()->height}}</td>
-                        <td>{{$k->getLastestGrowth()->weight}}</td>
+                        <td>
+                            @if($k->getLastestGrowth())
+                                {{$k->getLastestGrowth()->height}}
+                            @endif
+                        </td>
+                        <td>
+                            @if($k->getLastestGrowth())
+                                {{$k->getLastestGrowth()->weight}}
+                            @endif
+                        </td>
                         <td>
                         @foreach ($k->getRestrictions() as $rest)
                             <div class="text-danger">{{$rest['type']}}</div>

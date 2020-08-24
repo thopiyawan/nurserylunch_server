@@ -23,6 +23,7 @@ class Classroom extends Model
 	protected $milk_ml;
 	protected $milk_box;
 
+
     protected $fillable = [
         'class_name',
     ];
