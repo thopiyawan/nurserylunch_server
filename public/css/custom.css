@@ -68,6 +68,9 @@ input[type=checkbox] {
     transition: none !important;
     width: 260px;
 }
+#aside-menu.center{
+    padding: 20px 20px 0 20px;
+}
 #aside-menu .center{
     padding: 20px 20px 0 20px;
 }
@@ -409,20 +412,20 @@ input[type=checkbox] {
     font-weight: 200;
 }
 
-.week-picker .ui-state-default{
+#week-picker .ui-state-default{
     border: none;
     background-color: transparent; 
 }
-.week-picker .ui-state-hover{
+#week-picker .ui-state-hover{
     background-color: var(--lightgray-fade);
     border: none; 
 }
-.week-picker .ui-state-active{
+#week-picker .ui-state-active{
     background-color: var(--primary-fade);
 }
-.week-picker .ui-datepicker{
+#week-picker .ui-datepicker{
     width: 100%;
 }
-.week-picker .ui-widget-content {
+#week-picker .ui-widget-content {
     border: none;
 } 

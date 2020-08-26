@@ -7,7 +7,7 @@
     <div class="m-b center">
         <h4 class="">แสดงเมนูอาหารของสัปดาห์</h4>
         <!-- <button class="btn btn-block btn-default m-b" type="" name="" value="">สัปดาห์นี้</button> -->
-        <div class="week-picker"></div>
+        <div id="week-picker"></div>
             <!-- <br /><br />
             <label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span> -->
         </body>
@@ -53,17 +53,26 @@
 </aside>
 <div id="wrapper">
     
-    <h1 class="page-title"> เมนูอาหาร <span>19 - 24 มิ.ย. 63</span> </h1>
-    
-    <span>เด็กอายุ 1 ปี - 3 ปี</span>
+    <h1 class="page-title">
+        <span>เมนูอาหาร</span>
+        <span id="startDate"></span>
+        <span> - </span>
+        <span id="endDate"></span>
+    </h1>
 
-    <div class="card">
-        <div class="card-header">D</div>
-
-        <div class="card-body">
-            You are logged in!
-
+    <div class="row">
+        <div class="col-lg-2">
+            <span>สำหรับเด็กอายุ - 3 ปี</span> 
         </div>
+        <div class="col-lg-2">
+            <span> อาหารปกติ</span> 
+        </div>
+        <div class="col-lg-8">
+            <a href="/mealplan/edit" class="btn btn-primary pull-right" type="" name="" value="">แก้ไขรายการอาหาร</a>
+        </div>
+    </div>
+    <div class="mealplan">
+        
     </div>
 </div>
 @endsection

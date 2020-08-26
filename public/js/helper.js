@@ -19,13 +19,17 @@ $(function(){
     var startDate;
     var endDate;
 
+    var setCurrentWeek = function () {
+        // body...
+    }
+
     var selectCurrentWeek = function() {
         window.setTimeout(function () {
-            $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
+            $('#week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
         }, 1);
     }
 
-    $('.week-picker').datepicker( {
+    $('#week-picker').datepicker( {
         showOtherMonths: true,
         selectOtherMonths: true,
         onSelect: function(dateText, inst) { 
@@ -48,11 +52,12 @@ $(function(){
             selectCurrentWeek();
         }
     });
-    $(document).on( 'mousemove','.week-picker .ui-datepicker-calendar tr',function() {$(this).find('td a').addClass('ui-state-hover'); });
-    $(document).on( 'mouseleave','.week-picker .ui-datepicker-calendar tr',function() {$(this).find('td a').removeClass('ui-state-hover'); });
+    $(".ui-datepicker-current-day").click();
+    
+    $(document).on( 'mousemove','#week-picker .ui-datepicker-calendar tr',function() {$(this).find('td a').addClass('ui-state-hover'); });
+    $(document).on( 'mouseleave','#week-picker .ui-datepicker-calendar tr',function() {$(this).find('td a').removeClass('ui-state-hover'); });
     //$('.week-picker .ui-datepicker-calendar tr').on('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
     //$('.week-picker .ui-datepicker-calendar tr').on('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
-
 
     //--
 
