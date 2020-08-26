@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<aside id="aside-menu">
+<aside id="aside-menu" class="p-t">
     <ul class="nav nav-tab main-level">
         <li class="">
             <a data-toggle="tab" href="#system" aria-expanded="true" class="active">

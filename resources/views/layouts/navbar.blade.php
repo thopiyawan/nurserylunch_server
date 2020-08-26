@@ -19,8 +19,9 @@
                         <span>สำรับของฉัน</span>
                     </a>
                 </li>
+
                 <li class="">
-                    <a class="nav-link  {{ Request::is('kids') ? 'active' : '' }}" href="{{ url('/kids')}}" >
+                    <a class="nav-link  {{ Request::segment(1) === 'kid' || Request::segment(1) === 'classroom' ? 'active' : '' }}" href="{{ url('/kids')}}" >
                         <i class="fas fa-users"></i>
                         <span>ข้อมูลเด็ก</span>
                     </a>

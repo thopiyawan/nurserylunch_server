@@ -1,8 +1,9 @@
 <ul class="nav nav-tab main-level" id="">
     @foreach($classrooms as $c)
-        <li class="">
+        <li class="class-level">
             <a  href="/classroom/{{$c->id}}" class="" id="classroom{{$c->id}}" aria-expanded="false" aria-disabled="true">
                 <span class="class-name">ห้อง {{$c->class_name}}</span>
+                <span class="kid-count-span"> ( {{$c->getKidCount()}}  คน)</span>
                 @if (!$c->active)
                     <span>ปิดชั่วคราว</span>
                 @endif
@@ -16,7 +17,7 @@
                         <li class="kid-name">
                             <a href="/kid/{{$k->id}}" id="kid{{$k->id}}" class="">
                                 <span><i class="far fa-user"></i></span>
-                                {{$k->firstname.' '.$k->lastname}}
+                                {{$k->getFullName()}}
                             </a>
                         </li>
                     @endforeach
@@ -24,6 +25,7 @@
             </ul>
         </li>
     @endforeach
+
     <li>
         <a href="" data-toggle="modal" data-target="#newClassroomForm"> 
             <span> <i class="fas fa-plus"></i> เพิ่มห้องเรียนใหม่ </span> 

@@ -97,7 +97,7 @@ class Kid extends Model
     }
     public function getFullName()
     {
-    	return $this->firstname." ".$this->lastname." ( น้อง".$this->nickname." )";
+    	return $this->firstname." ".$this->lastname." ( ".$this->nickname." )";
     }
     public function getLastestGrowth()
     {

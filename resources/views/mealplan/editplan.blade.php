@@ -99,15 +99,8 @@
 </aside>
 <div id="wrapper">
     
-    <h1>Mealplan</h1>
-    <div class="card">
-        <div class="card-header">Dashboard</div>
+    <h1 class="page-title">แก้ไขเมนูอาหาร</h1>
 
-        <div class="card-body">
-            You are logged in!
-
-        </div>
-    </div>
 </div>
 @endsection
 

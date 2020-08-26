@@ -68,8 +68,17 @@ input[type=checkbox] {
     transition: none !important;
     width: 260px;
 }
-#aside-menu.center{
+#aside-menu .center{
     padding: 20px 20px 0 20px;
+}
+
+#aside-menu.p-t{
+    padding-top: 50px;
+}
+#aside-menu .nav-second-level li{
+    /*border-top:  var(--darkgray) 1px solid;*/
+    /*background-color: var(--lightgray);*/
+    border: none;
 }
 /*#aside-menu .nav-second-level li{
     padding: 10px 10px 10px 30px;
@@ -305,15 +314,19 @@ input[type=checkbox] {
 .navbar-right {
     float: right !important;
 }
-.nav-tab.main-level{
+/*.nav-tab.main-level{
     margin-top: 34px;
-}
+}*/
 .nav-tab .class-name{
     font-weight: 400;
 }
-.nav-tab .kid-name{
-    padding-left: 24px;
+
+.nav-tab .kid-count-span{
+    color: var(--gray);
+    font-size: var(--font-size-m1);
+    font-weight: 200;
 }
+
 .nav-tab>li{
     border-top: 1px solid #eaeaea;
     /*height: 46px;*/
@@ -386,3 +399,30 @@ input[type=checkbox] {
     padding: 4px 12px;
     margin-bottom: 4px;
 }
+.ui-datepicker .ui-datepicker-header{
+    padding: 0 !important;
+    border:none;
+    background: transparent;
+}
+.ui-datepicker th {
+    padding: 0 !important;
+    font-weight: 200;
+}
+
+.week-picker .ui-state-default{
+    border: none;
+    background-color: transparent; 
+}
+.week-picker .ui-state-hover{
+    background-color: var(--lightgray-fade);
+    border: none; 
+}
+.week-picker .ui-state-active{
+    background-color: var(--primary-fade);
+}
+.week-picker .ui-datepicker{
+    width: 100%;
+}
+.week-picker .ui-widget-content {
+    border: none;
+} 

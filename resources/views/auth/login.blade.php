@@ -22,7 +22,7 @@
             </div> -->
             <div class="form-group">
                 <label class="control-label">{{ __('ชื่อผู้ใช้งาน') }}</label>
-                <input id="username" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
+                <input id="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autofocus>
                 @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>"ชื่อผู้ใช้งานไม่ถูกต้อง"</strong>
