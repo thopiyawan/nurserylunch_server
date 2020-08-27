@@ -98,8 +98,99 @@
     </div>
 </aside>
 <div id="wrapper">
-    
     <h1 class="page-title">แก้ไขเมนูอาหาร</h1>
+    <div class="meal-panel row monday">
+        <div class="col col-day">
+            <div class="mlabel">จันทร์</div>
+            <div class="mdate">23</div>
+        </div>
+        <div class="col col-meal">
+            <div class="mlabel">ว่างเช้า</div>
+            <div id="ui-sortable" class="ui-sortable">
+                <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
+                    <span class=""><i class="fa fa-hand-pointer-o"></i> วางที่นี่</span>
+                </div>
+            </div>
+        </div>
+        <div class="col col-meal">
+            <div class="mlabel">กลางวัน</div>
+            <div id="ui-sortable" class="ui-sortable">
+                <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
+                    <span class=""><i class="fa fa-hand-pointer-o"></i> วางที่นี่</span>
+                </div>
+            </div>
+        </div>
+        <div class="col col-meal">
+            <div class="mlabel">ว่างบ่าย</div>
+            <div id="ui-sortable" class="ui-sortable">
+                <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
+                    <span class=""><i class="fa fa-hand-pointer-o"></i> วางที่นี่</span>
+                </div>
+            </div>
+        </div>
+        <div class="col col-nutrition">
+            <div class="mlabel">สารอาหาร</div>
+            <div class="energy-contanier">
+                <div class="nut-labels">
+                    <span class="">พลังงาน</span>
+                    <span class="">0 / 400-550 กิโลแคล</span>
+                </div>
+                <div class="nut-tabs">
+                    <div class="nut-tab danger selected">น้อยเกินไป</div>
+                    <div class="nut-tab warning selected">น้อย</div>
+                    <div class="nut-tab ok selected">พอดี</div>
+                    <div class="nut-tab warning selected">มาก</div>
+                    <div class="nut-tab danger selected">มากเกินไป</div>
+                </div>
+                <div class="nut-labels">
+                    <span class="">พลังงาน</span>
+                    <span class="">0 / 400-550 กิโลแคล</span>
+                </div>
+                <div class="nut-tabs">
+                    <div class="nut-tab danger">น้อยเกินไป</div>
+                    <div class="nut-tab warning">น้อย</div>
+                    <div class="nut-tab ok">พอดี</div>
+                    <div class="nut-tab warning">มาก</div>
+                    <div class="nut-tab danger">มากเกินไป</div>
+                </div>
+                <div class="nut-labels">
+                    <span class="">พลังงาน</span>
+                    <span class="">0 / 400-550 กิโลแคล</span>
+                </div>
+                <div class="nut-tabs">
+                    <div class="nut-tab danger">น้อยเกินไป</div>
+                    <div class="nut-tab warning">น้อย</div>
+                    <div class="nut-tab ok">พอดี</div>
+                    <div class="nut-tab warning">มาก</div>
+                    <div class="nut-tab danger">มากเกินไป</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="meal-panel row tuesday">
+        <div class="col col-day">
+            <div class="mlabel">อังคาร</div>
+            <div class="mdate">24</div>
+        </div>
+    </div>
+    <div class="meal-panel row wednesday">
+        <div class="col col-day">
+            <div class="mlabel">พุธ</div>
+            <div class="mdate">25</div>
+        </div>
+    </div>
+    <div class="meal-panel row thursday">
+        <div class="col col-day">
+            <div class="mlabel">พฤหัส</div>
+            <div class="mdate">26</div>
+        </div>
+    </div>
+    <div class="meal-panel row friday">
+        <div class="col col-day">
+            <div class="mlabel">ศุกร์</div>
+            <div class="mdate">27</div>
+        </div>
+    </div>
 
 </div>
 @endsection

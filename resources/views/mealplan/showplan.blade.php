@@ -71,8 +71,44 @@
             <a href="/mealplan/edit" class="btn btn-primary pull-right" type="" name="" value="">แก้ไขรายการอาหาร</a>
         </div>
     </div>
-    <div class="mealplan">
-        
+    <div class="meal-panel row monday">
+        <div class="col col-day">
+            <div class="mlabel">จันทร์</div>
+            <div class="mdate">23</div>
+        </div>
+        <div class="col col-meal">
+            <div class="mlabel">ว่างเช้า</div>
+        </div>
+        <div class="col col-meal">
+            <div class="mlabel">กลางวัน</div>
+        </div>
+        <div class="col col-meal">
+            <div class="mlabel">ว่างบ่าย</div>
+        </div>
+    </div>
+    <div class="meal-panel row tuesday">
+        <div class="col col-day">
+            <div class="mlabel">อังคาร</div>
+            <div class="mdate">24</div>
+        </div>
+    </div>
+    <div class="meal-panel row wednesday">
+        <div class="col col-day">
+            <div class="mlabel">พุธ</div>
+            <div class="mdate">25</div>
+        </div>
+    </div>
+    <div class="meal-panel row thursday">
+        <div class="col col-day">
+            <div class="mlabel">พฤหัส</div>
+            <div class="mdate">26</div>
+        </div>
+    </div>
+    <div class="meal-panel row friday">
+        <div class="col col-day">
+            <div class="mlabel">ศุกร์</div>
+            <div class="mdate">27</div>
+        </div>
     </div>
 </div>
 @endsection

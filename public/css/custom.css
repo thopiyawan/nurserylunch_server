@@ -357,6 +357,57 @@ input[type=checkbox] {
 .menu-block{
     padding: 20px; 
 }
+.meal-panel{
+    background: white;
+    border: 1px solid var(--lightgray);  
+    padding: 12px;
+    margin: 10px 0px; 
+}
+.meal-panel.monday{border-left: 5px solid #f9dc06;}
+.meal-panel.tuesday{border-left: 5px solid #ff6663;}
+.meal-panel.wednesday{border-left: 5px solid #7ac943;}
+.meal-panel.thursday{border-left: 5px solid #f7931e;}
+.meal-panel.friday{border-left: 5px solid #3fa6f2;}
+.meal-panel .col{
+    float: left !important;
+    flex-basis: unset;
+}
+.meal-panel .col-day{width: 7%;}
+.meal-panel .col-meal{
+    width: 21%;
+    padding-right: 12px;
+}
+.meal-panel .col-nutrition{width: 30%;}
+.meal-panel .mlabel{
+    color: var(--darkgray);
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.meal-panel .mdate{
+    color: color: var(--darkgray);;
+    font-size: 32px; 
+    margin-top: -10px;
+}
+.meal-panel .nut-labels{
+    margin-bottom: -2px;
+}
+.meal-panel .nut-tabs{
+    margin-bottom: 10px;
+}
+.meal-panel .nut-tab{
+    background: #d8d8d8;
+    border-radius: 8px;
+    color: white !important;
+    display: inline-block;
+    font-size: 12px;
+    text-align: center;
+    width: 19.5%;
+    margin-left: -1%;
+}
+.nut-tab.danger.selected{background: #c0392b;}
+.nut-tab.warning.selected{background: #f7931e;}
+.nut-tab.ok.selected{background: #7ac943;}
+
 .pull-right{
     float: right !important;
 }
@@ -401,6 +452,10 @@ input[type=checkbox] {
     cursor: move;
     padding: 4px 12px;
     margin-bottom: 4px;
+}
+
+.ui-sortable-placeholder {
+    border: 1px dashed var(--darkgray) !important;
 }
 .ui-datepicker .ui-datepicker-header{
     padding: 0 !important;
