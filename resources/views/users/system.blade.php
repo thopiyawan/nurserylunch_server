@@ -207,34 +207,6 @@
         </div>
 
     </div>
-
-    <div class="hr-line-dashed"></div>
-    
-    <div class="checkbox">
-        <input type="checkbox" value="{{ $setting->is_for_big }}" name="is_for_big" {{$setting->is_for_big ? 'checked' : ''}}> 
-        <label>จัดอาหารสำหรับเด็กอายุ 1 - 3 ปี</label>
-    </div>
-    <div>
-        <label class="control-label">อาหารพิเศษสำหรับเด็กอายุ 1 - 3 ปี</label>
-    </div>
-    <div class="row m-b">
-        <div class="col-lg-12">
-            <select class="select-tag for_small_select" name="for_small[]" multiple="multiple">
-                <optgroup label="อาหารพิเศษ">
-                    <option value="">อาหารมุสลิม</option>
-                    <option value="">อาหารมังสวิรัติ</option>
-                    <option value="">อาหารเจ</option>
-                </optgroup>
-                <optgroup label="สําหรับเด็กที่แพ้อาหารประเภท นม / ไข่ / แป้ง">
-                    <option value="">แพ้นมวัว</option>
-                    <option value="">แพ้ไข่ไก่</option>
-                    <option value="">แพ้นมแม่</option>
-                    <option value="">แพ้นมแป้งสาลี</option>
-                </optgroup>
-            </select>
-        </div>
-    </div>
-
     <div class="row form-group">
         <div class="col-sm-8 col-sm-offset-2">
             <!-- <button class="btn btn-default" type="submit">Cancel</button> -->

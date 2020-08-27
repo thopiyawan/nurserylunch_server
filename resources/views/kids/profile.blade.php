@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<aside id="aside-menu p-t">
+<aside id="aside-menu" class="p-t">
     @include('kids.sidemenu')
 </aside>
 <div id="wrapper">
