@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <aside id="aside-menu">
+    @include('mealplan.showsidemenu')
 </aside>
 <div id="wrapper">
     <div class="row justify-content-center">

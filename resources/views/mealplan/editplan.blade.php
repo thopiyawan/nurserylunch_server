@@ -192,6 +192,13 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <div class="col-lg-8 col-sm-offset-4">
+            <button class="btn btn-default" type="">ยกเลิก</button>
+            <button class="btn btn-primary" type="submit" name="update" value="school">บันทึกข้อมูล</button>
+        </div>
+    </div>
+
 </div>
 @endsection
 

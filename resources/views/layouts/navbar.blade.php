@@ -13,7 +13,7 @@
         <div class="navbar-right">
             <ul class="nav navbar-nav no-borders">
                 <li class="">
-                    <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="{{url('/')}}" >
+                    <a class="nav-link {{ Request::is('/') || Request::segment(1) === 'mealplan' ? 'active' : '' }}" href="{{url('/')}}" >
                         <!-- <i class="fa fa-address-book" aria-hidden="true"></i> -->
                         <i class="fas fa-calendar-alt"></i>
                         <span>สำรับของฉัน</span>

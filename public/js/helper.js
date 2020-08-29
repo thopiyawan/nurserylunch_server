@@ -19,10 +19,6 @@ $(function(){
     var startDate;
     var endDate;
 
-    var setCurrentWeek = function () {
-        // body...
-    }
-
     var selectCurrentWeek = function() {
         window.setTimeout(function () {
             $('#week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
@@ -32,10 +28,11 @@ $(function(){
     $('#week-picker').datepicker( {
         showOtherMonths: true,
         selectOtherMonths: true,
+        showButtonPanel: true,
         onSelect: function(dateText, inst) { 
             var date = $(this).datepicker('getDate');
-            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
-            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
+            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay()+1);
+            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
             var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
             $('#startDate').text($.datepicker.formatDate( dateFormat, startDate, inst.settings ));
             $('#endDate').text($.datepicker.formatDate( dateFormat, endDate, inst.settings ));
@@ -50,15 +47,41 @@ $(function(){
         },
         onChangeMonthYear: function(year, month, inst) {
             selectCurrentWeek();
+        }, 
+        _gotoToday: function(id){
+            console.log("in go to today");
+            $(".ui-datepicker-current-day").click();
         }
     });
+    $.datepicker.regional['th'] = {
+        closeText: 'ปิด',
+        prevText: 'เดือนที่แล้ว',
+        nextText: 'เดือนหน้า;',
+        currentText: 'สัปดาห์นี้',
+        monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม',
+          'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+        ],
+        monthNamesShort: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'สิ.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+        dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์'],
+        dayNamesShort: ['อา','จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+        dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+        weekHeader: 'อาทิตย์',
+        dateFormat: 'dd/mm/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['th']);
+
     $(".ui-datepicker-current-day").click();
     
     $(document).on( 'mousemove','#week-picker .ui-datepicker-calendar tr',function() {$(this).find('td a').addClass('ui-state-hover'); });
     $(document).on( 'mouseleave','#week-picker .ui-datepicker-calendar tr',function() {$(this).find('td a').removeClass('ui-state-hover'); });
-    //$('.week-picker .ui-datepicker-calendar tr').on('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
-    //$('.week-picker .ui-datepicker-calendar tr').on('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
-
+    $(document).on('click', 'button.ui-datepicker-current', function(){ 
+        //console.log("click!");
+        $(".ui-datepicker-today").click(); 
+    });
     //--
 
     function addIconToSelect (className, val){
@@ -85,8 +108,19 @@ $(function(){
 		}
     }
 
-    $( ".ui-sortable" ).sortable();
-    console.log("end sortable");
+    // $( ".ui-sortable" ).sortable();
+    // console.log("end sortable");
+
+    var element = ".ui-sortable";
+    var connect = ".ui-sortable";
+
+    $(element).sortable({
+        cancel: ".ui-state-disabled",
+        connectWith: connect,
+        cursor: "move",
+        cursorAt: { top:5, left: 5 }, 
+        dropOnEmpty: false
+    });
 
 
 

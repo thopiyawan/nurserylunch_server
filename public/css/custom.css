@@ -371,10 +371,11 @@ input[type=checkbox] {
 .meal-panel .col{
     float: left !important;
     flex-basis: unset;
+    flex-grow: unset;
 }
 .meal-panel .col-day{width: 7%;}
 .meal-panel .col-meal{
-    width: 21%;
+    width: 20%;
     padding-right: 12px;
 }
 .meal-panel .col-nutrition{width: 30%;}
@@ -384,9 +385,13 @@ input[type=checkbox] {
     margin-bottom: 8px;
 }
 .meal-panel .mdate{
-    color: color: var(--darkgray);;
-    font-size: 32px; 
+    color: var(--darkgray);;
+    font-size: 32px;
+    font-weight: 300; 
     margin-top: -10px;
+}
+.meal-panel .mrecipe{
+    font-weight: 300;
 }
 .meal-panel .nut-labels{
     margin-bottom: -2px;
@@ -465,6 +470,40 @@ input[type=checkbox] {
 .ui-datepicker th {
     padding: 0 !important;
     font-weight: 200;
+}
+.ui-datepicker-prev span, .ui-datepicker-next span {
+    background-image: none !important;
+}
+.ui-datepicker-prev span.ui-icon, .ui-datepicker-next span.ui-icon {
+    width: 35%;
+    height: 100%;
+    display: block;
+    text-indent: 0;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+.ui-datepicker-prev span:before{
+    content: "\f053";
+    font-family: "Font Awesome 5 Free";
+    position: relative;
+}
+.ui-datepicker-next span:before{
+    content: "\f054";
+    font-family: "Font Awesome 5 Free";
+    position: relative;
+}
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span{
+    top:20%;
+}
+.ui-datepicker .ui-datepicker-buttonpane {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.ui-datepicker .ui-datepicker-buttonpane button {
+    background-color: var(--lightgray) !important;
+    width: 100%;
+    margin: 0 !important;
 }
 
 #week-picker .ui-state-default{
