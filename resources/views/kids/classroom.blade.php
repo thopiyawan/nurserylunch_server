@@ -17,10 +17,21 @@
                 <a class="btn btn-default" data-toggle="modal" data-target="#editClassroomForm"> 
                     <span> <i class="far fa-edit"></i> แก้ไขชื่อห้องเรียน</span>
                 </a>
-                <a class="btn btn-default" href="/classroom/toggle/{{$classroom->id}}">                 
-                    <span> <i class="fas fa-minus-circle"></i> {{($classroom->active?'ปิดห้องเรียนชั่วคราว':'เปิดห้องเรียน')}}</span>
+                @if ($classroom->getKidCount()>0)
+                <a class="btn btn-default" data-toggle="modal" data-target="#classNotEmptyError"> 
+                @else
+                <a id="toggleClassBtn" class="btn btn-default" href="/classroom/toggle/{{$classroom->id}}">
+                @endif
+                    <span>
+                        <i class="fas fa-minus-circle"></i> 
+                        {{($classroom->active?'ปิดห้องเรียนชั่วคราว':'เปิดห้องเรียน')}}
+                    </span>
                 </a>
-                 <a class="btn btn-default" href="/classroom/delete/{{$classroom->id}}">                 
+                 @if ($classroom->getKidCount()>0)
+                 <a class="btn btn-default" data-toggle="modal" data-target="#classNotEmptyError"> 
+                @else
+                <a class="btn btn-default" data-toggle="modal" data-target="#deleteClassConfirmation"> 
+                @endif
                     <span> <i class="far fa-trash-alt"></i> ลบห้องเรียนถาวร</span>
                 </a>
             </div>
@@ -246,7 +257,33 @@
     </div>
 </div>
 
+<div class="modal fade" id="classNotEmptyError" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <i class="icon-primary fas fa-exclamation-circle fa-5x m-b"></i>
+                <h2 class="text-highlight modal-title">ดูเหมือนว่ายังมีเด็กในห้องเรียนอยู่</h2>
+                <h3 class="m-b">กรุณาย้ายเด็กออกจากห้องก่อนทำการปิดหรือลบห้องเรียน</h3>
+                <button type="button" class="btn btn-default m-b" data-dismiss="modal">เข้าใจแล้ว</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-
+<div class="modal fade" id="deleteClassConfirmation" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <i class="icon-primary fas fa-exclamation-circle fa-5x m-b"></i>
+                <h2 class="text-highlight modal-title">คุณแน่ใจหรือไม่?</h2>
+                <h4 class="m-b">คุณกำลังลบห้องเรียนอย่างถาวรและคุณจะไม่สามารถกู้คืนได้</h4>
+                <button type="button" class="btn btn-default" data-dismiss="modal">ไม่, ฉันไม่ต้องการลบ</button>
+                <a id="deleteClassBtn" class="btn btn-primary" href="/classroom/delete/{{$classroom->id}}">
+                    <span>ใช่, ลบห้องเรียนเลย</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection

@@ -200,6 +200,9 @@ input[type=checkbox] {
 .hr-line-dashed {
     border-top: 1px dotted #d8d8d8;
 }
+.icon-primary{
+    color: var(--primary);
+}
 .kid-panel .kid-name{
     color: var(--primary);
     font-size: var( --font-size-p2);
@@ -453,6 +456,9 @@ input[type=checkbox] {
 }
 .table thead th {
     font-weight: 500;
+}
+.text-center{
+    text-align: center;
 }
 .ui-sortable .menu-body{
     background-color: white; 
