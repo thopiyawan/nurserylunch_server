@@ -132,6 +132,9 @@ input[type=checkbox] {
     background-color:var(--primary-fade);
     border-color: var(--primary-fade);
 }
+.bold{
+    font-weight: 400;
+}
 
 
 .in-group-select{
@@ -177,12 +180,13 @@ input[type=checkbox] {
 }
 .dropdown-menu {
     margin: 0;
-    font-size: var(--font-size-m1);
+    font-size: 1rem;
     /*padding: 0.8rem 0;*/
 }
 .dropdown-item{
     padding: 0.6rem 0.2rem 0.6rem 2.2rem;
     font-weight: 300;
+    height: 50px !important;
 }
 /*.fa{
     font-family: 'FontAwesome', sans-serif;

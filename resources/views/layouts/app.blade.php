@@ -21,15 +21,16 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/metismenu/dist/metisMenu.min.css">
 
+    <script src="{{ asset('js/app.js') }}" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/metismenu"></script>
+    <script src="{{ asset('js/helper.js') }}"></script>
+
 </head>
 <body class="fixed-navbar sidebar-scroll">
     <div id="app">
         @include('layouts.navbar')
         @yield('content')
     </div>
-    <script src="{{ asset('js/app.js') }}" ></script>
-    <script src="https://cdn.jsdelivr.net/npm/metismenu"></script>
-    <script src="{{ asset('js/helper.js') }}"></script>
     
 </body>
 </html>

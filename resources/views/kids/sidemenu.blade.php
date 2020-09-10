@@ -39,8 +39,6 @@
     </a>
 </div>
 
-
-
 <div class="modal fade" id="newClassroomForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -51,7 +49,15 @@
                     @csrf 
                     <div class="form-group">
                         <label class="control-label">ชื่อห้องเรียน</label>
-                        <div class=""><input type="text" value="" name="class_name" class="form-control"></div>
+                            <input type="text" name="class_name" class="form-control {{ $errors->hasBag('createclass') ? 'is-invalid' :'' }}" value="{{ old('class_name') }}" required>
+                            @if ($errors->hasBag('createclass'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>"ชื่อห้องเรียนนี้มีอยู่แล้ว"</strong>
+                                </span>
+                                <script type="text/javascript">
+                                    $("#newClassroomForm").modal('show');
+                                </script>
+                            @endif
                     </div>
                     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                     <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเพิ่ม</button>
@@ -60,6 +66,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="newKidForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">

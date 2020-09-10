@@ -35,20 +35,13 @@
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                 @error('password')
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $รหัสผ่านไม่ถูกต้อง }}</strong>
+                        <strong>"รหัสผ่านไม่ถูกต้อง"</strong>
                     </span>
                 @enderror
             </div>
         
             <div class="form-group row">
                 <div class="col-md-6">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember')?'checked' : '' }}>
-
-                        <label class="form-check-label" for="remember">
-                            {{ __('Remember Me') }}
-                        </label>
-                    </div>
                 </div>
                 <div class="col-md-6 text-right">
                     <a class="link text-highlight" href="https://recovery.thaischoollunch.in.th/">

@@ -224,13 +224,19 @@
             <!-- <div class="color-line "></div>             -->
             <div class="modal-body">
                 <h4 class="modal-title">แก้ไขห้องเรียน</h4>
-                <form method="POST" action="/classroom/edit/{{$classroom->id}}" class="form-horizontal">   
+                <form method="POST" action="/classroom/edit/{{$classroom->id}}" class="">   
                     @csrf 
-                    <div class="row form-group">
-                        <label class="col-sm-4 control-label">ชื่อห้องเรียน</label>
-                        <div class="col-sm-6">
-                            <input type="text" value="{{$classroom->class_name}}" name="class_name" class="form-control">
-                        </div>
+                    <div class="form-group">
+                        <label class="control-label">ชื่อห้องเรียน</label>
+                        <input type="text" value="" name="class_name" class="form-control {{ $errors->hasBag('editclass') ? 'is-invalid' :'' }}" required>
+                        @if ($errors->hasBag('editclass'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>"ชื่อห้องเรียนนี้มีอยู่แล้ว"</strong>
+                            </span>
+                            <script type="text/javascript">
+                                $("#editClassroomForm").modal('show');
+                            </script>
+                        @endif
                     </div>
                     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                     <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
@@ -239,6 +245,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 @endsection

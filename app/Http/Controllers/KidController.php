@@ -11,6 +11,8 @@ use App\FoodRestriction;
 use App\GrowthEntry;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule; 
+use Illuminate\Support\Facades\Validator;
 
 class KidController extends Controller
 {
@@ -50,11 +52,26 @@ class KidController extends Controller
 
     public function createClassroom(Request $request)
     {
+
         $user = auth()->user();
         $school = School::where('id', $user->school_id)->first();
+        $validator = Validator::make($request->all(), [
+            'class_name' => [
+                'required', 
+                'max:255', 
+                Rule::unique('classrooms')->where(function($query) use ($school) {
+                    $query->where('school_id', $school->id);
+                }),
+            ]
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator, 'createclass');
+        }
+
         $classroom = Classroom::create([
             'class_name' => $request['class_name'],
         ]);
+
 
         $school->classrooms()->save($classroom);
 
@@ -65,6 +82,36 @@ class KidController extends Controller
     {
     
         $classroom = Classroom::where('id', $id)->first();
+        $validator = Validator::make($request->all(), [
+            'class_name' => [
+                'required', 
+                'max:255', 
+                Rule::unique('classrooms')->ignore($classroom->id)->where(function($query) use ($classroom) {
+                    $query->where('school_id', $classroom->school_id);
+                }),
+            ]
+        ]);
+        if ($validator->fails()) {
+            return redirect('classroom/'.$classroom->id)->withErrors($validator, 'editclass');
+        }
+        
+
+        // $rules = [
+        //     'class_name' => [
+        //         'required', 
+        //         'max:255', 
+        //         Rule::unique('classrooms')->ignore($classroom->id)->where(function($query) use ($classroom) {
+        //             $query->where('school_id', $classroom->school_id);
+        //         }),
+        //     ],
+        // ];
+
+        // $customMessages = ['class_name' => ''];
+        // $attributes = ['class_name' => 'class_name',];
+
+        // $this->validate($request, $rules, $customMessages, $attributes );
+
+
         $classroom->class_name = $request['class_name'];
         $classroom->save();
         

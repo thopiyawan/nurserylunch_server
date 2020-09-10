@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -36,5 +37,25 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $errors = [$this->username() => trans('auth.failed')];
+    
+        // Load user from database
+        $user = \App\User::where($this->username(), $request->{$this->username()})->first();
+    
+        if ($user && !\Hash::check($request->password, $user->password)) {
+            $errors = ['password' => 'Wrong password'];
+        }
+    
+        if ($request->expectsJson()) {
+            return response()->json($errors, 422);
+        }
+    
+        return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors($errors);
     }
 }

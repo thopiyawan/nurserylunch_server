@@ -3,7 +3,7 @@
 @csrf 
     <div class="form-group">
         <!-- day -->
-    	<label class="control-label">จัดอาหารสำหรับ</label>
+    	<label class="control-label bold">จัดอาหารสำหรับ</label>
         <div class="checkbox">
     		<input class="" type="checkbox" value="{{ $setting->is_weekday }}" name="is_weekday" {{$setting->is_weekday ? 'checked' : ''}}> 
             <label>วันจันทร์ - วันศุกร์</label>
@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
         <!-- meal -->
-        <label class="control-label">จัดอาหารสำหรับมื้อ</label>
+        <label class="control-label bold">จัดอาหารสำหรับมื้อ</label>
         <div class="checkbox">
             <input type="checkbox" value="{{ $setting->is_breakfast }}" name="is_breakfast" {{$setting->is_breakfast ? 'checked' : ''}}> 
             <label>เช้า</label>
@@ -42,15 +42,12 @@
 
     <div class="form-group">
         <!-- small kids -->
-        <label class="control-label">จัดอาหารสำหรับเด็กอายุต่ำกว่า 1 ปี</label>
+        <label class="control-label bold">จัดอาหารสำหรับเด็กอายุต่ำกว่า 1 ปี</label>
         <div class="checkbox">
             <input id="for_small" type="checkbox" value="{{ $setting->is_for_small }}" name="is_for_small" {{$setting->is_for_small ? 'checked' : ''}}> 
             <label>จัดอาหารสำหรับเด็กอายุต่ำกว่า 1 ปี</label>
         </div>
-        <label class="control-label">จัดอาหารพิเศษสำหรับเด็กอายุต่ำกว่า 1 ปี</label>
-        <div>
-            ยังไม่มีอาหารพิเศษ
-        </div>
+        <label class="control-label bold">จัดอาหารพิเศษสำหรับเด็กอายุต่ำกว่า 1 ปี</label>
 
         <!-- small kids special menu -->
         <div>
@@ -127,15 +124,12 @@
 
     <div class="form-group">
         <!-- big kids -->
-        <label class="control-label">จัดอาหารสำหรับเด็กอายุ 1 - 3 ปี</label>
+        <label class="control-label bold">จัดอาหารสำหรับเด็กอายุ 1 - 3 ปี</label>
         <div class="checkbox">
             <input type="checkbox" value="{{ $setting->is_for_big }}" name="is_for_big" {{$setting->is_for_big ? 'checked' : ''}}> 
             <label>จัดอาหารสำหรับเด็กอายุต่ำกว่า 1 ปี</label>
         </div>
-        <label class="control-label">จัดอาหารพิเศษสำหรับเด็กอายุ 1 - 3 ปี</label>
-        <div>
-            ยังไม่มีอาหารพิเศษ
-        </div>
+        <label class="control-label bold">จัดอาหารพิเศษสำหรับเด็กอายุ 1 - 3 ปี</label>
 
         <!-- big kids special menu -->
         <div>
