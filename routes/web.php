@@ -38,6 +38,8 @@ Route::get('/kid/{id}', 'KidController@showKid')->name('kid.show');
 Route::post('/kid/edit/{id}', 'KidController@editKid')->name('kid.edit');
 Route::post('/kid/editmilk/{id}', 'KidController@editMilk')->name('kid.editmilk');
 Route::post('/kid/editnotes/{id}', 'KidController@editNotes')->name('kid.editnotes');
+Route::post('/kid/moveclass/{id}', 'KidController@moveClass')->name('kid.moveclass');
+Route::post('/kid/withdraw/{id}', 'KidController@withdraw')->name('kid.withdraw');
 
 Route::post('/kid/createrestriction/{id}', 'KidController@createRestriction')->name('kid.createrestriction');
 Route::post('/kid/editrestrictions/{id}', 'KidController@editRestrictions')->name('kid.editrestrictions');
@@ -45,6 +47,6 @@ Route::post('/kid/deleterestriction/{id}', 'KidController@deleteRestriction')->n
 
 Route::post('/kid/creategrowth/{id}', 'KidController@createGrowth')->name('kid.creategrowth');
 Route::post('/kid/editgrowth/{id}', 'KidController@editGrowth')->name('kid.editgrowth');
-
+Route::get('/kid/deletegrowth/{id}', 'KidController@deleteGrowth')->name('kid.deletegrowth');
 
 

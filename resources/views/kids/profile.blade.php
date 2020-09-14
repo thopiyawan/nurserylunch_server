@@ -4,7 +4,16 @@
     @include('kids.sidemenu')
 </aside>
 <div id="wrapper">
-   	<h1 class="page-title">{{$classroom->class_name.' > '.$kid->firstname.' '.$kid->lastname}}</h1>
+   	<div class="row">
+        <div class="col-lg-6">
+            <h1 class="page-title">{{$classroom->class_name.' > '.$kid->firstname.' '.$kid->lastname}}</h1>
+        </div>
+        <div class="col-lg-6">
+            <div class="pull-right">
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-6">
             <div class="hpanel kid-panel">
@@ -48,6 +57,14 @@
                                     <div class="col-lg-8 panel-text">
                                         {{$kid->getActiveLevel()}}
                                     </div>
+                                </div>
+                                <div class="">
+                                    <a class="btn btn-default" data-toggle="modal" data-target="#moveKidForm"> 
+                                        <span> <i class="far fa-edit"></i> ย้ายห้อง</span>
+                                    </a>
+                                    <a class="btn btn-outline btn-danger" data-toggle="modal" data-target="#withdrawConfirmation"> 
+                                        <span><i class="fas fa-sign-out-alt"></i> ย้ายออกจากโรงเรียน</span>
+                                    </a>
                                 </div>
                             </div>    
                         </div>
@@ -165,13 +182,13 @@
             <div class="hpanel kid-panel">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-6">
                             <h4 class="title"> การเจริญเติบโต </h4>
                             <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <a class="pull-right" data-toggle="modal" data-target="#createGrowthForm">
-                                <span> <i class="fas fa-plus"></i> เพิ่มการเจริญเติบโต </span>
+                                <span> <i class="fas fa-plus"></i> เพิ่ม </span>
                             </a>
                         </div>
                     </div>
@@ -195,6 +212,14 @@
                                             <a class="" data-toggle="modal" data-target="#editGrowthForm{{$entry->id}}">
                                                 <span> <i class="fas fa-pen"></i> แก้ไข</span>
                                             </a>
+                                            <div class="btn-group open">
+                                                <button data-toggle="dropdown" class="btn btn-outline dropdown-toggle btn-sm" aria-expanded="true"> 
+                                                    <i class="fas fa-trash"></i> 
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="/kid/deletegrowth/{{$entry->id}}">ลบออกถาวร</a></li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -218,22 +243,22 @@
                     @csrf 
                         <div class="form-group">
                             <label class="control-label">ชื่อจริง</label>
-                            <div class=""><input type="text" value="{{$kid->firstname}}" name="firstname" class="form-control"></div>
+                            <div class=""><input type="text" value="{{$kid->firstname}}" name="firstname" class="form-control" required></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label">นามสกุลจริง</label>
-                            <div class=""><input type="text" value="{{$kid->lastname}}" name="lastname" class="form-control"></div>
+                            <div class=""><input type="text" value="{{$kid->lastname}}" name="lastname" class="form-control" required></div>
                         </div>
                     
                     
                         <div class="form-group">
                             <label class="control-label">ชื่อเล่น</label>
-                            <div class=""><input type="text" value="{{$kid->nickname}}" name="nickname" class="form-control"></div>
+                            <div class=""><input type="text" value="{{$kid->nickname}}" name="nickname" class="form-control" required></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label">เพศ</label>
                             <div class="">
-                                <select name="sex" class="form-control">
+                                <select name="sex" class="form-control ">
                                     <option value="male" {{$kid->sex=='male'? 'selected' : ''}}>ชาย </option>
                                     <option value="female" {{$kid->sex=='female'? 'selected' : ''}}>หญิง </option>
                                 </select>
@@ -242,14 +267,14 @@
                         <label class="control-label">วัน เดือน ปี เกิด</label>
                         <div class="row">
                             <div class="form-group col-md-3">
-                                <select  value="" name="b-day" class="form-control">
+                                <select  value="" name="b-day" class="form-control {{$errors->hasBag('editkid')? 'is-invalid':''}}">
                                     @for ($x = 1; $x <= 31; $x++)
                                         <option value="{{$x}}" {{$kid->getBirthDate() == $x? 'selected' : ''}}> {{$x}} </option>
                                     @endfor
                                 </select>
                             </div>
                             <div class="form-group col-md-5">
-                                <select  value="" name="b-month" class="form-control">
+                                <select  value="" name="b-month" class="form-control {{$errors->hasBag('editkid')? 'is-invalid':''}}">
                                     <option value="01" {{$kid->getBirthMonth() =='01'? 'selected' : ''}}> มกราคม </option>
                                     <option value="02" {{$kid->getBirthMonth() =='02'? 'selected' : ''}}> กุมภาพันธ์ </option>
                                     <option value="03" {{$kid->getBirthMonth() =='03'? 'selected' : ''}}> มีนาคม </option>
@@ -265,13 +290,21 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <select  value="" name="b-year" class="form-control">
+                                <select  value="" name="b-year" class="form-control {{$errors->hasBag('editkid')? 'is-invalid':''}}">
                                     @for ($x = 2020; $x >= 2000; $x--)
                                         <option value="{{$x}}"> {{$x}} </option>
                                     @endfor
                                 </select>
                             </div>
                         </div>
+                        @if ($errors->hasBag('editkid'))
+                        <div class="text-danger" role="alert">
+                            <strong>"วันเดือนปีเกิดไม่ถูกต้อง : มากกว่าปัจจุบัน"</strong>
+                        </div>
+                        <script type="text/javascript">
+                            $("#editKidForm").modal('show');
+                        </script>
+                        @endif
                         <div class="form-group">
                             <label class="control-label">การใช้พลังงาน</label>
                             <div class="">
@@ -429,7 +462,7 @@
             <div class="modal-body"> 
                 <h4 class="modal-title text-center">คุณแน่ใจหรือไม่</h4>
                 <div class="text-center">
-                    คุณกำลังจะลบช้อกำจัดอาหารของ {{$kid->getFullName()}}
+                    คุณกำลังจะลบข้อกำจัดอาหารของ {{$kid->getFullName()}}
                 </div>
                 <div class="text-center">
                     ลบข้อกำจัดอาหาร : {{$rest["type"]."(".$rest["detail"].")"}}
@@ -445,6 +478,29 @@
     </div>
 </div>
 @endforeach
+
+<div class="modal fade" id="withdrawConfirmation" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="color-line "></div>             -->
+            <div class="modal-body"> 
+                <h4 class="modal-title text-center m-b">คุณแน่ใจหรือไม่</h4>
+                <div class="text-center m-b">
+                    คุณกำลังจะย้าย <span> {{$kid->getFullName()}} </span> ออกจากโรงเรียน
+                </div>
+                <div class="text-center m-b">
+                    คุณจะไม่สามารถกู้ข้อมูลน้องคืนได้
+                </div>
+                <form method="POST" action="/kid/withdraw/{{$kid->id}}" class="form-horizontal text-center">   
+                    @csrf
+                    <input type="hidden" id="" name="kid_id" value="{{$kid->id}}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ไม่, ฉันไม่ต้องการลบ</button>
+                    <button class="btn btn-primary" type="submit" name="create" value="">ใช่, ฉันต้องการลบออก</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="createGrowthForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
@@ -479,6 +535,15 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="moveKidForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                @include('kids._moveKidForm')
+            </div>
+        </div>
+    </div>
+</div> 
 
 @foreach ($kid->getGrowthEntries() as $entry)
 <div class="modal fade" id="editGrowthForm{{$entry->id}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
@@ -509,6 +574,7 @@
                     </div>
                     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                     <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    <button class="btn btn-danger pull-right" type="submit" name="create" value="">ลบออก</button>
                 </form>
             </div>
         </div>

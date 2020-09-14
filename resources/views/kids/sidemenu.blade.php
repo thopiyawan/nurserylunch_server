@@ -87,17 +87,17 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">ชื่อจริง</label>
-                            <div class=""><input type="text" value="" name="firstname" class="form-control"></div>
+                            <div class=""><input type="text" value="" name="firstname" class="form-control" required></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label">นามสกุลจริง</label>
-                            <div class=""><input type="text" value="" name="lastname" class="form-control"></div>
+                            <div class=""><input type="text" value="" name="lastname" class="form-control" required></div>
                         </div>
                     
                     
                         <div class="form-group">
                             <label class="control-label">ชื่อเล่น</label>
-                            <div class=""><input type="text" value="" name="nickname" class="form-control"></div>
+                            <div class=""><input type="text" value="" name="nickname" class="form-control" required></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label">เพศ</label>
@@ -112,14 +112,14 @@
                     <label class="control-label">วัน เดือน ปี เกิด</label>
                     <div class="row">
                         <div class="form-group col-md-3">
-                            <select  value="" name="b-day" class="form-control">
+                            <select  value="" name="b-day" class="form-control {{$errors->hasBag('createkid')? 'is-invalid':''}}">
                                 @for ($x = 1; $x <= 31; $x++)
                                     <option value="{{$x}}"> {{$x}} </option>
                                 @endfor
                             </select>
                         </div>
                         <div class="form-group col-md-5">
-                            <select  value="" name="b-month" class="form-control">
+                            <select  value="" name="b-month" class="form-control {{$errors->hasBag('createkid')? 'is-invalid':''}}">
                                 <option value="01"> มกราคม </option>
                                 <option value="02"> กุมภาพันธ์ </option>
                                 <option value="03"> มีนาคม </option>
@@ -135,13 +135,23 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <select  value="" name="b-year" class="form-control">
+                            <select  value="" name="b-year" class="form-control {{$errors->hasBag('createkid')? 'is-invalid':''}}">
                                 @for ($x = 2020; $x >= 2000; $x--)
                                     <option value="{{$x}}"> {{$x}} </option>
                                 @endfor
                             </select>
                         </div>
                     </div>
+                    
+                    @if ($errors->hasBag('createkid'))
+                        <div class="text-danger" role="alert">
+                            <strong>"วันเดือนปีเกิดไม่ถูกต้อง : มากกว่าปัจจุบัน"</strong>
+                        </div>
+                        <script type="text/javascript">
+                            $("#newKidForm").modal('show');
+                        </script>
+                    @endif
+                    
   <!--                   <div class="form-group">
                         <label class="control-label">การใช้พลังงาน</label>
                         <select  value="" name="energy" class="form-control">

@@ -158,13 +158,22 @@ class KidController extends Controller
         $user = auth()->user();
         $school = School::where('id', $user->school_id)->first();
         $birthday = $request['b-year'].'-'.$request['b-month'].'-'.$request['b-day'];
+        $request->merge(['birthday' => date("Y-m-d", strtotime($birthday))]);
+
+        $validator = Validator::make($request->all(), [
+            'birthday' => 'before_or_equal:'.date('Y-m-d'),
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator, 'createkid');
+        }
+
         $kid = Kid::create([
             'classroom_id' => $request['classroom_id'],
             'firstname' => $request['firstname'],
             'lastname' => $request['lastname'],
             'nickname' => $request['nickname'],
             'sex' => $request['sex'],
-            'birthday' => date("Y-m-d", strtotime($birthday)),
+            'birthday' => $request['birthday'],
         ]);
 
         $school->kids()->save($kid);
@@ -176,12 +185,21 @@ class KidController extends Controller
     {
     
         $kid = Kid::where('id', $id)->first();
+        $birthday = $request['b-year'].'-'.$request['b-month'].'-'.$request['b-day'];
+        $request->merge(['birthday' => date("Y-m-d", strtotime($birthday))]);
+
+        $validator = Validator::make($request->all(), [
+            'birthday' => 'before_or_equal:'.date('Y-m-d'),
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator, 'editkid');
+        }
+
         $kid->firstname = $request->input("firstname");
         $kid->lastname = $request->input("lastname");
         $kid->nickname = $request->input("nickname");
         $kid->sex = $request->input("sex");
-        $birthday = $request['b-year'].'-'.$request['b-month'].'-'.$request['b-day'];
-        $kid->birthday = date("Y-m-d", strtotime($birthday));
+        $kid->birthday = $request['birthday'];
         $kid->active_level = $request->input("active_level");
         
         $kid->save();
@@ -189,9 +207,29 @@ class KidController extends Controller
         return redirect('kid/'.$id);
 
     }
+
+    public function moveClass(Request $request, $id = null)
+    {
+        $kid = Kid::where('id', $id)->first();
+        $kid->classroom_id = $request->input("classroom_id");
+        $kid->save();
+
+        return redirect('kid/'.$id);
+
+    }
+    public function withdraw(Request $request, $id = null)
+    {
+        $kid = Kid::where('id', $id)->first();
+        $classroom_id = $kid->classroom_id;
+        $kid->status = "withdraw";
+        $kid->save();
+
+        return redirect('classroom/'.$classroom_id);
+
+    }
     public function editNotes(Request $request, $id = null)
     {
-    
+        
         $kid = Kid::where('id', $id)->first();
         $kid->notes = $request->input("notes");
         $kid->save();
@@ -202,17 +240,21 @@ class KidController extends Controller
     public function createRestriction(Request $request, $id = null)
     {
         
-        if ($request['detail'] == "no")
-        {
-            return redirect('kid/'.$id);
-        }
+        $validator = Validator::make($request->all(), [
+            'detail' => Rule::unique('food_restrictions')->where(function($query) use ($id) {
+                    $query->where('kid_id', $id);
+                }),
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator, 'createRestriction');
+        } 
+
         $kid = Kid::where('id', $id)->first();
         $type = "alergy";
         if ($request['type'] == 'muslim' or $request['type'] == 'vege' or $request['type'] == 'vegan')
         {
             $type = "special";
         }
-        $type = $request['detail'];
         $rest = FoodRestriction::create([
             'type' => $type,
             'detail' => $request['detail'],
@@ -268,6 +310,15 @@ class KidController extends Controller
         $entry->save();
 
         return redirect('kid/'.$kid_id);
+    }
+    public function deleteGrowth(Request $request, $id = null)
+    {
+    
+        $growth = GrowthEntry::where('id', $id)->first();
+        $growth->delete();
+        
+        return redirect()->back();
+
     }
 }
 

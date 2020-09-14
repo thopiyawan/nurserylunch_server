@@ -27,8 +27,8 @@
                         {{($classroom->active?'ปิดห้องเรียนชั่วคราว':'เปิดห้องเรียน')}}
                     </span>
                 </a>
-                 @if ($classroom->getKidCount()>0)
-                 <a class="btn btn-default" data-toggle="modal" data-target="#classNotEmptyError"> 
+                @if ($classroom->getKidCount()>0)
+                <a class="btn btn-default" data-toggle="modal" data-target="#classNotEmptyError"> 
                 @else
                 <a class="btn btn-default" data-toggle="modal" data-target="#deleteClassConfirmation"> 
                 @endif
@@ -215,9 +215,14 @@
                             <div class="text-danger">{{$rest['type']}}</div>
                             <div class="">{{$rest['detail']}}</div>
                         @endforeach
+
                         </td>
                         <td>{{$k->getMilk('ml')}} </td>
-                        <td>-</td>
+                        <td>
+                            <a class="" data-toggle="modal" data-target="#moveKidForm{{$k->id}}">
+                                <span><i class=""></i> ย้ายห้อง </span>
+                            </a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -256,6 +261,18 @@
         </div>
     </div>
 </div>
+
+@foreach ($classroom->getKids() as $kid)
+<div class="modal fade" id="moveKidForm{{$kid->id}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                @include('kids._moveKidForm')
+            </div>
+        </div>
+    </div>
+</div> 
+@endforeach
 
 <div class="modal fade" id="classNotEmptyError" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">

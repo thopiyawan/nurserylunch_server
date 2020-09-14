@@ -30,7 +30,7 @@ class Classroom extends Model
 
     public function init()
     {
-    	$this->kids = Kid::where('classroom_id', $this->id)->get();
+    	$this->kids = Kid::where('classroom_id', $this->id)->where('status', 'active')->get();
     	$this->kids_count = $this->kids->count();
 
     	$smallest = $this->kids->max('birthday');
@@ -60,12 +60,14 @@ class Classroom extends Model
     }
     public function getKids()
     {
-    	$this->kids = Kid::where('classroom_id', $this->id)->get();	
+    	$this->kids = Kid::where('classroom_id', $this->id)->where('status', 'active')->get();
     	return $this->kids;
     }
 
     public function getKidCount()
     {
+        $this->kids = Kid::where('classroom_id', $this->id)->where('status', 'active')->get();
+        $this->kids_count = $this->kids->count();
     	return $this->kids_count;
     }
     public function getMinAge()
