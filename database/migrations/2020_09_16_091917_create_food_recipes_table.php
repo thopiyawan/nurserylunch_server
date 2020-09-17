@@ -26,7 +26,7 @@ class CreateFoodRecipesTable extends Migration
             $table->foreign('pur_unit_id')->references('id')->on('pur_units');
             $table->timestamps();
         });
-        Schema::dropIfExists('recipies');
+        Schema::dropIfExists('recipes');
         Schema::dropIfExists('food_recipe');
     }
 
