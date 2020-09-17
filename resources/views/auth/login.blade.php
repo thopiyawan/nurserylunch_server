@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="col-md-6 login-panel right">
-        <h3 class="font-normal text-highlight">เข้าสู่ระบบ</h3>
+        <h3 class="font-normal text-highlight">เข้าสู่ระบบ Branch Kelly</h3>
         <form method="POST" action="{{ route('login') }}">
             @csrf
 <!--             <div class="form-group">
