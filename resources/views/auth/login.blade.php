@@ -59,7 +59,7 @@
         </form>
         <div class="hr-line-dashed"></div>
         <div>
-            <p class="text-center">ยังไม่มีบัญชีผู้ใช้งาน?</p>
+            <p class="text-center">ยังไม่มีบัญชีผู้ใช้งาน? testtttt</p>
             <a class="btn btn-default btn-block" href="https://school.kiddiary.in.th/registers" target="_blank">สร้างบัญชีใหม่</a>
         </div>
     </div>
