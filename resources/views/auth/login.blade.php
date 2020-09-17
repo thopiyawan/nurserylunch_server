@@ -53,7 +53,7 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">
-                    {{ __('เข้าสู่ระบบ') }}
+                    {{ __('เข้าสู่ระบบ branch dev') }}
                 </button>
             </div>
         </form>
