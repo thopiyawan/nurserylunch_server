@@ -13,7 +13,9 @@
         </div>
     </div>
     <div class="col-md-6 login-panel right">
+
         <h3 class="font-normal text-highlight">เข้าสู่ระบบ Branch Kelly</h3>
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
 <!--             <div class="form-group">
@@ -51,7 +53,7 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">
-                    {{ __('เข้าสู่ระบบ') }}
+                    {{ __('เข้าสู่ระบบ branch dev') }}
                 </button>
             </div>
         </form>
