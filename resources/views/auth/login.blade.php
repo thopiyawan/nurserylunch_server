@@ -14,7 +14,7 @@
     </div>
     <div class="col-md-6 login-panel right">
 
-        <h3 class="font-normal text-highlight">เข้าสู่ระบบ Branch Kelly</h3>
+        <h3 class="font-normal text-highlight">เข้าสู่ระบบ</h3>
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
@@ -53,13 +53,13 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">
-                    {{ __('เข้าสู่ระบบ branch dev') }}
+                    {{ __('เข้าสู่ระบบ') }}
                 </button>
             </div>
         </form>
         <div class="hr-line-dashed"></div>
         <div>
-            <p class="text-center">ยังไม่มีบัญชีผู้ใช้งาน? testtttt</p>
+            <p class="text-center">ยังไม่มีบัญชีผู้ใช้งาน?</p>
             <a class="btn btn-default btn-block" href="https://school.kiddiary.in.th/registers" target="_blank">สร้างบัญชีใหม่</a>
         </div>
     </div>
