@@ -11,13 +11,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(SchoolSeeder::class);
-        //$this->call(IngredientSeeder::class);
-        //$this->call(FoodSeeder::class);
-        //$this->call(FoodProperties::class);
-        //$this->call(FoodComposition::class);
-        //$this->call(FoodNutritions::class);
-        //$this->call(PurAndCookUnit::class);
-        //$this->call(RecipeSeeder::class);
+        //  $this->call(SchoolSeeder::class);
+        $this->call(IngredientSeeder::class);
+        $this->call(FoodSeeder::class);
+        $this->call(FoodProperties::class);
+        $this->call(FoodComposition::class);
+        $this->call(FoodNutritions::class);
+        $this->call(PurAndCookUnit::class);
+        $this->call(RecipeSeeder::class);
     }
 }

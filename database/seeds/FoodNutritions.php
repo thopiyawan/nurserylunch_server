@@ -16,7 +16,7 @@ class FoodNutritions extends Seeder
         foreach ($csv as $key => $item) {
             $nutrition = new Nutrition();
             $nutrition->food_id = $item[0];
-            $nutrition->enerygy = $item[1];
+            $nutrition->energy = $item[1];
             $nutrition->protien = $item[2];
             $nutrition->carbohydrate = $item[3];
             $nutrition->fat = $item[4];
