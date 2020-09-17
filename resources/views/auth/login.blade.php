@@ -14,7 +14,7 @@
     </div>
     <div class="col-md-6 login-panel right">
 
-        <h3 class="font-normal text-highlight">เข้าสู่ระบบ</h3>
+        <h3 class="font-normal text-highlight">เข้าสู่ระบบ TEST</h3>
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
