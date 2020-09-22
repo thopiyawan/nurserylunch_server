@@ -55,16 +55,16 @@ class Kid extends Model
     			'muslim' => 'มุสลิม',
     			'vege' => 'มังสวิรัติ',
     			'vegan' => 'เจ',
-    			'milk' => 'นม',
-    			'breastmilk' => 'นมแม่',
-    			'egg' => 'ไข่ไก่',
-    			'wheat' => 'แป้งสาลี',
-    			'shrimp' => 'กุ้ง',
-    			'shell' => 'หอย',
-    			'crab' => 'ปู',
-    			'fish' => 'ปลา',
-    			'peanut' => 'ถั่วลิสง',
-    			'soybean' => 'ถั่วเหลือง',
+    			'milk' => 'แพ้นม',
+    			'breastmilk' => 'แพ้นมแม่',
+    			'egg' => 'แพ้ไข่ไก่',
+    			'wheat' => 'แพ้แป้งสาลี',
+    			'shrimp' => 'แพ้กุ้ง',
+    			'shell' => 'แพ้หอย',
+    			'crab' => 'แพ้ปู',
+    			'fish' => 'แพ้ปลา',
+    			'peanut' => 'แพ้ถั่วลิสง',
+    			'soybean' => 'แพ้ถั่วเหลือง',
     		);
     		$thaiRest = array('id'=> $rest->id,'type' => $type, 'detail'=> $detail_array[$rest->detail] );
     		$temp[$rest->id] = $thaiRest;
@@ -116,7 +116,7 @@ class Kid extends Model
     {
     	if($type == "ml")
     	{
-    		return number_format($this->milk_oz*29.574, 2);
+    		return number_format($this->milk_oz*29.574, 0);
 
     	}
     	elseif($type == "box")
@@ -125,6 +125,21 @@ class Kid extends Model
 
     	}
     	return $this->milk_oz;
+    }
+    public function getMilkUpdate()
+    {
+        //$milk_update = \Carbon\Carbon::parse($this->milk_update)->diff(\Carbon\Carbon::now())->format('%y ปี %m เดือน %d วัน');
+        \Carbon\Carbon::setLocale('th');
+        if ($this->milk_update == null)
+        {
+            return "ไม่มีข้อมูลการอัพเดท";
+        }
+        else
+        {
+            $milk_update = \Carbon\Carbon::parse($this->milk_update)->diffForHumans();
+            return "อัพเดทล่าสุดเมื่อ ".$milk_update;
+        }
+
     }
     public function getSex()
     {

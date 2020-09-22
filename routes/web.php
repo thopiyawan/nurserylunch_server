@@ -37,6 +37,7 @@ Route::post('/kid/create', 'KidController@createKid')->name('kid.create');
 Route::get('/kid/{id}', 'KidController@showKid')->name('kid.show');
 Route::post('/kid/edit/{id}', 'KidController@editKid')->name('kid.edit');
 Route::post('/kid/editmilk/{id}', 'KidController@editMilk')->name('kid.editmilk');
+Route::get('/kid/deletemilk/{id}', 'KidController@deleteMilk')->name('kid.deletemilk');
 Route::post('/kid/editnotes/{id}', 'KidController@editNotes')->name('kid.editnotes');
 Route::post('/kid/moveclass/{id}', 'KidController@moveClass')->name('kid.moveclass');
 Route::post('/kid/withdraw/{id}', 'KidController@withdraw')->name('kid.withdraw');

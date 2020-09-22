@@ -277,6 +277,19 @@ class KidController extends Controller
     
         $kid = Kid::where('id', $id)->first();
         $kid->milk_oz = $request->input("oz");
+        $kid->milk_update = \Carbon\Carbon::now();
+        $kid->save();
+        
+        return redirect('kid/'.$id);
+
+    }
+
+     public function deleteMilk(Request $request, $id = null)
+    {
+    
+        $kid = Kid::where('id', $id)->first();
+        $kid->milk_oz = null;
+        $kid->milk_update = null;
         $kid->save();
         
         return redirect('kid/'.$id);

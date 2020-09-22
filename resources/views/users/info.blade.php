@@ -19,7 +19,7 @@
     </div>
     <div class="row form-group">
         <label class="col-sm-2 control-label">E-mail</label>
-        <div class="col-sm-6"><input type="text" value="{{ $user->email }}" name="email" class="form-control"></div>
+        <div class="col-sm-6"><input type="email" value="{{ $user->email }}" name="email" class="form-control"></div>
     </div>
     <div class="form-group">
         <div class="col-sm-8 col-sm-offset-2">
