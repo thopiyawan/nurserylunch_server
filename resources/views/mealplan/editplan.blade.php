@@ -1,206 +1,109 @@
 @extends('layouts.app')
 @section('content')
-
-<aside id="aside-menu" class="center">
-
-    <!-- SER|ARCH SECTION  -->
-    <div class="m-b">
-        <h4 class="">ค้นหาเมนู</h4>       
-        <!-- <div class="input-group m-b">
-            <span class="input-group-addon">
-                <i class="fas fa-search"></i>
-            </span> 
-            <input type="text" placeholder="ค้นหาเมนู" class="form-control font-light">
-        </div>  -->
-        <input type="text"  title="ค้นหาเมนู" placeholder="ค้นหาเมนู"  name="searchMenu" id="searchMenu" class="form-control">
-    </div>
-
-    <!-- FILTER SECTION  -->
-    <div class="m-b">
-        <h4 class="">ตัวกรอง</h4>
-        @foreach($in_groups as $ig)
-            <select id="" class="{{$ig->ingredient_group_eng_name}}-select in-group-select" multiple="multiple" data-style="btn-select-picker">
-                @foreach($ig->ingredients()->get() as $in)
-                    {{ $in->ingredient_name }}
-                    <option value="{{ $in->ingredient_name }}" data-icon="">{{ $in->ingredient_name }}</option>
-                @endforeach
-            </select>
+    @php
+    $day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+    $day_in_week_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสดี", "ศุกร์"];
+    @endphp
+    <aside id="aside-menu" class="center">
+        <!-- SER|ARCH SECTION  -->
+        <div class="m-b">
+            <h4 class="">ค้นหาเมนู</h4>
+            <input type="text" title="ค้นหาเมนู" placeholder="ค้นหาเมนู" name="searchMenu" id="searchMenu"
+                class="form-control">
+        </div>
+        <!-- FILTER SECTION  -->
+        <div class="m-b">
+            <h4 class="">ตัวกรอง</h4>
+            @foreach ($in_groups as $ig)
+                <select id="" class="{{ $ig->ingredient_group_eng_name }}-select in-group-select" multiple="multiple"
+                    data-style="btn-select-picker">
+                    @foreach ($ig->ingredients()->get() as $in)
+                        {{ $in->ingredient_name }}
+                        <option value="{{ $in->ingredient_name }}" data-icon="">{{ $in->ingredient_name }}</option>
+                    @endforeach
+                </select>
+            @endforeach
+        </div>
+        <div class="m-b">
+            <h4 class="">ผลลัพธ์</h4>
+            @foreach ($foodList as $food)
+                <div class="ui-sortable">
+                    <div class="menu-body">
+                        <span id={{ $food->id }}>{{ $food->food_thai }}</span>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </aside>
+    <div id="wrapper">
+        <h1 class="page-title">แก้ไขเมนูอาหาร</h1>
+        @foreach ($day_in_week as $key => $day)
+            {{ Debugbar::info() }}
+            @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key]])
         @endforeach
-    </div>
-    
-    <div class="m-b">
-        <h4 class="">ผลลัพธ์</h4>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>ข้าวต้มหมูสับทรงเครื่อง</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>บวบผัดหมูสับ</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>แครอทหอมใหญ่ผัดหมู</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>แกงจืดไก่กะหล่ําปลี</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>เต้าหู้เทริยากิ</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>แกงจืดบ็อคโคลี่หมูสับ</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>ผัดผักสามสี</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>แกงจืดซาโยเต้หมูสับ</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>ข้าวต้มหมูสับทรงเครื่อง</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>ข้าวต้มหมูสับทรงเครื่อง</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>ข้าวต้มหมูสับทรงเครื่อง</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>ข้าวต้มหมูสับทรงเครื่อง</span>
-            </div>
-        </div>
-        <div class="ui-sortable">
-            <div class="menu-body">
-                <span>ข้าวต้มหมูสับทรงเครื่อง</span>
+        <div class="form-group">
+            <div class="col-lg-8 col-sm-offset-4">
+                <button class="btn btn-default" type="">ยกเลิก</button>
+                <button class="btn btn-primary" type="submit" name="update" value="school"
+                    onclick="handleClick()">บันทึกข้อมูล</button>
             </div>
         </div>
     </div>
-</aside>
-<div id="wrapper">
-    <h1 class="page-title">แก้ไขเมนูอาหาร</h1>
-    <div class="meal-panel row monday">
-        <div class="col col-day">
-            <div class="mlabel">จันทร์</div>
-            <div class="mdate">23</div>
-        </div>
-        <div class="col col-meal">
-            <div class="mlabel">ว่างเช้า</div>
-            <div id="ui-sortable" class="ui-sortable">
-                <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
-                    <span class=""><i class="fa fa-hand-pointer-o"></i> วางที่นี่</span>
-                </div>
-            </div>
-        </div>
-        <div class="col col-meal">
-            <div class="mlabel">กลางวัน</div>
-            <div id="ui-sortable" class="ui-sortable">
-                <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
-                    <span class=""><i class="fa fa-hand-pointer-o"></i> วางที่นี่</span>
-                </div>
-            </div>
-        </div>
-        <div class="col col-meal">
-            <div class="mlabel">ว่างบ่าย</div>
-            <div id="ui-sortable" class="ui-sortable">
-                <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
-                    <span class=""><i class="fa fa-hand-pointer-o"></i> วางที่นี่</span>
-                </div>
-            </div>
-        </div>
-        <div class="col col-nutrition">
-            <div class="mlabel">สารอาหาร</div>
-            <div class="energy-contanier">
-                <div class="nut-labels">
-                    <span class="">พลังงาน</span>
-                    <span class="">0 / 400-550 กิโลแคล</span>
-                </div>
-                <div class="nut-tabs">
-                    <div class="nut-tab danger selected">น้อยเกินไป</div>
-                    <div class="nut-tab warning selected">น้อย</div>
-                    <div class="nut-tab ok selected">พอดี</div>
-                    <div class="nut-tab warning selected">มาก</div>
-                    <div class="nut-tab danger selected">มากเกินไป</div>
-                </div>
-                <div class="nut-labels">
-                    <span class="">พลังงาน</span>
-                    <span class="">0 / 400-550 กิโลแคล</span>
-                </div>
-                <div class="nut-tabs">
-                    <div class="nut-tab danger">น้อยเกินไป</div>
-                    <div class="nut-tab warning">น้อย</div>
-                    <div class="nut-tab ok">พอดี</div>
-                    <div class="nut-tab warning">มาก</div>
-                    <div class="nut-tab danger">มากเกินไป</div>
-                </div>
-                <div class="nut-labels">
-                    <span class="">พลังงาน</span>
-                    <span class="">0 / 400-550 กิโลแคล</span>
-                </div>
-                <div class="nut-tabs">
-                    <div class="nut-tab danger">น้อยเกินไป</div>
-                    <div class="nut-tab warning">น้อย</div>
-                    <div class="nut-tab ok">พอดี</div>
-                    <div class="nut-tab warning">มาก</div>
-                    <div class="nut-tab danger">มากเกินไป</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="meal-panel row tuesday">
-        <div class="col col-day">
-            <div class="mlabel">อังคาร</div>
-            <div class="mdate">24</div>
-        </div>
-    </div>
-    <div class="meal-panel row wednesday">
-        <div class="col col-day">
-            <div class="mlabel">พุธ</div>
-            <div class="mdate">25</div>
-        </div>
-    </div>
-    <div class="meal-panel row thursday">
-        <div class="col col-day">
-            <div class="mlabel">พฤหัส</div>
-            <div class="mdate">26</div>
-        </div>
-    </div>
-    <div class="meal-panel row friday">
-        <div class="col col-day">
-            <div class="mlabel">ศุกร์</div>
-            <div class="mdate">27</div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-lg-8 col-sm-offset-4">
-            <button class="btn btn-default" type="">ยกเลิก</button>
-            <button class="btn btn-primary" type="submit" name="update" value="school">บันทึกข้อมูล</button>
-        </div>
-    </div>
-
-</div>
 @endsection
+@section('script')
+    <script type="application/javascript">
+        // your code
+        let mondayDate = new Date(localStorage.getItem('mondayDate'));
+        let tuesdayDate = new Date(localStorage.getItem('tuesdayDate'));
+        let wednesdayDate = new Date(localStorage.getItem('wednesdayDate'));
+        let thursdayDate = new Date(localStorage.getItem('thursdayDate'));
+        let fridayDate = new Date(localStorage.getItem('fridayDate'));
+        $('#monday').text(mondayDate.getDate())
+        $('#tuesday').text(tuesdayDate.getDate())
+        $('#wednesday').text(wednesdayDate.getDate())
+        $('#thursday').text(thursdayDate.getDate())
+        $('#friday').text(fridayDate.getDate())
+        $('.meal-panel.row.monday').attr("data-date", mondayDate)
+        $('.meal-panel.row.tuesday').attr("data-date", tuesdayDate)
+        $('.meal-panel.row.wednesday').attr("data-date", wednesdayDate)
+        $('.meal-panel.row.thursday').attr("data-date", thursdayDate)
+        $('.meal-panel.row.friday').attr("data-date", fridayDate)
 
+        function handleClick() {
+            let morningList = []
+            $(document).ready(function() {
+                let date = new Date($('.meal-panel.row.monday').data('date'))
+                console.log(date)
+                let morning = $("#morning-meal .ui-sortable-handle>span")
+                $.each(morning, function(key, value) {
+                    if (value.id !== "") {
+                        morningList.push(value.id)
+                    }
+                })
+                console.log('morningList = ', morningList)
+                getMessage(morningList, date.toDateString())
+            })
+        }
 
+        function getMessage(morningList, date) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/mealplan/foodlogs',
+                data: {
+                    morning: morningList,
+                    date: date
+                },
+                success: function(data) {
+                    //location.reload();
+                    alert(data.success)
+                }
+            });
+        }
 
+    </script>
+@endsection

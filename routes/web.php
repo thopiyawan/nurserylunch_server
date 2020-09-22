@@ -50,3 +50,4 @@ Route::post('/kid/editgrowth/{id}', 'KidController@editGrowth')->name('kid.editg
 Route::get('/kid/deletegrowth/{id}', 'KidController@deleteGrowth')->name('kid.deletegrowth');
 
 
+Route::post('/mealplan/foodlogs', 'MealplanController@addFood');
