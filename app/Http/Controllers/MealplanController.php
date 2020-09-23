@@ -22,10 +22,12 @@ class MealplanController extends Controller				// Define the class name
 	}
 	public function editPlan()							// Define the method name
     {
+				$userId = auth()->user()->id;
 				$in_groups = IngredientGroup::all();        
 				$schoolId = auth()->user()->school_id;
 				$foods = Food::all();
-        return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods]);	// Return response to client
+				$foodLogs = getLastLogs($userId);
+        return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs]);	// Return response to client
 		}
 		public function addFood(Request $request)
 	{
@@ -33,7 +35,10 @@ class MealplanController extends Controller				// Define the class name
 		$input = $request->all();	
 		$date = new DateTime($input['date']);
 		$meal_date = $date->format('Y-m-d');
+		$deletedRows = FoodLogs::where('meal_date', $meal_date)->delete();
+		Debugbar::info($deletedRows);
 		$userId = auth()->user()->id;
+
 		foreach ($input['morning'] as $key => $value) {
 			FoodLogs::create(
 				[
