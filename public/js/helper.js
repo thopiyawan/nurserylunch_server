@@ -168,15 +168,9 @@ $(function () {
             input_box.val((ml_val / 180).toFixed(1));
         } else if (changeId == "milk-input-oz") {
             var oz_val = input_oz.val();
-<<<<<<< HEAD
-            input_ml.val((oz_val*29.574).toFixed(0));
-            input_box.val((oz_val*29.574/180).toFixed(1));
-        }else{
-=======
             input_ml.val((oz_val * 29.574).toFixed(2));
             input_box.val((oz_val * 29.574 / 180).toFixed(1));
         } else {
->>>>>>> meal-select
             var box_val = input_box.val();
             input_ml.val((box_val * 180));
             input_oz.val((box_val * 180 / 29.574).toFixed(2));
