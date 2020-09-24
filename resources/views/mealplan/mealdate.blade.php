@@ -3,18 +3,18 @@
         <div class="mlabel">{{ $day_th }}</div>
         <div class="mdate"><span id={{ $day }}></span></div>
     </div>
-
+    {{--
     <div class="col col-meal" id="breakfast-meal-{{ $day }}" date-date="123">
-        <div class="mlabel">ว่างเช้า</div>
+        <div class="mlabel">เช้า</div>
         <div id="" class="ui-sortable ui-sortable-meal">
             <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
                 <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="col col-meal" id="breakfast-snack-meal-{{ $day }}" date-date="123">
-        <div class="mlabel">เช้า</div>
+        <div class="mlabel">ว่างเช้า</div>
         <div id="" class="ui-sortable ui-sortable-meal">
             @foreach ($food_logs as $food)
                 <div class="menu-body ui-sortable-handle ui-sortable-meal">
@@ -26,7 +26,7 @@
             </div>
         </div>
     </div>
-    <div class="col col-meal">
+    <div class="col col-meal" id="lunch-meal-{{ $day }}">
         <div class="mlabel">กลางวัน</div>
         <div id="" class="ui-sortable ui-sortable-meal">
             <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>
-    <div class="col col-meal">
+    <div class="col col-meal" id="lunch-snack-meal-{{ $day }}">
         <div class="mlabel">ว่างบ่าย</div>
         <div id="" class="ui-sortable ui-sortable-meal">
             <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">

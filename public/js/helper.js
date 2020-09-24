@@ -135,8 +135,8 @@ $(function () {
     });
 
     function onSortableRemove(event, ui) {
-        console.log(event);
-        console.log(ui);
+        // console.log(event);
+        // console.log(ui);
 
         var target = event.target;
         if (target.classList.contains("food-list")) {

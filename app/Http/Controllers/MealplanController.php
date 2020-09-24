@@ -31,28 +31,85 @@ class MealplanController extends Controller				// Define the class name
 		}
 		public function addFood(Request $request)
 	{
-		$schoolId = auth()->user()->school_id;
 		date_default_timezone_set("Asia/Bangkok");
-		$input = $request->all();	
-		$date = new DateTime($input['date']);
-		$meal_date = $date->format('Y-m-d');
-		$deletedRows = FoodLogs::where('meal_date', $meal_date)->delete();
-		Debugbar::info($deletedRows);
 		$userId = auth()->user()->id;
+		$schoolId = auth()->user()->school_id;
+		$input = $request->all();	
+		$mealPlanData = $input['mealPlanData'];
 
-		foreach ($input['morning'] as $key => $value) {
-			FoodLogs::create(
-				[
-					'meal_code' => 1,
-					'item_position' => $key,
-					'food_id' => $value,
-					'user_id' => $userId,
-					'meal_date' => $meal_date,
-					"food_type" => 1,
-					"school_id" => $schoolId
-				]
-			);
-		};
+		foreach($mealPlanData as $key => $value){
+			//for each property in mealplan data
+			Debugbar::info($value);
+			if(isset($value['mealDate'])){
+				$date = new DateTime($value['mealDate']);
+				$mealDate = $date->format('Y-m-d');
+				$deletedRows = FoodLogs::where('meal_date', $mealDate)->delete();
+				foreach ($value['breakfastSnack'] as $pos_breakfast => $breakfast_food) {
+					Debugbar::info($breakfast_food);
+					FoodLogs::create(
+								[
+									'meal_code' => 2,
+									'item_position' => $key,
+									'food_id' => $breakfast_food,
+									'user_id' => $userId,
+									'meal_date' => $mealDate,
+									"food_type" => 1,
+									"school_id" => $schoolId
+								]
+							);
+				
+				}
+
+				foreach ($value['lunch'] as $pos_lunch => $lunch_food) {
+					Debugbar::info($lunch_food);
+					FoodLogs::create(
+						[
+							'meal_code' => 3,
+							'item_position' => $key,
+							'food_id' => $lunch_food,
+							'user_id' => $userId,
+							'meal_date' => $mealDate,
+							"food_type" => 1,
+							"school_id" => $schoolId
+						]
+					);
+				}
+	
+
+
+
+
+
+
+
+			}else{
+					return response()->json(['success' => 'error insert food']);
+			}
+			// Debugbar::info(isset($value['mealDate']));			
+			// Debugbar::info(isset($value['breakfast']));			
+			// Debugbar::info(isset($value['breakfastSnack']));			
+			// Debugbar::info(isset($value['lunch']));			
+			// Debugbar::info(isset($value['lunchSnack']));			
+		}
+		// $date = new DateTime($input['date']);
+		// $meal_date = $date->format('Y-m-d');
+		// $deletedRows = FoodLogs::where('meal_date', $meal_date)->delete();
+
+	
+		
+		// foreach ($input['morning'] as $key => $value) {
+		// 	FoodLogs::create(
+		// 		[
+		// 			'meal_code' => 1,
+		// 			'item_position' => $key,
+		// 			'food_id' => $value,
+		// 			'user_id' => $userId,
+		// 			'meal_date' => $meal_date,
+		// 			"food_type" => 1,
+		// 			"school_id" => $schoolId
+		// 		]
+		// 	);
+		// };
 		return response()->json(['success' => 'Insert into food log done']);
 	}
 }

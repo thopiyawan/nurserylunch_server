@@ -1,8 +1,10 @@
 @extends('layouts.app')
 @section('content')
     @php
-    $day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-    $day_in_week_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสดี", "ศุกร์"];
+    //$day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+    //$day_in_week_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสดี", "ศุกร์"];
+    $day_in_week = ["monday", "tuesday"];
+    $day_in_week_th = ["จันทร์", "อังคาร"];
     @endphp
     <aside id="aside-menu" class="center">
         <!-- SER|ARCH SECTION  -->
@@ -91,10 +93,11 @@
         $('#endDate').text(fridayDate.toLocaleDateString());
 
         function handleClick() {
-            let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+            //let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+            let day_in_week = ["monday", "tuesday"];
             let morningList = []
             $(document).ready(function() {
-                let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+                let day_in_week = ["monday", "tuesday"];
                 let mondayData = new Date($('.meal-panel.row.monday').data('date'))
                 let tuesdayData = new Date($('.meal-panel.row.tuesday').data('date'))
                 let wednesdayData = new Date($('.meal-panel.row.wednesday').data('date'))
@@ -102,72 +105,46 @@
                 let fridayData = new Date($('.meal-panel.row.friday').data('date'))
                 let mealPlanData = []
                 day_in_week.forEach((day) => {
-                    let mealDate = new Date($(`.meal-panel.row.${day}`).data('date'))
+                    let mealLogs = {
+                        mealDate: "",
+                        breakfast: [],
+                        breakfastSnack: [],
+                        lunch: [],
+                        lunchSnack: [],
+                    }
+                    let mealDate = new Date($(`.meal-panel.row.${day}`).data('date')).toLocaleDateString()
                     let breakfast = $(`#breakfast-meal-${day} .ui-sortable-handle>span`)
-                    let breakfast_snack = $(`#breakfast-snack-meal-${day}.ui-sortable-handle>span`)
+                    let breakfastSnack = $(`#breakfast-snack-meal-${day} .ui-sortable-handle>span`)
                     let lunch = $(`#lunch-meal-${day} .ui-sortable-handle>span`)
-                    let lunch_snack = $(`#lunch-snack-meal-${day} .ui-sortable-handle>span`)
+                    let lunchSnack = $(`#lunch-snack-meal-${day} .ui-sortable-handle>span`)
+                    mealLogs['mealDate'] = mealDate;
                     $.each(breakfast, function(key, value) {
                         if (value.id !== "") {
-                            mondayMeal['breakfast'].push(value.id)
+                            mealLogs['breakfast'].push(value.id)
                         }
                     })
-                    $.each(breakfast_snack, function(key, value) {
+                    $.each(breakfastSnack, function(key, value) {
                         if (value.id !== "") {
-                            mondayMeal['breakfast_snack'].push(value.id)
+                            mealLogs['breakfastSnack'].push(value.id)
                         }
                     })
                     $.each(lunch, function(key, value) {
                         if (value.id !== "") {
-                            mondayMeal['lunch'].push(value.id)
+                            mealLogs['lunch'].push(value.id)
                         }
                     })
-                    $.each(lunch_snack, function(key, value) {
+                    $.each(lunchSnack, function(key, value) {
                         if (value.id !== "") {
-                            mondayMeal['lunch_snack'].push(value.id)
+                            mealLogs['lunchSnack'].push(value.id)
                         }
                     })
-                    mealPlanData.push(mealDate, breakfast, breakfast_snack, lunch, lunch_snack)
+                    mealPlanData.push(mealLogs)
                 })
-                console.log(mealPlanData)
-                let mondayMeal = {
-                    date: mondayData,
-                    breakfast: [],
-                    breakfast_snack: [],
-                    lunch: [],
-                    lunch_snack: []
-                }
-                let breakfast = $("#breakfast-meal-monday .ui-sortable-handle>span")
-                let breakfast_snack = $("#breakfast-snack-meal-monday .ui-sortable-handle>span")
-                let lunch = $("#lunch-meal-monday .ui-sortable-handle>span")
-                let lunch_snack = $("#lunch-snack-meal-monday .ui-sortable-handle>span")
-                $.each(breakfast, function(key, value) {
-                    if (value.id !== "") {
-                        mondayMeal['breakfast'].push(value.id)
-                    }
-                })
-                $.each(breakfast_snack, function(key, value) {
-                    if (value.id !== "") {
-                        mondayMeal['breakfast_snack'].push(value.id)
-                    }
-                })
-                $.each(lunch, function(key, value) {
-                    if (value.id !== "") {
-                        mondayMeal['lunch'].push(value.id)
-                    }
-                })
-                $.each(lunch_snack, function(key, value) {
-                    if (value.id !== "") {
-                        mondayMeal['lunch_snack'].push(value.id)
-                    }
-                })
-                console.log(mondayMeal)
-                // console.log('morningList = ', morningList)
-                // getMessage(morningList, date.toDateString())
+                addFoodLogs(mealPlanData)
             })
         }
 
-        function getMessage(morningList, date) {
+        function addFoodLogs(mealPlanData) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -177,8 +154,7 @@
                 type: 'POST',
                 url: '/mealplan/foodlogs',
                 data: {
-                    morning: morningList,
-                    date: date
+                    mealPlanData: mealPlanData
                 },
                 success: function(data) {
                     //location.reload();
