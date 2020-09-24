@@ -379,13 +379,18 @@ input[type=checkbox] {
     float: left !important;
     flex-basis: unset;
     flex-grow: unset;
+    padding-left: 8px;
+    padding-right: 8px; 
 }
-.meal-panel .col-day{width: 7%;}
+.meal-panel .col-day{
+    width: 5%;
+    padding-left: 0px;
+}
 .meal-panel .col-meal{
-    width: 20%;
-    padding-right: 12px;
+    width: 23%;
+    /*padding-right: 12px;*/
 }
-.meal-panel .col-nutrition{width: 30%;}
+.meal-panel .col-nutrition{width: 25%;}
 .meal-panel .mlabel{
     color: var(--darkgray);
     font-size: 16px;
