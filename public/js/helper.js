@@ -134,12 +134,12 @@ $(function () {
         remove: onSortableRemove,
     });
 
-    function onSortableRemove(event, ui){
+    function onSortableRemove(event, ui) {
         console.log(event);
         console.log(ui);
 
         var target = event.target;
-        if(target.classList.contains("food-list")){
+        if (target.classList.contains("food-list")) {
             ui.item.clone().appendTo(target);
         }
 

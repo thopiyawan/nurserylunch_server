@@ -87,7 +87,6 @@
         $('.meal-panel.row.wednesday').attr("data-date", wednesdayDate)
         $('.meal-panel.row.thursday').attr("data-date", thursdayDate)
         $('.meal-panel.row.friday').attr("data-date", fridayDate)
-
         $('#startDate').text(mondayDate.toLocaleDateString());
         $('#endDate').text(fridayDate.toLocaleDateString());
 
