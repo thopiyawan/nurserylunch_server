@@ -6,7 +6,7 @@
 
     <div class="col col-meal" id="breakfast-meal-{{ $day }}" date-date="123">
         <div class="mlabel">ว่างเช้า</div>
-        <div id="" class="ui-sortable">
+        <div id="" class="ui-sortable ui-sortable-meal">
             <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
                 <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
             </div>
