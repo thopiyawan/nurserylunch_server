@@ -125,16 +125,27 @@ $(function () {
     // $( ".ui-sortable" ).sortable();
     // console.log("end sortable");
 
-    var element = ".ui-sortable";
-    var connect = ".ui-sortable";
-
-    $(element).sortable({
+    $(".ui-sortable").sortable({
         cancel: ".ui-state-disabled",
-        connectWith: connect,
+        connectWith: ".ui-sortable-meal",
         cursor: "move",
         cursorAt: { top: 5, left: 5 },
-        dropOnEmpty: false
+        dropOnEmpty: false,
+        remove: onSortableRemove,
     });
+
+    function onSortableRemove(event, ui){
+        console.log(event);
+        console.log(ui);
+
+        var target = event.target;
+        if(target.classList.contains("food-list")){
+            ui.item.clone().appendTo(target);
+        }
+
+        //console.log(ui);
+        //$("#ui-sortable-food-list").add(ui.item);
+    }
 
 
 

@@ -26,17 +26,36 @@
         </div>
         <div class="m-b">
             <h4 class="">ผลลัพธ์</h4>
-            @foreach ($foodList as $food)
-                <div class="ui-sortable">
-                    <div class="menu-body">
-                        <span id={{ $food->id }}>{{ $food->food_thai }}</span>
+            <div class="">
+                @foreach ($foodList as $food)
+                    <div class="ui-sortable food-list">
+                        <div class="menu-body">
+                            <span id={{ $food->id }}>{{ $food->food_thai }}</span>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
     </aside>
     <div id="wrapper">
         <h1 class="page-title">แก้ไขเมนูอาหาร</h1>
+        <div class="row">
+            <div class="col-lg-3">
+                <span><i class="far fa-calendar-alt"></i></span>
+                <span id="startDate"></span>
+                <span id="startDate"></span>
+                <span> - </span>
+                <span id="endDate"></span>
+            </div>
+            <div class="col-lg-3">
+                <span><i class="fas fa-user-friends"></i></span>
+                <span> เด็กอายุต่ำกว่า 1 ปี </span>
+            </div>
+            <div class="col-lg-3">
+                <span><i class="fas fa-utensils"></i></i></span>
+                <span> อาหารปกติ</span>
+            </div>
+        </div>
         @foreach ($day_in_week as $key => $day)
             {{ Debugbar::info() }}
             @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key]])
@@ -68,6 +87,9 @@
         $('.meal-panel.row.wednesday').attr("data-date", wednesdayDate)
         $('.meal-panel.row.thursday').attr("data-date", thursdayDate)
         $('.meal-panel.row.friday').attr("data-date", fridayDate)
+
+        $('#startDate').text(mondayDate.toLocaleDateString());
+        $('#endDate').text(fridayDate.toLocaleDateString());
 
         function handleClick() {
             let morningList = []
