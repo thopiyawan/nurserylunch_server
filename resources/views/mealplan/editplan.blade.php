@@ -70,18 +70,79 @@
         $('.meal-panel.row.friday').attr("data-date", fridayDate)
 
         function handleClick() {
+            let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
             let morningList = []
             $(document).ready(function() {
-                let date = new Date($('.meal-panel.row.monday').data('date'))
-                console.log(date)
-                let morning = $("#morning-meal .ui-sortable-handle>span")
-                $.each(morning, function(key, value) {
+                let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+                let mondayData = new Date($('.meal-panel.row.monday').data('date'))
+                let tuesdayData = new Date($('.meal-panel.row.tuesday').data('date'))
+                let wednesdayData = new Date($('.meal-panel.row.wednesday').data('date'))
+                let thursdayData = new Date($('.meal-panel.row.thursday').data('date'))
+                let fridayData = new Date($('.meal-panel.row.friday').data('date'))
+                let mealPlanData = []
+                day_in_week.forEach((day) => {
+                    let mealDate = new Date($(`.meal-panel.row.${day}`).data('date'))
+                    let breakfast = $(`#breakfast-meal-${day} .ui-sortable-handle>span`)
+                    let breakfast_snack = $(`#breakfast-snack-meal-${day}.ui-sortable-handle>span`)
+                    let lunch = $(`#lunch-meal-${day} .ui-sortable-handle>span`)
+                    let lunch_snack = $(`#lunch-snack-meal-${day} .ui-sortable-handle>span`)
+                    $.each(breakfast, function(key, value) {
+                        if (value.id !== "") {
+                            mondayMeal['breakfast'].push(value.id)
+                        }
+                    })
+                    $.each(breakfast_snack, function(key, value) {
+                        if (value.id !== "") {
+                            mondayMeal['breakfast_snack'].push(value.id)
+                        }
+                    })
+                    $.each(lunch, function(key, value) {
+                        if (value.id !== "") {
+                            mondayMeal['lunch'].push(value.id)
+                        }
+                    })
+                    $.each(lunch_snack, function(key, value) {
+                        if (value.id !== "") {
+                            mondayMeal['lunch_snack'].push(value.id)
+                        }
+                    })
+                    mealPlanData.push(mealDate, breakfast, breakfast_snack, lunch, lunch_snack)
+                })
+                console.log(mealPlanData)
+                let mondayMeal = {
+                    date: mondayData,
+                    breakfast: [],
+                    breakfast_snack: [],
+                    lunch: [],
+                    lunch_snack: []
+                }
+                let breakfast = $("#breakfast-meal-monday .ui-sortable-handle>span")
+                let breakfast_snack = $("#breakfast-snack-meal-monday .ui-sortable-handle>span")
+                let lunch = $("#lunch-meal-monday .ui-sortable-handle>span")
+                let lunch_snack = $("#lunch-snack-meal-monday .ui-sortable-handle>span")
+                $.each(breakfast, function(key, value) {
                     if (value.id !== "") {
-                        morningList.push(value.id)
+                        mondayMeal['breakfast'].push(value.id)
                     }
                 })
-                console.log('morningList = ', morningList)
-                getMessage(morningList, date.toDateString())
+                $.each(breakfast_snack, function(key, value) {
+                    if (value.id !== "") {
+                        mondayMeal['breakfast_snack'].push(value.id)
+                    }
+                })
+                $.each(lunch, function(key, value) {
+                    if (value.id !== "") {
+                        mondayMeal['lunch'].push(value.id)
+                    }
+                })
+                $.each(lunch_snack, function(key, value) {
+                    if (value.id !== "") {
+                        mondayMeal['lunch_snack'].push(value.id)
+                    }
+                })
+                console.log(mondayMeal)
+                // console.log('morningList = ', morningList)
+                // getMessage(morningList, date.toDateString())
             })
         }
 

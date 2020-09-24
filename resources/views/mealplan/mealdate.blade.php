@@ -3,43 +3,66 @@
         <div class="mlabel">{{ $day_th }}</div>
         <div class="mdate"><span id={{ $day }}></span></div>
     </div>
-    {{-- <div class="col col-meal" id="morning-meal" date-date="123">
+
+    <div class="col col-meal" id="breakfast-meal-{{ $day }}" date-date="123">
         <div class="mlabel">ว่างเช้า</div>
         <div id="ui-sortable" class="ui-sortable">
-            <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
-                <span class=""><i class="fa fa-hand-pointer-o"></i> วางที่นี่</span>
-            </div>
-        </div>
-    </div> --}}
-    <div class="col col-meal" id="morning-meal" date-date="123">
-        <div class="mlabel">เช้า</div>
-        <div id="ui-sortable" class="ui-sortable">
-            @foreach ($food_logs as $food)
+            {{-- @foreach ($food_logs as $food)
                 <div class="menu-body ui-sortable-handle">
                     <span id={{ $food->id }}>{{ $food->food_thai }}</span>
                 </div>
-            @endforeach
+            @endforeach --}}
             <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
                 <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
             </div>
         </div>
     </div>
-    <div class="col col-meal">
-        <div class="mlabel">กลางวัน</div>
+
+    <div class="col col-meal" id="breakfast-snack-meal-{{ $day }}" date-date="123">
+        <div class="mlabel">เช้า</div>
         <div id="ui-sortable" class="ui-sortable">
+            {{-- @foreach ($food_logs as $food)
+                <div class="menu-body ui-sortable-handle">
+                    <span id={{ $food->id }}>{{ $food->food_thai }}</span>
+                </div>
+            @endforeach --}}
             <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
-                <span class=""><i class="fa fa-hand-pointer-o"></i> วางที่นี่</span>
+                <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
             </div>
         </div>
     </div>
-    <div class="col col-meal">
-        <div class="mlabel">ว่างบ่าย</div>
+
+    <div class="col col-meal" id="lunch-meal-{{ $day }}" date-date="123">
+        <div class="mlabel">เช้า</div>
         <div id="ui-sortable" class="ui-sortable">
+            {{-- @foreach ($food_logs as $food)
+                <div class="menu-body ui-sortable-handle">
+                    <span id={{ $food->id }}>{{ $food->food_thai }}</span>
+                </div>
+            @endforeach --}}
             <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
-                <span class=""><i class="fa fa-hand-pointer-o"></i> วางที่นี่</span>
+                <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
             </div>
         </div>
     </div>
+
+    <div class="col col-meal" id="lunch-snack-meal-{{ $day }}" date-date="123">
+        <div class="mlabel">เช้า</div>
+        <div id="ui-sortable" class="ui-sortable">
+            {{-- @foreach ($food_logs as $food)
+                <div class="menu-body ui-sortable-handle">
+                    <span id={{ $food->id }}>{{ $food->food_thai }}</span>
+                </div>
+            @endforeach --}}
+            <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
+                <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <div class="col col-nutrition">
         <div class="mlabel">สารอาหาร</div>
         <div class="energy-contanier">

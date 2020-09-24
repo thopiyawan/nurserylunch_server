@@ -31,6 +31,7 @@ class MealplanController extends Controller				// Define the class name
 		}
 		public function addFood(Request $request)
 	{
+		$schoolId = auth()->user()->school_id;
 		date_default_timezone_set("Asia/Bangkok");
 		$input = $request->all();	
 		$date = new DateTime($input['date']);
@@ -47,7 +48,8 @@ class MealplanController extends Controller				// Define the class name
 					'food_id' => $value,
 					'user_id' => $userId,
 					'meal_date' => $meal_date,
-					"food_type" => 1
+					"food_type" => 1,
+					"school_id" => $schoolId
 				]
 			);
 		};
