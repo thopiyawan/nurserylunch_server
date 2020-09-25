@@ -160,7 +160,7 @@
                     mealPlanData: mealPlanData
                 },
                 success: function(data) {
-                    //location.reload();
+                    location.reload();
                     alert(data.success)
                 }
             });
