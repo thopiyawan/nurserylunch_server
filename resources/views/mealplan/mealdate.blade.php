@@ -17,9 +17,11 @@
         <div class="mlabel">ว่างเช้า</div>
         <div id="" class="ui-sortable ui-sortable-meal">
             @foreach ($food_logs as $food)
-                <div class="menu-body ui-sortable-handle ui-sortable-meal">
-                    <span id={{ $food->id }}>{{ $food->food_thai }}</span>
-                </div>
+                @if ($food->meal_code == 2 && $food->meal_date == $date_in_week)
+                    <div class="menu-body ui-sortable-handle ui-sortable-meal">
+                        <span id={{ $food->food_id }}>{{ $food->food_thai }}</span>
+                    </div>
+                @endif
             @endforeach
             <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
                 <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
@@ -29,6 +31,14 @@
     <div class="col col-meal" id="lunch-meal-{{ $day }}">
         <div class="mlabel">กลางวัน</div>
         <div id="" class="ui-sortable ui-sortable-meal">
+            @foreach ($food_logs as $food)
+                @if ($food->meal_code == 3 && $food->meal_date == $date_in_week)
+                    <div class="menu-body ui-sortable-handle ui-sortable-meal">
+                        <span id={{ $food->food_id }}>{{ $food->food_thai }}</span>
+                    </div>
+                @endif
+            @endforeach
+
             <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
                 <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
             </div>
@@ -37,6 +47,14 @@
     <div class="col col-meal" id="lunch-snack-meal-{{ $day }}">
         <div class="mlabel">ว่างบ่าย</div>
         <div id="" class="ui-sortable ui-sortable-meal">
+            @foreach ($food_logs as $food)
+                @if ($food->meal_code == 4 && $food->meal_date == $date_in_week)
+                    <div class="menu-body ui-sortable-handle ui-sortable-meal">
+                        <span id={{ $food->food_id }}>{{ $food->food_thai }}</span>
+                    </div>
+                @endif
+            @endforeach
+
             <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
                 <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
             </div>

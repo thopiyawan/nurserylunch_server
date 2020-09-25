@@ -1,10 +1,12 @@
 @extends('layouts.app')
 @section('content')
     @php
-    //$day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-    //$day_in_week_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสดี", "ศุกร์"];
-    $day_in_week = ["monday", "tuesday"];
-    $day_in_week_th = ["จันทร์", "อังคาร"];
+    $day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+    $day_in_week_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสดี", "ศุกร์"];
+    $date_in_week = $dayInweek;
+
+    //$day_in_week = ["monday", "tuesday"];
+    // $day_in_week_th = ["จันทร์", "อังคาร"];
     @endphp
     <aside id="aside-menu" class="center">
         <!-- SER|ARCH SECTION  -->
@@ -60,7 +62,8 @@
         </div>
         @foreach ($day_in_week as $key => $day)
             {{ Debugbar::info() }}
-            @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key]])
+            @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>
+            $date_in_week[$key]])
         @endforeach
         <div class="form-group">
             <div class="col-lg-8 col-sm-offset-4">
@@ -93,11 +96,10 @@
         $('#endDate').text(fridayDate.toLocaleDateString());
 
         function handleClick() {
-            //let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-            let day_in_week = ["monday", "tuesday"];
+            let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
             let morningList = []
             $(document).ready(function() {
-                let day_in_week = ["monday", "tuesday"];
+                let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
                 let mondayData = new Date($('.meal-panel.row.monday').data('date'))
                 let tuesdayData = new Date($('.meal-panel.row.tuesday').data('date'))
                 let wednesdayData = new Date($('.meal-panel.row.wednesday').data('date'))
@@ -140,6 +142,7 @@
                     })
                     mealPlanData.push(mealLogs)
                 })
+                console.log('addLog function')
                 addFoodLogs(mealPlanData)
             })
         }

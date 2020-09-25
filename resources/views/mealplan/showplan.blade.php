@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
     {{ Debugbar::info($logs) }}
+    {{ Debugbar::info($dayInweek) }}
     <aside id="aside-menu" class="">
 
         <!-- SER|ARCH SECTION  -->
@@ -33,6 +34,7 @@
                 <a href="/mealplan/edit" class="btn btn-primary pull-right" type="" name="" value="">แก้ไขรายการอาหาร</a>
             </div>
         </div>
+
         <div class="meal-panel row monday">
             <div class="col col-day">
                 <div class="mlabel">จันทร์</div>
@@ -41,46 +43,152 @@
             <div class="col col-meal">
                 <div class="mlabel">ว่างเช้า</div>
                 @foreach ($logs as $log)
-                    {{ Debugbar::info($log) }}
-                    <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @if ($log->meal_code == 2 && $log->meal_date == $dayInweek[0])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
                 @endforeach
             </div>
             <div class="col col-meal">
                 <div class="mlabel">กลางวัน</div>
-                <div class="mrecipe">ข้าวต้มหมูทรงเครื่อง</div>
-                <div class="mrecipe">เต้าหู้ผัดเทริยากิ</div>
-                <div class="mrecipe">ผัดผักสามสี</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 3 && $log->meal_date == $dayInweek[0])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
             </div>
             <div class="col col-meal">
                 <div class="mlabel">ว่างบ่าย</div>
-                <div class="mrecipe">ฝักทองนึ่งโรบมะพร้าว</div>
-                <div class="mrecipe">กล้วยน้ำหว้า 1 ผล</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 4 && $log->meal_date == $dayInweek[0])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
             </div>
-
         </div>
+
+
         <div class="meal-panel row tuesday">
             <div class="col col-day">
                 <div class="mlabel">อังคาร</div>
-                <div class="mdate"><span id="tuesdayDate"></div>
+                <div class="mdate"><span id="tuesdayDate"></span></div>
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">ว่างเช้า</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 2 && $log->meal_date == $dayInweek[1])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">กลางวัน</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 3 && $log->meal_date == $dayInweek[1])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">ว่างบ่าย</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 4 && $log->meal_date == $dayInweek[1])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
             </div>
         </div>
+
+
         <div class="meal-panel row wednesday">
             <div class="col col-day">
                 <div class="mlabel">พุธ</div>
-                <div class="mdate"><span id="wednesdayDate"></div>
+                <div class="mdate"><span id="wednesdayDate"></span></div>
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">ว่างเช้า</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 2 && $log->meal_date == $dayInweek[2])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">กลางวัน</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 3 && $log->meal_date == $dayInweek[2])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">ว่างบ่าย</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 4 && $log->meal_date == $dayInweek[2])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
             </div>
         </div>
+
         <div class="meal-panel row thursday">
             <div class="col col-day">
-                <div class="mlabel">พฤหัส</div>
-                <div class="mdate"><span id="thursdayDate"></div>
+                <div class="mlabel">พฤหัสบดี</div>
+                <div class="mdate"><span id="thursdayDate"></span></div>
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">ว่างเช้า</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 2 && $log->meal_date == $dayInweek[3])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">กลางวัน</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 3 && $log->meal_date == $dayInweek[3])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">ว่างบ่าย</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 4 && $log->meal_date == $dayInweek[3])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
             </div>
         </div>
+
         <div class="meal-panel row friday">
             <div class="col col-day">
                 <div class="mlabel">ศุกร์</div>
-                <div class="mdate"><span id="fridayDate"></div>
+                <div class="mdate"><span id="fridayDate"></span></div>
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">ว่างเช้า</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 2 && $log->meal_date == $dayInweek[4])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">กลางวัน</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 3 && $log->meal_date == $dayInweek[4])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="col col-meal">
+                <div class="mlabel">ว่างบ่าย</div>
+                @foreach ($logs as $log)
+                    @if ($log->meal_code == 4 && $log->meal_date == $dayInweek[4])
+                        <div class="mrecipe"> - {{ $log->food_thai }}</div>
+                    @endif
+                @endforeach
             </div>
         </div>
-    </div>
-@endsection
+    @endsection

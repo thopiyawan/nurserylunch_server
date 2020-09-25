@@ -9,25 +9,34 @@ use App\FoodLogs;
 use Illuminate\Http\Request;
 use Datetime;
 use Debugbar;
+use Carbon\Carbon;
 use DB;
 class MealplanController extends Controller				// Define the class name
 {
 	
 	public function showPlan()
 	{
+		$now = Carbon::now();
+		$weekStartDate = $now->startOfWeek()->format('Y-m-d');
+		$weekEndDate = $now->endOfWeek()->format('Y-m-d');
+		dateInweek($weekStartDate);
 		$userId = auth()->user()->id;
-		$foodLogs = getLastLogs($userId);
-		Debugbar::info($foodLogs);
-		return view('mealplan.showplan', ['logs' => $foodLogs]);
+		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
+		$dayInweek = dateInweek($weekStartDate);
+		return view('mealplan.showplan', ['logs' => $foodLogs,'dayInweek' => $dayInweek]);
 	}
 	public function editPlan()							// Define the method name
     {
+				$now = Carbon::now();
+				$weekStartDate = $now->startOfWeek()->format('Y-m-d');
+				$weekEndDate = $now->endOfWeek()->format('Y-m-d');
 				$userId = auth()->user()->id;
 				$in_groups = IngredientGroup::all();        
 				$schoolId = auth()->user()->school_id;
 				$foods = Food::all();
-				$foodLogs = getLastLogs($userId);
-        return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs]);	// Return response to client
+				$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
+				$dayInweek = dateInweek($weekStartDate);
+        return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek]);	// Return response to client
 		}
 		public function addFood(Request $request)
 	{
@@ -36,87 +45,101 @@ class MealplanController extends Controller				// Define the class name
 		$schoolId = auth()->user()->school_id;
 		$input = $request->all();	
 		$mealPlanData = $input['mealPlanData'];
-
-		foreach($mealPlanData as $key => $value){
-			//for each property in mealplan data
-			Debugbar::info($value);
-			if(isset($value['mealDate'])){
+		foreach($mealPlanData as $mealData){
+			foreach($mealPlanData as $key => $value){
 				$date = new DateTime($value['mealDate']);
 				$mealDate = $date->format('Y-m-d');
 				$deletedRows = FoodLogs::where('meal_date', $mealDate)->delete();
-				foreach ($value['breakfastSnack'] as $pos_breakfast => $breakfast_food) {
-					Debugbar::info($breakfast_food);
-					FoodLogs::create(
-								[
-									'meal_code' => 2,
-									'item_position' => $key,
-									'food_id' => $breakfast_food,
-									'user_id' => $userId,
-									'meal_date' => $mealDate,
-									"food_type" => 1,
-									"school_id" => $schoolId
-								]
-							);
-				
+				if(isset($value['breakfast'])){
+					foreach ($value['breakfast'] as $pos_breakfast  => $breakfastFood) {
+						FoodLogs::create(
+									[
+										'meal_code' => 1,
+										'item_position' => $pos_breakfast,
+										'food_id' => $breakfastFood,
+										'user_id' => $userId,
+										'meal_date' => $mealDate,
+										"food_type" => 1,
+										"school_id" => $schoolId
+									]
+								);
+					}
 				}
 
-				foreach ($value['lunch'] as $pos_lunch => $lunch_food) {
-					Debugbar::info($lunch_food);
-					FoodLogs::create(
-						[
-							'meal_code' => 3,
-							'item_position' => $key,
-							'food_id' => $lunch_food,
-							'user_id' => $userId,
-							'meal_date' => $mealDate,
-							"food_type" => 1,
-							"school_id" => $schoolId
-						]
-					);
+				if(isset($value['breakfastSnack'])){
+					foreach ($value['breakfastSnack'] as $pos_breakfastSnack => $breakfastSnackFood) {
+						FoodLogs::create(
+									[
+										'meal_code' => 2,
+										'item_position' => $pos_breakfastSnack,
+										'food_id' => $breakfastSnackFood,
+										'user_id' => $userId,
+										'meal_date' => $mealDate,
+										"food_type" => 1,
+										"school_id" => $schoolId
+									]
+								);
+					}
 				}
-	
 
+				if(isset($value['lunch'])){
+					foreach ($value['lunch'] as $pos_lunch => $lunchFood) {
+						FoodLogs::create(
+									[
+										'meal_code' => 3,
+										'item_position' => $pos_lunch,
+										'food_id' => $lunchFood,
+										'user_id' => $userId,
+										'meal_date' => $mealDate,
+										"food_type" => 1,
+										"school_id" => $schoolId
+									]
+								);
+					}
+				}
 
-
-
-
-
-
-			}else{
-					return response()->json(['success' => 'error insert food']);
+				if(isset($value['lunchSnack'])){
+					foreach ($value['lunchSnack'] as $pos_lunchSnack => $lunchSnackFood) {
+						FoodLogs::create(
+									[
+										'meal_code' => 4,
+										'item_position' => $pos_lunchSnack,
+										'food_id' => $lunchSnackFood,
+										'user_id' => $userId,
+										'meal_date' => $mealDate,
+										"food_type" => 1,
+										"school_id" => $schoolId
+									]
+								);
+					}
+				}
+			
 			}
-			// Debugbar::info(isset($value['mealDate']));			
-			// Debugbar::info(isset($value['breakfast']));			
-			// Debugbar::info(isset($value['breakfastSnack']));			
-			// Debugbar::info(isset($value['lunch']));			
-			// Debugbar::info(isset($value['lunchSnack']));			
 		}
-		// $date = new DateTime($input['date']);
-		// $meal_date = $date->format('Y-m-d');
-		// $deletedRows = FoodLogs::where('meal_date', $meal_date)->delete();
-
-	
-		
-		// foreach ($input['morning'] as $key => $value) {
-		// 	FoodLogs::create(
-		// 		[
-		// 			'meal_code' => 1,
-		// 			'item_position' => $key,
-		// 			'food_id' => $value,
-		// 			'user_id' => $userId,
-		// 			'meal_date' => $meal_date,
-		// 			"food_type" => 1,
-		// 			"school_id" => $schoolId
-		// 		]
-		// 	);
-		// };
 		return response()->json(['success' => 'Insert into food log done']);
 	}
+
 }
 
 
-function getLastLogs($userId)
-{
-	$lastLog = DB::select('SELECT foods.id, foods.food_thai FROM food_logs inner join foods on foods.id = food_logs.food_id where food_logs.created_at = (SELECT max(food_logs.created_at) FROM food_logs) && user_id = ? ORDER BY food_logs.item_position', [$userId]);
+// function getLastLogs($userId)
+// {
+// 	$lastLog = DB::select('SELECT foods.id, foods.food_thai FROM food_logs inner join foods on foods.id = food_logs.food_id where food_logs.created_at = (SELECT max(food_logs.created_at) FROM food_logs) && user_id = ? && meal_code = ? ORDER BY food_logs.item_position', [$userId, 2]);
+// 	return $lastLog;
+// }
+
+function getLastLogs($userId,$weekStartDate,$weekEndDate){
+		$lastLog = DB::select('SELECT food_id, meal_code, food_thai, meal_date FROM food_logs INNER JOIN foods on food_logs.food_id = foods.id WHERE user_id = ? &&  food_logs.meal_date BETWEEN ? AND ?', [$userId, $weekStartDate, $weekEndDate]);
 	return $lastLog;
+}
+
+
+function dateInweek($weekStartDate){
+	$monday = new Carbon($weekStartDate);
+	$tuesday = $monday->copy()->addDays();
+	$wednesday = $tuesday->copy()->addDays();
+	$thursday = $wednesday->copy()->addDays();
+	$friday = $thursday->copy()->addDays();
+	$dayInweek = array($monday->format('Y-m-d'), $tuesday->format('Y-m-d'), $wednesday->format('Y-m-d'), $thursday->format('Y-m-d'), $friday->format('Y-m-d'));
+	return $dayInweek;
 }
