@@ -34,26 +34,3 @@
         <div id="meal-plan">
         </div>
     @endsection
-
-    @section('script')
-        <script type="application/javascript">
-            let mondayDate = new Date(localStorage.getItem('mondayDate'));
-            let tuesdayDate = new Date(localStorage.getItem('tuesdayDate'));
-            let wednesdayDate = new Date(localStorage.getItem('wednesdayDate'));
-            let thursdayDate = new Date(localStorage.getItem('thursdayDate'));
-            let fridayDate = new Date(localStorage.getItem('fridayDate'));
-            $('#monday').text(mondayDate.getDate())
-            $('#tuesday').text(tuesdayDate.getDate())
-            $('#wednesday').text(wednesdayDate.getDate())
-            $('#thursday').text(thursdayDate.getDate())
-            $('#friday').text(fridayDate.getDate())
-            $('.meal-panel.row.monday').attr("data-date", mondayDate)
-            $('.meal-panel.row.tuesday').attr("data-date", tuesdayDate)
-            $('.meal-panel.row.wednesday').attr("data-date", wednesdayDate)
-            $('.meal-panel.row.thursday').attr("data-date", thursdayDate)
-            $('.meal-panel.row.friday').attr("data-date", fridayDate)
-            $('#startDate').text(mondayDate.toLocaleDateString());
-            $('#endDate').text(fridayDate.toLocaleDateString());
-
-        </script>
-    @endsection

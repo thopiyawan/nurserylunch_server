@@ -34,8 +34,10 @@ class MealplanController extends Controller				// Define the class name
     {
 				
 				$now = Carbon::now();
-				$weekStartDate = $now->startOfWeek()->format('Y-m-d');
-				$weekEndDate = $now->endOfWeek()->format('Y-m-d');
+				// $weekStartDate = $now->startOfWeek()->format('Y-m-d');
+				// $weekEndDate = $now->endOfWeek()->format('Y-m-d');
+				$weekStartDate = $request->session()->get('startDateOfWeek');
+				$weekEndDate = $request->session()->get('endDateOfWeek');
 				$userId = auth()->user()->id;
 				$in_groups = IngredientGroup::all();        
 				$schoolId = auth()->user()->school_id;
@@ -127,7 +129,6 @@ class MealplanController extends Controller				// Define the class name
 
 	public function dateSelect(Request $request)
 	{
-		
 		$now = Carbon::now();
 		$input = $request->all();
 		$userId = auth()->user()->id;
@@ -137,6 +138,8 @@ class MealplanController extends Controller				// Define the class name
 		$endDate = new DateTime($inputEndDate);
 		$startDate = $startDate->format('Y-m-d');
 		$endDate = $endDate->format('Y-m-d');
+		$request->session()->put('startDateOfWeek', $startDate);
+		$request->session()->put('endDateOfWeek', $endDate);
 		$in_groups = IngredientGroup::all();        
 		$schoolId = auth()->user()->school_id;
 		$foods = Food::all();

@@ -1,7 +1,7 @@
 <div class="meal-panel row monday">
     <div class="col col-day">
         <div class="mlabel">จันทร์</div>
-        <div class="mdate"><span id="mondayDate"></span></div>
+        <div class="mdate"><span id="mondayDate">{{ date('d', strtotime($dayInweek[0])) }}</span></div>
     </div>
     <div class="col col-meal">
         <div class="mlabel">ว่างเช้า</div>
@@ -33,7 +33,7 @@
 <div class="meal-panel row tuesday">
     <div class="col col-day">
         <div class="mlabel">อังคาร</div>
-        <div class="mdate"><span id="tuesdayDate"></span></div>
+        <div class="mdate"><span id="tuesdayDate">{{ date('d', strtotime($dayInweek[1])) }}</span></div>
     </div>
     <div class="col col-meal">
         <div class="mlabel">ว่างเช้า</div>
@@ -65,7 +65,7 @@
 <div class="meal-panel row wednesday">
     <div class="col col-day">
         <div class="mlabel">พุธ</div>
-        <div class="mdate"><span id="wednesdayDate"></span></div>
+        <div class="mdate"><span id="wednesdayDate">{{ date('d', strtotime($dayInweek[2])) }}</span></div>
     </div>
     <div class="col col-meal">
         <div class="mlabel">ว่างเช้า</div>
@@ -96,7 +96,7 @@
 <div class="meal-panel row thursday">
     <div class="col col-day">
         <div class="mlabel">พฤหัสบดี</div>
-        <div class="mdate"><span id="thursdayDate"></span></div>
+        <div class="mdate"><span id="thursdayDate">{{ date('d', strtotime($dayInweek[3])) }}</span></div>
     </div>
     <div class="col col-meal">
         <div class="mlabel">ว่างเช้า</div>
@@ -127,7 +127,7 @@
 <div class="meal-panel row friday">
     <div class="col col-day">
         <div class="mlabel">ศุกร์</div>
-        <div class="mdate"><span id="fridayDate"></span></div>
+        <div class="mdate"><span id="fridayDate">{{ date('d', strtotime($dayInweek[4])) }}</span></div>
     </div>
     <div class="col col-meal">
         <div class="mlabel">ว่างเช้า</div>
