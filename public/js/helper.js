@@ -52,6 +52,26 @@ $(function () {
             localStorage.setItem("thursdayDate", thursdayDate)
             localStorage.setItem("fridayDate", fridayDate)
             selectCurrentWeek();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/mealplan/dateselect',
+                data: {
+                    date: { startDate: startDate.toLocaleDateString(), endDate: endDate.toLocaleDateString() }
+                },
+                success: function (data) {
+                    console.log('dkjfjd')
+                    console.log(data);
+                    $("#meal-plan").html(data);
+                }
+            });
+
+
         },
         beforeShowDay: function (date) {
             var cssClass = '';
@@ -187,6 +207,7 @@ $(function () {
             input_oz.val((box_val * 180 / 29.574).toFixed(2));
         }
     }
+
 
 
     //------- SETTING CHECKBOX

@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Controllers;						// Location of file
-
 use App\Ingredient;
 use App\IngredientGroup;										// Import other classes
 use App\Http\Controllers\Controller;
@@ -11,22 +10,29 @@ use Datetime;
 use Debugbar;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Session;
 class MealplanController extends Controller				// Define the class name
 {
 	
-	public function showPlan()
+	public function showPlan($startDate = null, $endDate = null)
 	{
 		$now = Carbon::now();
 		$weekStartDate = $now->startOfWeek()->format('Y-m-d');
 		$weekEndDate = $now->endOfWeek()->format('Y-m-d');
+		if($startDate && $endDate){
+			$weekStartDate  = $startDate;
+			$weekEndDate = $endDate;
+		}
 		dateInweek($weekStartDate);
 		$userId = auth()->user()->id;
 		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
 		$dayInweek = dateInweek($weekStartDate);
+		
 		return view('mealplan.showplan', ['logs' => $foodLogs,'dayInweek' => $dayInweek]);
 	}
-	public function editPlan()							// Define the method name
+	public function editPlan(Request $request)							// Define the method name
     {
+				
 				$now = Carbon::now();
 				$weekStartDate = $now->startOfWeek()->format('Y-m-d');
 				$weekEndDate = $now->endOfWeek()->format('Y-m-d');
@@ -119,6 +125,26 @@ class MealplanController extends Controller				// Define the class name
 		return response()->json(['success' => 'Insert into food log done']);
 	}
 
+	public function dateSelect(Request $request)
+	{
+		
+		$now = Carbon::now();
+		$input = $request->all();
+		$userId = auth()->user()->id;
+		$inputStartDate = $input['date']['startDate'];
+		$inputEndDate = $input['date']['endDate'];
+		$startDate = new DateTime($inputStartDate);
+		$endDate = new DateTime($inputEndDate);
+		$startDate = $startDate->format('Y-m-d');
+		$endDate = $endDate->format('Y-m-d');
+		$in_groups = IngredientGroup::all();        
+		$schoolId = auth()->user()->school_id;
+		$foods = Food::all();
+		$foodLogs = getLastLogs($userId, $startDate, $endDate);
+		$dayInweek = dateInweek($startDate);
+		return view('mealplan.mealpanel', ['logs' => $foodLogs,'dayInweek' => $dayInweek]);
+	}
+
 }
 
 
@@ -143,3 +169,5 @@ function dateInweek($weekStartDate){
 	$dayInweek = array($monday->format('Y-m-d'), $tuesday->format('Y-m-d'), $wednesday->format('Y-m-d'), $thursday->format('Y-m-d'), $friday->format('Y-m-d'));
 	return $dayInweek;
 }
+
+
