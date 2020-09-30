@@ -34,7 +34,12 @@
                 @foreach ($foodList as $food)
                     <div class="ui-sortable food-list">
                         <div class="menu-body">
-                            <span id={{ $food->id }}>{{ $food->food_thai }}</span>
+                            <div class="col col-food-name" id={{ $food->id }}>{{ $food->food_thai }}</div>
+                            <div class="col col-delete">
+                                <a class="pull-right" data-toggle="modal" data-target="#editKidForm">
+                                    <span><i class="fas fa-times"></i></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -165,6 +170,8 @@
                 }
             });
         }
+
+        
 
     </script>
 @endsection
