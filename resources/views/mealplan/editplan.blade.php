@@ -66,7 +66,6 @@
             </div>
         </div>
         @foreach ($day_in_week as $key => $day)
-            {{ Debugbar::info() }}
             @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>
             $date_in_week[$key]])
         @endforeach
@@ -170,8 +169,6 @@
                 }
             });
         }
-
-        
 
     </script>
 @endsection

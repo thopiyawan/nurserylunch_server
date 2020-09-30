@@ -52,6 +52,7 @@ class MealplanController extends Controller				// Define the class name
 		$userId = auth()->user()->id;
 		$schoolId = auth()->user()->school_id;
 		$input = $request->all();	
+		Debugbar::info($input);
 		$mealPlanData = $input['mealPlanData'];
 		foreach($mealPlanData as $mealData){
 			foreach($mealPlanData as $key => $value){

@@ -12,7 +12,6 @@
             </div>
         </div>
     </div> --}}
-    {{ Debugbar::info($food) }}
     <div class="col col-meal" id="breakfast-snack-meal-{{ $day }}" date-date="123">
         <div class="mlabel">ว่างเช้า</div>
         <div id="" class="ui-sortable ui-sortable-meal">
