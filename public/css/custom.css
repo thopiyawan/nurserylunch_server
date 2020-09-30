@@ -488,6 +488,8 @@ input[type=checkbox] {
 }
 
 .ui-sortable .col-delete{
+    font-size: var(--font-size-m1);
+    color: var(--gray);
     width: 4%;
     vertical-align: top;
 }

@@ -152,11 +152,13 @@ $(function () {
         // $("<span>Test</span>").appendTo(item);
     }
 
-    $(".ui-sortable").on('click', onColDeleteClick);
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $(".col-delete").on('click', onColDeleteClick);
     function onColDeleteClick(event){
         console.log("on click");
-        console.log(event.currentTarget);
-        event.currentTarget.remove();
+        $(this).parent().parent().remove();
+        
     }
 
     //------- CLASSROOM & KID SIDE MENU

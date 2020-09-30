@@ -33,6 +33,7 @@
                     <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
                 </div>
             </div>
+            <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on left">Hello</button>
         
     </div>
     <div class="col col-meal">
