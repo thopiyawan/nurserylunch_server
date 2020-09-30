@@ -38,6 +38,7 @@
                 </div>
             </div>
             <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on left">Hello</button>
+        </div>
         
     </div>
     <div class="col col-meal" id="lunch-meal-{{ $day }}">
