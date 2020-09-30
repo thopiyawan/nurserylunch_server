@@ -119,10 +119,13 @@
                         lunchSnack: [],
                     }
                     let mealDate = new Date($(`.meal-panel.row.${day}`).data('date')).toLocaleDateString()
-                    let breakfast = $(`#breakfast-meal-${day} .ui-sortable-handle>span`)
-                    let breakfastSnack = $(`#breakfast-snack-meal-${day} .ui-sortable-handle>span`)
-                    let lunch = $(`#lunch-meal-${day} .ui-sortable-handle>span`)
-                    let lunchSnack = $(`#lunch-snack-meal-${day} .ui-sortable-handle>span`)
+                    let breakfast = $(`#breakfast-meal-${day} > .ui-sortable .col-food-name`)
+                    let breakfastSnack = $(
+                        `#breakfast-snack-meal-${day} > .ui-sortable .col-food-name`
+                    )
+                    console.log("handleClick -> breakfastSnack", breakfastSnack)
+                    let lunch = $(`#lunch-meal-${day} > .ui-sortable .col-food-name`)
+                    let lunchSnack = $(`#lunch-snack-meal-${day} > .ui-sortable .col-food-name`)
                     mealLogs['mealDate'] = mealDate;
                     $.each(breakfast, function(key, value) {
                         if (value.id !== "") {
@@ -147,6 +150,7 @@
                     mealPlanData.push(mealLogs)
                 })
                 console.log('addLog function')
+                console.log(mealPlanData);
                 addFoodLogs(mealPlanData)
             })
         }
@@ -164,7 +168,7 @@
                     mealPlanData: mealPlanData
                 },
                 success: function(data) {
-                    location.reload();
+                    //location.reload();
                     alert(data.success)
                 }
             });
