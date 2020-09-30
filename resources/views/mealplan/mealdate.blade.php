@@ -13,16 +13,27 @@
     </div> --}}
     <div class="col col-meal" id="morning-meal" date-date="123">
         <div class="mlabel">เช้า</div>
-        <div id="" class="ui-sortable ui-sortable-meal">
+        
             @foreach ($food_logs as $food)
-                <div class="menu-body ui-sortable-handle ui-sortable-meal">
-                    <span id={{ $food->id }}>{{ $food->food_thai }}</span>
+            <div class="ui-sortable ui-sortable-meal">
+                <div class="menu-body">
+                    <div class="col col-food-name">
+                        <span id={{ $food->id }}>{{ $food->food_thai }}</span>
+                    </div>
+                    <div class="col col-delete">
+                        <a class="pull-right" >
+                            <span><i class="fas fa-times"></i></span>
+                        </a>
+                    </div>
                 </div>
-            @endforeach
-            <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
-                <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
             </div>
-        </div>
+            @endforeach
+            <div class="ui-sortable">
+                <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
+                    <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
+                </div>
+            </div>
+        
     </div>
     <div class="col col-meal">
         <div class="mlabel">กลางวัน</div>
