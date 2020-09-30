@@ -152,22 +152,34 @@ $(function () {
         cursorAt: { top: 5, left: 5 },
         dropOnEmpty: false,
         remove: onSortableRemove,
+        receive: onSortableReceive,
+
     });
 
-    function onSortableRemove(event, ui) {
-        // console.log(event);
-        // console.log(ui);
-
+    function onSortableRemove(event, ui){
         var target = event.target;
         if (target.classList.contains("food-list")) {
             ui.item.clone().appendTo(target);
         }
-
-        //console.log(ui);
-        //$("#ui-sortable-food-list").add(ui.item);
     }
 
+    function onSortableReceive(event, ui){
+        console.log("onSortableReceive");
+        var item = ui.item;
+        console.log(event);
+        console.log(ui);
 
+        // $("<span>Test</span>").appendTo(item);
+    }
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $(".col-delete").on('click', onColDeleteClick);
+    function onColDeleteClick(event){
+        console.log("on click");
+        $(this).parent().parent().remove();
+        
+    }
 
     //------- CLASSROOM & KID SIDE MENU
     var path = window.location.pathname.split("/");
