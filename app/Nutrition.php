@@ -11,4 +11,5 @@ class Nutrition extends Model
     public function food(){
         return $this->belongsTo(Food::class);
     }
+    
 }

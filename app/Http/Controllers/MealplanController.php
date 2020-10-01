@@ -5,6 +5,7 @@ use App\IngredientGroup;										// Import other classes
 use App\Http\Controllers\Controller;
 use App\Food;
 use App\FoodLogs;
+use App\Setting;
 use Illuminate\Http\Request;
 use Datetime;
 use Debugbar;
@@ -15,6 +16,8 @@ class MealplanController extends Controller
 {
 	public function showPlan($startDate = null, $endDate = null)
 	{
+		$userId = auth()->user()->id;
+		$userSetting = Setting::find($userId);
 		$now = Carbon::now();
 		$weekStartDate = $now->startOfWeek()->format('Y-m-d');
 		$weekEndDate = $now->endOfWeek()->format('Y-m-d');
@@ -27,10 +30,12 @@ class MealplanController extends Controller
 		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
 		$dayInweek = dateInweek($weekStartDate);
 		
-		return view('mealplan.showplan', ['logs' => $foodLogs,'dayInweek' => $dayInweek]);
+		return view('mealplan.showplan', ['logs' => $foodLogs,'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
 	}
 	public function editPlan(Request $request)							// Define the method name
     {
+				$userId = auth()->user()->id;
+				$userSetting = Setting::find($userId);
 				$now = Carbon::now();
 				$weekStartDate = $request->session()->get('startDateOfWeek');
 				$weekEndDate = $request->session()->get('endDateOfWeek');
@@ -40,7 +45,7 @@ class MealplanController extends Controller
 				$foods = Food::all();
 				$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
 				$dayInweek = dateInweek($weekStartDate);
-        return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek]);
+        return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting]);
 		}
 		public function addFood(Request $request)
 	{
@@ -48,7 +53,6 @@ class MealplanController extends Controller
 		$userId = auth()->user()->id;
 		$schoolId = auth()->user()->school_id;
 		$input = $request->all();	
-		Debugbar::info($input);
 		$mealPlanData = $input['mealPlanData'];
 		foreach($mealPlanData as $mealData){
 			foreach($mealPlanData as $key => $value){
@@ -126,6 +130,8 @@ class MealplanController extends Controller
 
 	public function dateSelect(Request $request)
 	{
+		$userId = auth()->user()->id;
+		$userSetting = Setting::find($userId);
 		$now = Carbon::now();
 		$input = $request->all();
 		$userId = auth()->user()->id;
@@ -142,7 +148,7 @@ class MealplanController extends Controller
 		$foods = Food::all();
 		$foodLogs = getLastLogs($userId, $startDate, $endDate);
 		$dayInweek = dateInweek($startDate);
-		return view('mealplan.mealpanel', ['logs' => $foodLogs,'dayInweek' => $dayInweek]);
+		return view('mealplan.mealpanel', ['logs' => $foodLogs,'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
 	}
 }
 function getLastLogs($userId,$weekStartDate,$weekEndDate){
