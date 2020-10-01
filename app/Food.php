@@ -13,4 +13,8 @@ class Food extends Model
     public function food_logs(){
         return $this->hasMany(FoodLogs::class);
     }
+
+    public function nutritions(){
+        return $this->hasOne(Nutrition::class);
+    }
 }

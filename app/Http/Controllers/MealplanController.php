@@ -11,9 +11,8 @@ use Debugbar;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Session;
-class MealplanController extends Controller				// Define the class name
+class MealplanController extends Controller			
 {
-	
 	public function showPlan($startDate = null, $endDate = null)
 	{
 		$now = Carbon::now();
@@ -32,10 +31,7 @@ class MealplanController extends Controller				// Define the class name
 	}
 	public function editPlan(Request $request)							// Define the method name
     {
-				
 				$now = Carbon::now();
-				// $weekStartDate = $now->startOfWeek()->format('Y-m-d');
-				// $weekEndDate = $now->endOfWeek()->format('Y-m-d');
 				$weekStartDate = $request->session()->get('startDateOfWeek');
 				$weekEndDate = $request->session()->get('endDateOfWeek');
 				$userId = auth()->user()->id;
@@ -44,7 +40,7 @@ class MealplanController extends Controller				// Define the class name
 				$foods = Food::all();
 				$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
 				$dayInweek = dateInweek($weekStartDate);
-        return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek]);	// Return response to client
+        return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek]);
 		}
 		public function addFood(Request $request)
 	{
@@ -148,22 +144,11 @@ class MealplanController extends Controller				// Define the class name
 		$dayInweek = dateInweek($startDate);
 		return view('mealplan.mealpanel', ['logs' => $foodLogs,'dayInweek' => $dayInweek]);
 	}
-
 }
-
-
-// function getLastLogs($userId)
-// {
-// 	$lastLog = DB::select('SELECT foods.id, foods.food_thai FROM food_logs inner join foods on foods.id = food_logs.food_id where food_logs.created_at = (SELECT max(food_logs.created_at) FROM food_logs) && user_id = ? && meal_code = ? ORDER BY food_logs.item_position', [$userId, 2]);
-// 	return $lastLog;
-// }
-
 function getLastLogs($userId,$weekStartDate,$weekEndDate){
 		$lastLog = DB::select('SELECT food_id, meal_code, food_thai, meal_date FROM food_logs INNER JOIN foods on food_logs.food_id = foods.id WHERE user_id = ? &&  food_logs.meal_date BETWEEN ? AND ?', [$userId, $weekStartDate, $weekEndDate]);
 	return $lastLog;
 }
-
-
 function dateInweek($weekStartDate){
 	$monday = new Carbon($weekStartDate);
 	$tuesday = $monday->copy()->addDays();

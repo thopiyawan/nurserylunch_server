@@ -4,9 +4,6 @@
     $day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
     $day_in_week_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสดี", "ศุกร์"];
     $date_in_week = $dayInweek;
-
-    //$day_in_week = ["monday", "tuesday"];
-    // $day_in_week_th = ["จันทร์", "อังคาร"];
     @endphp
     <aside id="aside-menu" class="center">
         <!-- SER|ARCH SECTION  -->
