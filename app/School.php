@@ -25,5 +25,9 @@ class School extends Model
     public function kids(){
         return $this->hasMany(Kid::class);
     }
+
+    public function energyLog(){
+        return $this->hasMany(EnergyLogs::class);
+    }
 }
 

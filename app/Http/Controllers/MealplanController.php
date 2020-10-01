@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Food;
 use App\FoodLogs;
 use App\Setting;
+use App\EnergyLogs;
+use App\Nutrition;
 use Illuminate\Http\Request;
 use Datetime;
 use Debugbar;
@@ -54,6 +56,7 @@ class MealplanController extends Controller
 		$schoolId = auth()->user()->school_id;
 		$input = $request->all();	
 		$mealPlanData = $input['mealPlanData'];
+		$energyBreakfastSnack = 0;
 		foreach($mealPlanData as $mealData){
 			foreach($mealPlanData as $key => $value){
 				$date = new DateTime($value['mealDate']);
@@ -61,6 +64,7 @@ class MealplanController extends Controller
 				$deletedRows = FoodLogs::where('meal_date', $mealDate)->delete();
 				if(isset($value['breakfast'])){
 					foreach ($value['breakfast'] as $pos_breakfast  => $breakfastFood) {
+					
 						FoodLogs::create(
 									[
 										'meal_code' => 1,
@@ -72,6 +76,7 @@ class MealplanController extends Controller
 										"school_id" => $schoolId
 									]
 								);
+						
 					}
 				}
 
@@ -88,6 +93,8 @@ class MealplanController extends Controller
 										"school_id" => $schoolId
 									]
 								);
+						$food_nutrition = Food::find($breakfastSnackFood);
+						$energyBreakfastSnack = $energyBreakfastSnack + $food_nutrition->nutritions->energy;
 					}
 				}
 
@@ -125,6 +132,28 @@ class MealplanController extends Controller
 			
 			}
 		}
+		EnergyLogs::create(
+			[
+				'meal_code' =>2,
+				'food_type' => 1,
+				'meal_date' => $date,
+				'energy' => $energyBreakfastSnack,
+				'protein' => 0,
+				'carbohydrate' =>0,
+				'fat' => 0,
+				'vitamin_a' =>0,
+				'vitamin_b1' => 0,
+				'vitamin_b2' => 0,
+				'iron' => 0,
+				'zine' =>0,
+				'calcium' => 0,
+				'phosphorus' =>0,
+				'fiber' => 0,
+				'sodium' => 0,
+				'sugar' => 0,
+				'school_id' => $schoolId 
+			]
+			);
 		return response()->json(['success' => 'Insert into food log done']);
 	}
 
