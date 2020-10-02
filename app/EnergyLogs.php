@@ -12,4 +12,8 @@ class EnergyLogs extends Model
     public function school(){
         return $this->belongTo(School::class);
     }
+
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
+    }
 }

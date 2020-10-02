@@ -11,5 +11,9 @@ class Nutrition extends Model
     public function food(){
         return $this->belongsTo(Food::class);
     }
+
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
+    }
     
 }

@@ -51,20 +51,29 @@ class MealplanController extends Controller
 		}
 		public function addFood(Request $request)
 	{
-		date_default_timezone_set("Asia/Bangkok");
-		$userId = auth()->user()->id;
-		$schoolId = auth()->user()->school_id;
-		$input = $request->all();	
-		$mealPlanData = $input['mealPlanData'];
-		$energyBreakfastSnack = 0;
-		foreach($mealPlanData as $mealData){
+		//set time zone
+			date_default_timezone_set("Asia/Bangkok");
+			$userId = auth()->user()->id;
+			$schoolId = auth()->user()->school_id;
+			$input = $request->all();	
+			$mealPlanData = $input['mealPlanData'];
+			$energyLogsTable = new EnergyLogs;
+			$nutritionColumns = $energyLogsTable->getTableColumns();
+			$nutritionColumns = array_diff($nutritionColumns, ['id', 'meal_code', 'food_type', 'meal_date', 'school_id', 'created_at', 	'updated_at']);
+			$energyLog = [];
+			//loop for each date meal plan
 			foreach($mealPlanData as $key => $value){
 				$date = new DateTime($value['mealDate']);
 				$mealDate = $date->format('Y-m-d');
 				$deletedRows = FoodLogs::where('meal_date', $mealDate)->delete();
+				$dateEnergy = ["mealdate" => $mealDate];
+				array_push($energyLog, $dateEnergy);
 				if(isset($value['breakfast'])){
+					$nutritionMealSum = [];
+					foreach($nutritionColumns as $columnName){
+						$nutritionMealSum[$columnName] = 0;
+					};
 					foreach ($value['breakfast'] as $pos_breakfast  => $breakfastFood) {
-					
 						FoodLogs::create(
 									[
 										'meal_code' => 1,
@@ -76,11 +85,18 @@ class MealplanController extends Controller
 										"school_id" => $schoolId
 									]
 								);
-						
+						$food_nutrition = Food::find($breakfastFood);
+						foreach($nutritionColumns as $nutritionName){
+							$nutritionMealSum[$nutritionName] = $nutritionMealSum[$nutritionName] + $food_nutrition->nutritions->$nutritionName;
+						}
 					}
+					$energyLog[$key]["breakfast"]  = $nutritionMealSum;
 				}
-
 				if(isset($value['breakfastSnack'])){
+					$nutritionMealSum = [];
+					foreach($nutritionColumns as $columnName){
+						$nutritionMealSum[$columnName] = 0;
+					};
 					foreach ($value['breakfastSnack'] as $pos_breakfastSnack => $breakfastSnackFood) {
 						FoodLogs::create(
 									[
@@ -94,11 +110,18 @@ class MealplanController extends Controller
 									]
 								);
 						$food_nutrition = Food::find($breakfastSnackFood);
-						$energyBreakfastSnack = $energyBreakfastSnack + $food_nutrition->nutritions->energy;
+						foreach($nutritionColumns as $nutritionName){
+							$nutritionMealSum[$nutritionName] = $nutritionMealSum[$nutritionName] + $food_nutrition->nutritions->$nutritionName;
+						}
 					}
+					$energyLog[$key]["breakfastSnack"]  = $nutritionMealSum;
 				}
 
 				if(isset($value['lunch'])){
+					$nutritionMealSum = [];
+					foreach($nutritionColumns as $columnName){
+						$nutritionMealSum[$columnName] = 0;
+					};
 					foreach ($value['lunch'] as $pos_lunch => $lunchFood) {
 						FoodLogs::create(
 									[
@@ -111,10 +134,19 @@ class MealplanController extends Controller
 										"school_id" => $schoolId
 									]
 								);
+						$food_nutrition = Food::find($lunchFood);
+						foreach($nutritionColumns as $nutritionName){
+							$nutritionMealSum[$nutritionName] = $nutritionMealSum[$nutritionName] + $food_nutrition->nutritions->$nutritionName;
+						}
 					}
+					$energyLog[$key]["lunch"]  = $nutritionMealSum;
 				}
 
 				if(isset($value['lunchSnack'])){
+					$nutritionMealSum = [];
+					foreach($nutritionColumns as $columnName){
+						$nutritionMealSum[$columnName] = 0;
+					};
 					foreach ($value['lunchSnack'] as $pos_lunchSnack => $lunchSnackFood) {
 						FoodLogs::create(
 									[
@@ -127,34 +159,89 @@ class MealplanController extends Controller
 										"school_id" => $schoolId
 									]
 								);
+						$food_nutrition = Food::find($lunchSnackFood);
+						foreach($nutritionColumns as $nutritionName){
+							$nutritionMealSum[$nutritionName] = $nutritionMealSum[$nutritionName] + $food_nutrition->nutritions->$nutritionName;
+						}
 					}
+					$energyLog[$key]["lunchSnack"]  = $nutritionMealSum;
 				}
-			
+			}
+
+
+		foreach($energyLog as $logPerDate){
+			$mealDate = $logPerDate['mealdate'];
+
+			if(isset($logPerDate['breakfast'])){
+				$data = $logPerDate['breakfast']; 
+				$data['meal_code'] = 1;
+				$data['food_type'] = 1;
+				$data['meal_date'] = $mealDate;
+				$data['school_id'] = $schoolId;
+				Debugbar::info($data);
+				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 1)->exists();
+				if($logExists){
+					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 1)->update($data);
+				}else{
+					EnergyLogs::create(
+						$data
+					);
+				}
+			}
+
+			if(isset($logPerDate['breakfastSnack'])){
+				$data = $logPerDate['breakfastSnack']; 
+				$data['meal_code'] = 2;
+				$data['food_type'] = 1;
+				$data['meal_date'] = $mealDate;
+				$data['school_id'] = $schoolId;
+				Debugbar::info($data);
+				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 2)->exists();
+				if($logExists){
+					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 2)->update($data);
+				}else{
+					EnergyLogs::create(
+						$data
+					);
+				}
+			}
+
+			if(isset($logPerDate['lunch'])){
+				$data = $logPerDate['lunch']; 
+				$data['meal_code'] = 3;
+				$data['food_type'] = 1;
+				$data['meal_date'] = $mealDate;
+				$data['school_id'] = $schoolId;
+				Debugbar::info($data);
+				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 3)->exists();
+				if($logExists){
+					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 3)->update($data);
+				}else{
+					EnergyLogs::create(
+						$data
+					);
+				}
+			}
+
+			if(isset($logPerDate['lunchSnack'])){
+				$data = $logPerDate['lunchSnack']; 
+				$data['meal_code'] = 4;
+				$data['food_type'] = 1;
+				$data['meal_date'] = $mealDate;
+				$data['school_id'] = $schoolId;
+				Debugbar::info($data);
+				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 4)->exists();
+				if($logExists){
+					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 4)->update($data);
+				}else{
+					EnergyLogs::create(
+						$data
+					);
+				}
 			}
 		}
-		EnergyLogs::create(
-			[
-				'meal_code' =>2,
-				'food_type' => 1,
-				'meal_date' => $date,
-				'energy' => $energyBreakfastSnack,
-				'protein' => 0,
-				'carbohydrate' =>0,
-				'fat' => 0,
-				'vitamin_a' =>0,
-				'vitamin_b1' => 0,
-				'vitamin_b2' => 0,
-				'iron' => 0,
-				'zine' =>0,
-				'calcium' => 0,
-				'phosphorus' =>0,
-				'fiber' => 0,
-				'sodium' => 0,
-				'sugar' => 0,
-				'school_id' => $schoolId 
-			]
-			);
-		return response()->json(['success' => 'Insert into food log done']);
+
+		return response()->json(['success' => 'บันทึกสำรับอาหารเสร็จเรียบร้อย']);
 	}
 
 	public function dateSelect(Request $request)
