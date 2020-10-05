@@ -4,10 +4,8 @@
     $day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
     $day_in_week_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสดี", "ศุกร์"];
     $date_in_week = $dayInweek;
-
-    //$day_in_week = ["monday", "tuesday"];
-    // $day_in_week_th = ["จันทร์", "อังคาร"];
     @endphp
+
     <aside id="aside-menu" class="center">
         <!-- SER|ARCH SECTION  -->
         <div class="m-b">
@@ -66,7 +64,6 @@
             </div>
         </div>
         @foreach ($day_in_week as $key => $day)
-            {{ Debugbar::info() }}
             @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>
             $date_in_week[$key]])
         @endforeach
@@ -120,10 +117,13 @@
                         lunchSnack: [],
                     }
                     let mealDate = new Date($(`.meal-panel.row.${day}`).data('date')).toLocaleDateString()
-                    let breakfast = $(`#breakfast-meal-${day} .ui-sortable-handle>span`)
-                    let breakfastSnack = $(`#breakfast-snack-meal-${day} .ui-sortable-handle>span`)
-                    let lunch = $(`#lunch-meal-${day} .ui-sortable-handle>span`)
-                    let lunchSnack = $(`#lunch-snack-meal-${day} .ui-sortable-handle>span`)
+                    let breakfast = $(`#breakfast-meal-${day} > .ui-sortable .col-food-name`)
+                    let breakfastSnack = $(
+                        `#breakfast-snack-meal-${day} > .ui-sortable .col-food-name`
+                    )
+                    console.log("handleClick -> breakfastSnack", breakfastSnack)
+                    let lunch = $(`#lunch-meal-${day} > .ui-sortable .col-food-name`)
+                    let lunchSnack = $(`#lunch-snack-meal-${day} > .ui-sortable .col-food-name`)
                     mealLogs['mealDate'] = mealDate;
                     $.each(breakfast, function(key, value) {
                         if (value.id !== "") {
@@ -148,6 +148,7 @@
                     mealPlanData.push(mealLogs)
                 })
                 console.log('addLog function')
+                console.log(mealPlanData);
                 addFoodLogs(mealPlanData)
             })
         }
@@ -165,13 +166,11 @@
                     mealPlanData: mealPlanData
                 },
                 success: function(data) {
-                    location.reload();
+                    //location.reload();
                     alert(data.success)
                 }
             });
         }
-
-        
 
     </script>
 @endsection
