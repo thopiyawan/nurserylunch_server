@@ -138,8 +138,9 @@ $(function () {
 
     function onSortableRemove(event, ui){
         var target = event.target;
+        console.log(ui);
         if (target.classList.contains("food-list")) {
-            ui.item.clone().appendTo(target);
+            ui.item.clone(true).appendTo(target);
         }
     }
 
@@ -152,12 +153,13 @@ $(function () {
         // $("<span>Test</span>").appendTo(item);
     }
 
+
     $('[data-toggle="tooltip"]').tooltip();
 
     $(".col-delete").on('click', onColDeleteClick);
     function onColDeleteClick(event){
         console.log("on click");
-        $(this).parent().parent().remove();
+        $(this).parent().remove();
         
     }
 
