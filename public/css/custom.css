@@ -59,15 +59,14 @@ input[type=checkbox] {
 .checkbox input[type=checkbox]:checked + label::before{
     background-color: var(--primary);
 }
-
 #aside-menu {
     float: left;
     left: 0;
     padding: 20px 0px 0 0px;
-    position: absolute;
+    position: fixed;
     top: 62px;
     transition: none !important;
-    width: 260px;
+    width: 270px;
 }
 #aside-menu.center{
     padding: 20px 20px 0 20px;
@@ -106,7 +105,7 @@ input[type=checkbox] {
 }
 #wrapper{
 	background: white;
-    margin-left: 260px;
+    margin-left: 270px;
     padding: 40px 40px;
     position: relative !important;
 	transition: none !important;
