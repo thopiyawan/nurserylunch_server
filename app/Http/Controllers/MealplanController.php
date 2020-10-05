@@ -27,18 +27,19 @@ class MealplanController extends Controller				// Define the class name
 	}
 	public function editPlan()							// Define the method name
     {
-				$now = Carbon::now();
-				$weekStartDate = $now->startOfWeek()->format('Y-m-d');
-				$weekEndDate = $now->endOfWeek()->format('Y-m-d');
-				$userId = auth()->user()->id;
-				$in_groups = IngredientGroup::all();        
-				$schoolId = auth()->user()->school_id;
-				$foods = Food::all();
-				$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
-				$dayInweek = dateInweek($weekStartDate);
-        return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek]);	// Return response to client
-		}
-		public function addFood(Request $request)
+		$now = Carbon::now();
+		$weekStartDate = $now->startOfWeek()->format('Y-m-d');
+		$weekEndDate = $now->endOfWeek()->format('Y-m-d');
+		$userId = auth()->user()->id;
+		$in_groups = IngredientGroup::all();        
+		$schoolId = auth()->user()->school_id;
+		$foods = Food::all();
+		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
+		$dayInweek = dateInweek($weekStartDate);
+		
+    	return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek]);	// Return response to client
+	}
+	public function addFood(Request $request)
 	{
 		date_default_timezone_set("Asia/Bangkok");
 		$userId = auth()->user()->id;
