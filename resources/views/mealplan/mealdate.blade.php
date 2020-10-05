@@ -60,8 +60,6 @@
                         <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
                     </div>
                 </div>
-                <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="right"
-                    title="" data-original-title="Tooltip on left">Hello</button>
             </div>
         </div>
     @endif
@@ -91,8 +89,6 @@
                         <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
                     </div>
                 </div>
-                <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="right"
-                    title="" data-original-title="Tooltip on left">Hello</button>
             </div>
         </div>
     @endif
@@ -122,48 +118,65 @@
                         <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
                     </div>
                 </div>
-                <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="right"
-                    title="" data-original-title="Tooltip on left">Hello</button>
             </div>
         </div>
     @endif
 
     <div class="col col-nutrition">
         <div class="mlabel">สารอาหาร</div>
-        <div class="energy-contanier">
-            <div class="nut-labels">
-                <span class="">พลังงาน</span>
-                <span class="">0 / 400-550 กิโลแคล</span>
+            <div class="energy">
+                <div class="nut-labels row">
+                    <div class="col col-lg-3">พลังงาน</div>
+                    <div class="col text-right"> 
+                     <span class="current"> 0 </span>
+                     <span> / </span>
+                     <span class="target"> //// </span>
+                     <span class="unit"> กิโลแคล </span>
+                    </div>
+                </div>
+                <div class="nut-bars">
+                    <div class="nut-bar danger selected">น้อยเกิน</div>
+                    <div class="nut-bar warning selected">น้อย</div>
+                    <div class="nut-bar ok selected">พอดี</div>
+                    <div class="nut-bar warning selected">มาก</div>
+                    <div class="nut-bar danger selected">มากเกิน</div>
+                </div>
             </div>
-            <div class="nut-tabs">
-                <div class="nut-tab danger selected">น้อยเกิน</div>
-                <div class="nut-tab warning selected">น้อย</div>
-                <div class="nut-tab ok selected">พอดี</div>
-                <div class="nut-tab warning selected">มาก</div>
-                <div class="nut-tab danger selected">มากเกิน</div>
+            <div class="protien">
+                <div class="nut-labels row">
+                    <div class="col col-lg-3">โปรตีน</div>
+                    <div class="col text-right"> 
+                     <span class="current"> 0 </span>
+                     <span> / </span>
+                     <span class="target"> 400-550 </span>
+                     <span class="unit"> แกรม </span>
+                    </div>
+                </div>
+                <div class="nut-bars">
+                    <div class="nut-bar danger ">น้อยเกิน</div>
+                    <div class="nut-bar warning ">น้อย</div>
+                    <div class="nut-bar ok ">พอดี</div>
+                    <div class="nut-bar warning ">มาก</div>
+                    <div class="nut-bar danger ">มากเกิน</div>
+                </div>
             </div>
-            <div class="nut-labels">
-                <span class="">พลังงาน</span>
-                <span class="">0 / 400-550 กิโลแคล</span>
+            <div class="fat">
+                <div class="nut-labels row">
+                    <div class="col col-lg-3">ไขมัน</div>
+                    <div class="col text-right"> 
+                     <span class="current"> 0 </span>
+                     <span> / </span>
+                     <span class="target"> 400-550 </span>
+                     <span class="unit"> แกรม </span>
+                    </div>
+                </div>
+                <div class="nut-bars">
+                    <div class="nut-bar danger ">น้อยเกิน</div>
+                    <div class="nut-bar warning ">น้อย</div>
+                    <div class="nut-bar ok ">พอดี</div>
+                    <div class="nut-bar warning ">มาก</div>
+                    <div class="nut-bar danger ">มากเกิน</div>
+                </div>
             </div>
-            <div class="nut-tabs">
-                <div class="nut-tab danger">น้อยเกิน</div>
-                <div class="nut-tab warning">น้อย</div>
-                <div class="nut-tab ok">พอดี</div>
-                <div class="nut-tab warning">มาก</div>
-                <div class="nut-tab danger">มากเกิน</div>
-            </div>
-            <div class="nut-labels">
-                <span class="">พลังงาน</span>
-                <span class="">0 / 400-550 กิโลแคล</span>
-            </div>
-            <div class="nut-tabs">
-                <div class="nut-tab danger">น้อยเกิน</div>
-                <div class="nut-tab warning">น้อย</div>
-                <div class="nut-tab ok">พอดี</div>
-                <div class="nut-tab warning">มาก</div>
-                <div class="nut-tab danger">มากเกิน</div>
-            </div>
-        </div>
     </div>
 </div>

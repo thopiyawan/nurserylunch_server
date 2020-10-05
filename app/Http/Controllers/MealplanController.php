@@ -36,18 +36,29 @@ class MealplanController extends Controller
 	}
 	public function editPlan(Request $request)							// Define the method name
     {
+    	$userId = auth()->user()->id;
+		$userSetting = Setting::find($userId);
 
 		$now = Carbon::now();
 		$weekStartDate = $now->startOfWeek()->format('Y-m-d');
 		$weekEndDate = $now->endOfWeek()->format('Y-m-d');
-		$userId = auth()->user()->id;
 		$in_groups = IngredientGroup::all();        
 		$schoolId = auth()->user()->school_id;
 		$foods = Food::all();
+		foreach($foods as $food)
+        {
+            $food->init();
+        }
 		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
 		$dayInweek = dateInweek($weekStartDate);
+
+		$targetNutrition = array(
+			'energy' => array(322.5, 645, 967.5, 1290),
+			'protien' => array(21.45, 25.05, 28.65, 32.35),
+			'fat' => array(6.275, 12.55, 18.825, 25.1),
+		);
 		
-    	return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek]);	// Return response to client
+    	return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'targetNutrition' =>$targetNutrition]);	// Return response to client
 	}
 	public function addFood(Request $request)
 	{

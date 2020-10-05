@@ -12,6 +12,7 @@
     --lightgray-fade : #eaeaea;
 
     /*FONT SIZE*/
+    --font-size-m2: 0.8rem;
     --font-size-m1: 0.9rem;
     --font-size-p1: 1.1rem;
     --font-size-p2: 1.2rem;
@@ -406,12 +407,13 @@ input[type=checkbox] {
     font-weight: 300;
 }
 .meal-panel .nut-labels{
-    margin-bottom: -2px;
+    margin-bottom: -7px;
+    font-size: var(--font-size-m2);
 }
-.meal-panel .nut-tabs{
+.meal-panel .nut-bars{
     margin-bottom: 10px;
 }
-.meal-panel .nut-tab{
+.meal-panel .nut-bar{
     background: #d8d8d8;
     border-radius: 8px;
     color: white !important;
@@ -421,9 +423,9 @@ input[type=checkbox] {
     width: 19.5%;
     margin-left: -1%;
 }
-.nut-tab.danger.selected{background: #c0392b;}
-.nut-tab.warning.selected{background: #f7931e;}
-.nut-tab.ok.selected{background: #7ac943;}
+.nut-bar.danger.selected{background: #c0392b;}
+.nut-bar.warning.selected{background: #f7931e;}
+.nut-bar.ok.selected{background: #7ac943;}
 
 .pull-right{
     float: right !important;

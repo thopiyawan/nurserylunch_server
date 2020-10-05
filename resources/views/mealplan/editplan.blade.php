@@ -32,7 +32,13 @@
                 @foreach ($foodList as $food)
                     <div class="ui-sortable food-list">
                         <div class="menu-body">
-                            <div class="col col-food-name" id={{ $food->id }}>{{ $food->food_thai }}</div>
+                            <div class="col col-food-name" 
+                                data-energy="{{$food->getEnergy()}}" 
+                                data-protien="{{$food->getProtien()}}"
+                                data-fat="{{$food->getFat()}}"
+                                id="{{$food->id}}">
+                                {{ $food->food_thai }}
+                            </div>
                             <div class="col col-delete">
                                 <a class="pull-right" data-toggle="modal" data-target="#editKidForm">
                                     <span><i class="fas fa-times"></i></span>
@@ -172,5 +178,16 @@
             });
         }
 
+        //calculate nutrition 
+        var targetNutrition = {!! json_encode($targetNutrition) !!};
+
+        console.log("HELLo KELLY");
+        console.log(targetNutrition);
+
+
+        $(".energy .target").text(targetNutrition["energy"][1] + "-" + targetNutrition["energy"][2]);
+        $(".protien .target").text(targetNutrition["protien"][1] + "-" + targetNutrition["protien"][2]);
+        $(".fat .target").text(targetNutrition["fat"][1] + "-" + targetNutrition["fat"][2]);
+        
     </script>
 @endsection
