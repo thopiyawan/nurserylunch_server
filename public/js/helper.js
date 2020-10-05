@@ -142,46 +142,6 @@ $(function () {
         }
     }
 
-    // $( ".ui-sortable" ).sortable();
-    // console.log("end sortable");
-
-    $(".ui-sortable").sortable({
-        cancel: ".ui-state-disabled",
-        connectWith: ".ui-sortable-meal",
-        cursor: "move",
-        cursorAt: { top: 5, left: 5 },
-        dropOnEmpty: false,
-        remove: onSortableRemove,
-        receive: onSortableReceive,
-
-    });
-
-    function onSortableRemove(event, ui){
-        var target = event.target;
-        console.log(ui);
-        if (target.classList.contains("food-list")) {
-            ui.item.clone(true).appendTo(target);
-        }
-    }
-
-    function onSortableReceive(event, ui){
-        console.log("onSortableReceive");
-        var item = ui.item;
-        console.log(event);
-        console.log(ui);
-
-        // $("<span>Test</span>").appendTo(item);
-    }
-
-
-    $('[data-toggle="tooltip"]').tooltip();
-
-    $(".col-delete").on('click', onColDeleteClick);
-    function onColDeleteClick(event){
-        console.log("on click");
-        $(this).parent().remove();
-        
-    }
 
     //------- CLASSROOM & KID SIDE MENU
     var path = window.location.pathname.split("/");

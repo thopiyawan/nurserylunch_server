@@ -135,11 +135,11 @@
                     </div>
                 </div>
                 <div class="nut-bars">
-                    <div class="nut-bar danger selected">น้อยเกิน</div>
-                    <div class="nut-bar warning selected">น้อย</div>
-                    <div class="nut-bar ok selected">พอดี</div>
-                    <div class="nut-bar warning selected">มาก</div>
-                    <div class="nut-bar danger selected">มากเกิน</div>
+                    <div class="nut-bar toolow danger">น้อยเกิน</div>
+                    <div class="nut-bar low warning">น้อย</div>
+                    <div class="nut-bar ok">พอดี</div>
+                    <div class="nut-bar high warning">มาก</div>
+                    <div class="nut-bar toohigh danger">มากเกิน</div>
                 </div>
             </div>
             <div class="protien">
@@ -153,11 +153,11 @@
                     </div>
                 </div>
                 <div class="nut-bars">
-                    <div class="nut-bar danger ">น้อยเกิน</div>
-                    <div class="nut-bar warning ">น้อย</div>
-                    <div class="nut-bar ok ">พอดี</div>
-                    <div class="nut-bar warning ">มาก</div>
-                    <div class="nut-bar danger ">มากเกิน</div>
+                    <div class="nut-bar toolow danger">น้อยเกิน</div>
+                    <div class="nut-bar low warning">น้อย</div>
+                    <div class="nut-bar ok">พอดี</div>
+                    <div class="nut-bar high warning">มาก</div>
+                    <div class="nut-bar toohigh danger">มากเกิน</div>
                 </div>
             </div>
             <div class="fat">
@@ -171,11 +171,11 @@
                     </div>
                 </div>
                 <div class="nut-bars">
-                    <div class="nut-bar danger ">น้อยเกิน</div>
-                    <div class="nut-bar warning ">น้อย</div>
-                    <div class="nut-bar ok ">พอดี</div>
-                    <div class="nut-bar warning ">มาก</div>
-                    <div class="nut-bar danger ">มากเกิน</div>
+                    <div class="nut-bar toolow danger">น้อยเกิน</div>
+                    <div class="nut-bar low warning">น้อย</div>
+                    <div class="nut-bar ok">พอดี</div>
+                    <div class="nut-bar high warning">มาก</div>
+                    <div class="nut-bar toohigh danger">มากเกิน</div>
                 </div>
             </div>
     </div>

@@ -178,16 +178,120 @@
             });
         }
 
+        //---- ui-sortable (drag and drop food) ----
+
+        $(".ui-sortable").sortable({
+            cancel: ".ui-state-disabled",
+            connectWith: ".ui-sortable-meal",
+            cursor: "move",
+            cursorAt: { top: 5, left: 5 },
+            dropOnEmpty: false,
+            remove: onSortableRemove,
+            receive: onSortableReceive,
+
+        });
+
+        function onSortableRemove(event, ui){
+            var target = event.target;
+            //console.log(ui);
+            if (target.classList.contains("food-list")) {
+                ui.item.clone(true).appendTo(target);
+            }
+        }
+
+        function onSortableReceive(event, ui){
+            //console.log(event);
+            //console.log(ui);
+
+            var parent = $(event.target).parents('.meal-panel');
+            calculateNutrition(parent);
+            //updateNutritionBar(parent);
+        }
+
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $(".col-delete").on('click', onColDeleteClick);
+        function onColDeleteClick(event){
+            console.log("on click");
+            $(this).parent().remove();
+            
+        }
+
+
         //calculate nutrition 
         var targetNutrition = {!! json_encode($targetNutrition) !!};
-
-        console.log("HELLo KELLY");
-        console.log(targetNutrition);
-
-
-        $(".energy .target").text(targetNutrition["energy"][1] + "-" + targetNutrition["energy"][2]);
-        $(".protien .target").text(targetNutrition["protien"][1] + "-" + targetNutrition["protien"][2]);
-        $(".fat .target").text(targetNutrition["fat"][1] + "-" + targetNutrition["fat"][2]);
+        initTarget();
         
+        
+        function initTarget(){
+            var keys = Object.keys(targetNutrition);
+            $.each(keys, function(){
+                var key = this;
+                var target = "."+key+" .target";
+                var scale = targetNutrition[key];
+                $(target).text(scale[1] + "-" + scale[2]);
+            });
+        }
+
+        function calculateNutrition(parent){
+            var sumEnergy = 0;
+            var sumProtien = 0;
+            var sumFat = 0;
+            var currentEnergyDom = parent.find(".energy .current");
+            var currentProtienDom = parent.find(".protien .current");
+            var currentFatDom = parent.find(".fat .current");
+            var allFoodLog = parent.find(".col-food-name");
+
+            allFoodLog.each(function( index ) {
+                sumEnergy += parseFloat($(this).attr("data-energy"));
+                sumProtien += parseFloat($(this).attr("data-protien"));
+                sumFat += parseFloat($(this).attr("data-fat"));
+            });
+            
+            currentEnergyDom.text(sumEnergy.toFixed(0));
+            currentProtienDom.text(sumProtien.toFixed(0));
+            currentFatDom.text(sumFat.toFixed(0));
+
+            updateNutritionBar(parent, "energy", sumEnergy);
+            updateNutritionBar(parent, "protien", sumProtien);
+            updateNutritionBar(parent, "fat", sumFat);
+
+        }
+
+        function updateNutritionBar(parent, key, sum){
+            // update nutirion bar
+            var scale = targetNutrition[key];
+            //console.log(scale);
+            var grade = "";
+            if (sum>=scale[3]){
+                grade = "toohigh";
+            }else if (sum>=scale[2]){
+                grade = "high";
+            }else if (sum>=scale[1]){
+                grade = "ok";
+            }else if (sum>=scale[0]){
+                grade = "low";
+            }else{
+                grade = "toolow";
+            }
+
+            parent.find("."+key).find(".nut-bar").removeClass("selected");
+            parent.find("."+key).find(".nut-bar."+grade).addClass("selected");
+
+
+            // var keys = Object.keys(targetNutrition);
+            // $.each(keys, function(){
+            //     var key = this;
+            //     var sum = 0;
+
+                
+            // });
+
+            
+        }
+
+
+
     </script>
 @endsection
