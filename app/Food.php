@@ -11,7 +11,7 @@ class Food extends Model
     //
 
     protected $energy;
-    protected $protien;
+    protected $protein;
     protected $fat;
 
 
@@ -19,7 +19,7 @@ class Food extends Model
     {
     	$nutrition = $this->nutritions;
     	$this->energy = $nutrition->energy;
-    	$this->protien = $nutrition->protien;
+    	$this->protein = $nutrition->protein;
     	$this->fat = $nutrition->fat;
     }
 
@@ -35,9 +35,9 @@ class Food extends Model
     {
 		return $this->energy;
     }
-    public function getProtien()
+    public function getProtein()
     {
-		return $this->protien;
+		return $this->protein;
     }
     public function getFat()
     {

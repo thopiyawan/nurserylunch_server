@@ -34,7 +34,7 @@
                         <div class="menu-body">
                             <div class="col col-food-name" 
                                 data-energy="{{$food->getEnergy()}}" 
-                                data-protien="{{$food->getProtien()}}"
+                                data-protein="{{$food->getProtein()}}"
                                 data-fat="{{$food->getFat()}}"
                                 id="{{$food->id}}">
                                 {{ $food->food_thai }}
@@ -236,25 +236,25 @@
 
         function calculateNutrition(parent){
             var sumEnergy = 0;
-            var sumProtien = 0;
+            var sumProtein = 0;
             var sumFat = 0;
             var currentEnergyDom = parent.find(".energy .current");
-            var currentProtienDom = parent.find(".protien .current");
+            var currentProteinDom = parent.find(".protein .current");
             var currentFatDom = parent.find(".fat .current");
             var allFoodLog = parent.find(".col-food-name");
 
             allFoodLog.each(function( index ) {
                 sumEnergy += parseFloat($(this).attr("data-energy"));
-                sumProtien += parseFloat($(this).attr("data-protien"));
+                sumProtein += parseFloat($(this).attr("data-protein"));
                 sumFat += parseFloat($(this).attr("data-fat"));
             });
             
             currentEnergyDom.text(sumEnergy.toFixed(0));
-            currentProtienDom.text(sumProtien.toFixed(0));
+            currentProteinDom.text(sumProtein.toFixed(0));
             currentFatDom.text(sumFat.toFixed(0));
 
             updateNutritionBar(parent, "energy", sumEnergy);
-            updateNutritionBar(parent, "protien", sumProtien);
+            updateNutritionBar(parent, "protein", sumProtein);
             updateNutritionBar(parent, "fat", sumFat);
 
         }

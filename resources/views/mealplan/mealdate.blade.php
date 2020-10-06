@@ -142,7 +142,7 @@
                     <div class="nut-bar toohigh danger">มากเกิน</div>
                 </div>
             </div>
-            <div class="protien">
+            <div class="protein">
                 <div class="nut-labels row">
                     <div class="col col-lg-3">โปรตีน</div>
                     <div class="col text-right"> 

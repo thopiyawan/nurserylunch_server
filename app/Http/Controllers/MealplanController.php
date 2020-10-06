@@ -54,7 +54,7 @@ class MealplanController extends Controller
 
 		$targetNutrition = array(
 			'energy' => array(322.5, 645, 967.5, 1290),
-			'protien' => array(21.45, 25.05, 28.65, 32.35),
+			'protein' => array(21.45, 25.05, 28.65, 32.35),
 			'fat' => array(6.275, 12.55, 18.825, 25.1),
 		);
 		
