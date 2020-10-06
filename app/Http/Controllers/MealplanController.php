@@ -279,7 +279,14 @@ class MealplanController extends Controller
 	}
 }
 function getLastLogs($userId,$weekStartDate,$weekEndDate){
-		$lastLog = DB::select('SELECT food_id, meal_code, food_thai, meal_date FROM food_logs INNER JOIN foods on food_logs.food_id = foods.id WHERE user_id = ? &&  food_logs.meal_date BETWEEN ? AND ?', [$userId, $weekStartDate, $weekEndDate]);
+		$lastLog = DB::select('
+			SELECT food_logs.food_id, food_logs.meal_code, foods.food_thai, food_logs.meal_date, 
+			nutritions.energy, nutritions.protein, nutritions.fat
+			FROM food_logs 
+			LEFT JOIN foods on food_logs.food_id = foods.id 
+			LEFT JOIN nutritions on food_logs.food_id = nutritions.food_id 
+			WHERE user_id = ? &&  food_logs.meal_date BETWEEN ? AND ?', 
+			[$userId, $weekStartDate, $weekEndDate]);
 	return $lastLog;
 }
 function dateInweek($weekStartDate){

@@ -183,7 +183,6 @@
         }
 
         //---- ui-sortable (drag and drop food) ----
-
         $(".ui-sortable").sortable({
             cancel: ".ui-state-disabled",
             connectWith: ".ui-sortable-meal",
@@ -197,19 +196,15 @@
 
         function onSortableRemove(event, ui){
             var target = event.target;
-            //console.log(ui);
             if (target.classList.contains("food-list")) {
                 ui.item.clone(true).appendTo(target);
             }
+            var parent = $(event.target).parents('.meal-panel');
         }
 
         function onSortableReceive(event, ui){
-            //console.log(event);
-            //console.log(ui);
-
             var parent = $(event.target).parents('.meal-panel');
             calculateNutrition(parent);
-            //updateNutritionBar(parent);
         }
 
 
@@ -217,17 +212,22 @@
 
         $(".col-delete").on('click', onColDeleteClick);
         function onColDeleteClick(event){
-            console.log("on click");
-            $(this).parent().remove();
-            
-        }
 
+            var parent = $(this).parents('.meal-panel');
+            $(this).parent().remove();
+            calculateNutrition(parent);
+        }
 
         //calculate nutrition 
         var targetNutrition = {!! json_encode($targetNutrition) !!};
+        initCalculation();
         initTarget();
         
-        
+        function initCalculation(){
+            $('.meal-panel').each(function(){
+                calculateNutrition($(this));
+            });
+        }
         function initTarget(){
             var keys = Object.keys(targetNutrition);
             $.each(keys, function(){
@@ -282,17 +282,6 @@
 
             parent.find("."+key).find(".nut-bar").removeClass("selected");
             parent.find("."+key).find(".nut-bar."+grade).addClass("selected");
-
-
-            // var keys = Object.keys(targetNutrition);
-            // $.each(keys, function(){
-            //     var key = this;
-            //     var sum = 0;
-
-                
-            // });
-
-            
         }
 
 

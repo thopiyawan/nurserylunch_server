@@ -12,7 +12,11 @@
                     @if ($food->meal_code == 1 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
-                                <div class="col col-food-name" id={{ $food->food_id }}>
+                                <div class="col col-food-name" 
+                                    data-energy="{{$food->energy}}" 
+                                    data-protein="{{$food->protein}}"
+                                    data-fat="{{$food->fat}}"
+                                    id="{{$food->food_id}}">
                                     {{ $food->food_thai }}
                                 </div>
                                 <div class="col col-delete">
@@ -43,7 +47,11 @@
                     @if ($food->meal_code == 2 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
-                                <div class="col col-food-name" id={{ $food->food_id }}>
+                                <div class="col col-food-name" 
+                                    data-energy="{{$food->energy}}" 
+                                    data-protein="{{$food->protein}}"
+                                    data-fat="{{$food->fat}}"
+                                    id="{{$food->food_id}}">
                                     {{ $food->food_thai }}
                                 </div>
                                 <div class="col col-delete">
@@ -72,7 +80,11 @@
                     @if ($food->meal_code == 3 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
-                                <div class="col col-food-name" id={{ $food->food_id }}>
+                                <div class="col col-food-name" 
+                                    data-energy="{{$food->energy}}" 
+                                    data-protein="{{$food->protein}}"
+                                    data-fat="{{$food->fat}}"
+                                    id="{{$food->food_id}}">
                                     {{ $food->food_thai }}
                                 </div>
                                 <div class="col col-delete">
@@ -101,7 +113,11 @@
                     @if ($food->meal_code == 4 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
-                                <div class="col col-food-name" id={{ $food->food_id }}>
+                                <div class="col col-food-name" 
+                                    data-energy="{{$food->energy}}" 
+                                    data-protein="{{$food->protein}}"
+                                    data-fat="{{$food->fat}}"
+                                    id="{{$food->food_id}}">
                                     {{ $food->food_thai }}
                                 </div>
                                 <div class="col col-delete">
