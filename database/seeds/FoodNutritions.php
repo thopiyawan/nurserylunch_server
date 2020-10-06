@@ -17,7 +17,7 @@ class FoodNutritions extends Seeder
             $nutrition = new Nutrition();
             $nutrition->food_id = $item[0];
             $nutrition->energy = $item[1];
-            $nutrition->protien = $item[2];
+            $nutrition->protein = $item[2];
             $nutrition->carbohydrate = $item[3];
             $nutrition->fat = $item[4];
             $nutrition->vitamin_a = $item[5];
