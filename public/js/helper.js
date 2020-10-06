@@ -2,7 +2,10 @@ console.log("in js");
 $(function () {
     //---- side menu
     $('#aside-menu').metisMenu();
-
+    $('#navigation').slimScroll({
+            height: '90vh',
+            opacity: 0.2,
+        });
     // --- MEAL PLAN ----
     $(".meat-select").selectpicker().on('loaded.bs.select', addIconToSelect(".meat-select", "")).on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
         addIconToSelect(".meat-select", this.value);

@@ -59,20 +59,26 @@ input[type=checkbox] {
 .checkbox input[type=checkbox]:checked + label::before{
     background-color: var(--primary);
 }
+.sidebar-scroll #aside-menu {
+    position: fixed;
+}
 #aside-menu {
     float: left;
     left: 0;
     padding: 20px 0px 0 0px;
-    position: fixed;
+    position: absolute;
     top: 62px;
     transition: none !important;
-    width: 270px;
+    width: 280px;
 }
 #aside-menu.center{
     padding: 20px 20px 0 20px;
 }
 #aside-menu .center{
     padding: 20px 20px 0 20px;
+}
+#aside-menu #navigation{
+    padding: 12px 14px 0 14px;
 }
 
 #aside-menu.p-t{
@@ -105,7 +111,7 @@ input[type=checkbox] {
 }
 #wrapper{
 	background: white;
-    margin-left: 270px;
+    margin-left: 280px;
     padding: 40px 40px;
     position: relative !important;
 	transition: none !important;
