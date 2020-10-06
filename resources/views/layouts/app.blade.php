@@ -28,7 +28,7 @@
 
 </head>
 
-<body class="fixed-navbar sidebar-scroll">
+<body class="fixed-navbar">
     <div id="app">
         @include('layouts.navbar')
         @yield('content')

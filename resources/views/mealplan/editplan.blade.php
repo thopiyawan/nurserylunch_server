@@ -5,51 +5,55 @@
     $day_in_week_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสดี", "ศุกร์"];
     $date_in_week = $dayInweek;
     @endphp
-
-    <aside id="aside-menu" class="center">
-        <!-- SER|ARCH SECTION  -->
-        <div class="m-b">
-            <h4 class="">ค้นหาเมนู</h4>
-            <input type="text" title="ค้นหาเมนู" placeholder="ค้นหาเมนู" name="searchMenu" id="searchMenu"
-                class="form-control">
-        </div>
-        <!-- FILTER SECTION  -->
-        <div class="m-b">
-            <h4 class="">ตัวกรอง</h4>
-            @foreach ($in_groups as $ig)
-                <select id="" class="{{ $ig->ingredient_group_eng_name }}-select in-group-select" multiple="multiple"
-                    data-style="btn-select-picker">
-                    @foreach ($ig->ingredients()->get() as $in)
-                        {{ $in->ingredient_name }}
-                        <option value="{{ $in->ingredient_name }}" data-icon="">{{ $in->ingredient_name }}</option>
+    <div class="sidebar-scroll">
+        <aside id="aside-menu" class="">
+        
+            <div id="navigation" style="overflow: hidden; width: auto; height: 100%;">
+                <!-- SER|ARCH SECTION  -->
+                <div class="m-b">
+                    <h4 class="">ค้นหาเมนู</h4>
+                    <input type="text" title="ค้นหาเมนู" placeholder="ค้นหาเมนู" name="searchMenu" id="searchMenu"
+                        class="form-control">
+                </div>
+                <!-- FILTER SECTION  -->
+                <div class="m-b">
+                    <h4 class="">ตัวกรอง</h4>
+                    @foreach ($in_groups as $ig)
+                        <select id="" class="{{ $ig->ingredient_group_eng_name }}-select in-group-select" multiple="multiple"
+                            data-style="btn-select-picker">
+                            @foreach ($ig->ingredients()->get() as $in)
+                                {{ $in->ingredient_name }}
+                                <option value="{{ $in->ingredient_name }}" data-icon="">{{ $in->ingredient_name }}</option>
+                            @endforeach
+                        </select>
                     @endforeach
-                </select>
-            @endforeach
-        </div>
-        <div class="m-b">
-            <h4 class="">ผลลัพธ์</h4>
-            <div class="">
-                @foreach ($foodList as $food)
-                    <div class="ui-sortable food-list">
-                        <div class="menu-body">
-                            <div class="col col-food-name" 
-                                data-energy="{{$food->getEnergy()}}" 
-                                data-protein="{{$food->getProtein()}}"
-                                data-fat="{{$food->getFat()}}"
-                                id="{{$food->id}}">
-                                {{ $food->food_thai }}
+                </div>
+                <div class="m-b">
+                    <h4 class="">ผลลัพธ์</h4>
+                    <div class="">
+                        @foreach ($foodList as $food)
+                            <div class="ui-sortable food-list">
+                                <div class="menu-body">
+                                    <div class="col col-food-name" 
+                                        data-energy="{{$food->getEnergy()}}" 
+                                        data-protein="{{$food->getProtein()}}"
+                                        data-fat="{{$food->getFat()}}"
+                                        id="{{$food->id}}">
+                                        {{ $food->food_thai }}
+                                    </div>
+                                    <div class="col col-delete">
+                                        <a class="pull-right" data-toggle="modal" data-target="#editKidForm">
+                                            <span><i class="fas fa-times"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col col-delete">
-                                <a class="pull-right" data-toggle="modal" data-target="#editKidForm">
-                                    <span><i class="fas fa-times"></i></span>
-                                </a>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
-                @endforeach
+                </div>
             </div>
-        </div>
-    </aside>
+        </aside>
+    </div>
     <div id="wrapper">
         <h1 class="page-title">แก้ไขเมนูอาหาร</h1>
         <div class="row">

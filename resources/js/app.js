@@ -5,8 +5,10 @@
  */
 
 require('./bootstrap');
+require('../../node_modules/jquery-slimscroll/jquery.slimscroll.min');
 require('select2');
 require('../../node_modules/bootstrap-select/dist/js/bootstrap-select.min');
+
 
 window.Vue = require('vue');
 

@@ -13,32 +13,12 @@
     <ul class="nav nav-tab main-level" id="">
         <li class="">
             <a  href="#" class="active" id="" aria-expanded="false" >
-                <span class="">ต่ำกว่า 1 ปี (ปกติ)</span>
+                <span class="">ต่ำกว่า 1 ปี</span>
             </a>
         </li>
         <li class="">
             <a  href="#" class="" id="" aria-expanded="false" >
-                <span class="">ต่ำกว่า 1 ปี (มุสลิม)</span>
-            </a>
-        </li>
-        <li class="">
-            <a  href="#" class="" id="" aria-expanded="false" >
-                <span class="">ต่ำกว่า 1 ปี (แพ้กุ้ง) </span>
-            </a>
-        </li>
-        <li class="">
-            <a  href="#" class="" id="" aria-expanded="false" >
-                <span class="">1 - 3 ปี (ปกติ)</span>
-            </a>
-        </li>
-        <li class="">
-            <a  href="#" class="" id="" aria-expanded="false" >
-                <span class="">1 - 3 ปี (มุสลิม)</span>
-            </a>
-        </li>
-        <li class="">
-            <a  href="#" class="" id="" aria-expanded="false" >
-                <span class="">1 - 3 ปี (แพ้กุ้ง) </span>
+                <span class="">1 - 3 ปี</span>
             </a>
         </li>
     </ul>
