@@ -15,6 +15,7 @@ class CreateDietaryReferenceIntakeTable extends Migration
     {
         Schema::create('dietary_reference_intake', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('year_condition');
             $table->float('energy')->default(0);
             $table->float('carb_lower')->default(0);;
             $table->float('carb_upper')->default(0);
