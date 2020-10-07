@@ -4,6 +4,7 @@ use App\Ingredient;
 use App\IngredientGroup;										// Import other classes
 use App\Http\Controllers\Controller;
 use App\Food;
+use App\FoodIngredient;
 use App\FoodLogs;
 use App\Setting;
 use App\EnergyLogs;
@@ -277,6 +278,43 @@ class MealplanController extends Controller
 		$dayInweek = dateInweek($startDate);
 		return view('mealplan.mealpanel', ['logs' => $foodLogs,'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
 	}
+
+	public function filterIngredient(Request $request){
+
+		$input= $request -> all();
+		$filterInput = $input['filterSelected'];
+		$allFilter = array();
+
+
+		if(isset($filterInput['meat'])){
+			foreach($filterInput['meat'] as $meatFilter){
+				array_push($allFilter, intval($meatFilter));
+			}
+		}
+
+		if(isset($filterInput['vegetable'])){
+			foreach($filterInput['vegetable'] as $vegetableFilter){
+				array_push($allFilter, intval($vegetableFilter));
+			}
+		}
+
+		if(isset($filterInput['protein'])){
+			foreach($filterInput['protein'] as $proteinFilter){
+				array_push($allFilter, intval($proteinFilter));
+			}
+		}
+
+		$filter = FoodIngredient::whereIn('ingredient_id', $allFilter)->get();	
+		$foodId = array();
+
+		foreach(	$filter as $food){
+			array_push($foodId, $food->food_id);
+		}
+
+		$foodFilter = Food::whereIn('id', $foodId)->get();	
+		return 'hello'
+	}
+
 }
 function getLastLogs($userId,$weekStartDate,$weekEndDate){
 		$lastLog = DB::select('

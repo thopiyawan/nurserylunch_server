@@ -19,12 +19,13 @@
                 <div class="m-b">
                     <h4 class="">ตัวกรอง</h4>
                     @foreach ($in_groups as $ig)
-                        <select id="food-select" name="food-select"
+                        {{ Debugbar::info($ig->ingredient_group_eng_name) }}
+                        <select id="" name="{{ $ig->ingredient_group_eng_name }}"
                             class="{{ $ig->ingredient_group_eng_name }}-select in-group-select" multiple="multiple"
                             data-style="btn-select-picker">
                             @foreach ($ig->ingredients()->get() as $in)
                                 {{ $in->ingredient_name }}
-                                <option value="{{ $in->ingredient_name }}" data-icon="">{{ $in->ingredient_name }}</option>
+                                <option value="{{ $in->id }}" data-icon="">{{ $in->ingredient_name }}</option>
                             @endforeach
                         </select>
                     @endforeach
@@ -291,20 +292,46 @@
         }
 
 
-        let fillterSelect = [];
+        let fillterSelect = {
+            meat: [],
+            vegetable: [],
+            protein: []
+        }
 
-        $('select[name="food-select"]').change(function() {
-            let value = $(this).val();
-            let
+        $('select[name="meat"]').change(function() {
+            let values = $(this).val();
+            fillterSelect['meat'] = values
+            filterFoodList(fillterSelect)
+        });
+        $('select[name="vegetable"]').change(function() {
+            let values = $(this).val();
+            fillterSelect['vegetable'] = values
+            filterFoodList(fillterSelect)
+        });
+        $('select[name="protein"]').change(function() {
+            let values = $(this).val();
+            fillterSelect['protein'] = values
+            filterFoodList(fillterSelect)
         });
 
-
-
-
-
-
-        // var value = e.options[e.selectedIndex].value;
-        // var text = e.options[e.selectedIndex].text;
+        function filterFoodList(fillterSelect) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/mealplan/filterIngredient',
+                data: {
+                    filterSelected: fillterSelect
+                },
+                success: function(data) {
+                    //location.reload();
+                    alert(data)
+                }
+            });
+        }
 
     </script>
 @endsection

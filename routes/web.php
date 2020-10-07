@@ -16,14 +16,14 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {return view('welcome');});
 Route::get('user', 'UserController@index');
 
-
 Auth::routes();
 Route::get('/', 'MealplanController@showPlan')->middleware('auth');
 Route::get('/mealplan/edit', 'MealplanController@editPlan')->middleware('auth');
 Route::get('/kids', 'KidController@showClassroom')->middleware('auth');
-Route::get('/download', function () {return view('download');})->middleware('auth');
+Route::get('/download', function () {
+return view('download');
+})->middleware('auth');
 Route::get('/setting', 'UserController@setting')->middleware('auth');
-
 
 Route::post('/setting', 'UserController@updateSetting');
 
@@ -50,7 +50,8 @@ Route::post('/kid/creategrowth/{id}', 'KidController@createGrowth')->name('kid.c
 Route::post('/kid/editgrowth/{id}', 'KidController@editGrowth')->name('kid.editgrowth');
 Route::get('/kid/deletegrowth/{id}', 'KidController@deleteGrowth')->name('kid.deletegrowth');
 
-
 Route::post('/mealplan/foodlogs', 'MealplanController@addFood');
 
 Route::post('/mealplan/dateselect', 'MealplanController@dateSelect');
+
+Route::post('/mealplan/filterIngredient', 'MealplanController@filterIngredient');
