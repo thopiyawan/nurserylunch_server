@@ -7,7 +7,7 @@
     @endphp
     <div class="sidebar-scroll">
         <aside id="aside-menu" class="">
-        
+
             <div id="navigation" style="overflow: hidden; width: auto; height: 100%;">
                 <!-- SER|ARCH SECTION  -->
                 <div class="m-b">
@@ -19,7 +19,8 @@
                 <div class="m-b">
                     <h4 class="">ตัวกรอง</h4>
                     @foreach ($in_groups as $ig)
-                        <select id="" class="{{ $ig->ingredient_group_eng_name }}-select in-group-select" multiple="multiple"
+                        <select id="food-select" name="food-select"
+                            class="{{ $ig->ingredient_group_eng_name }}-select in-group-select" multiple="multiple"
                             data-style="btn-select-picker">
                             @foreach ($ig->ingredients()->get() as $in)
                                 {{ $in->ingredient_name }}
@@ -34,11 +35,9 @@
                         @foreach ($foodList as $food)
                             <div class="ui-sortable food-list">
                                 <div class="menu-body">
-                                    <div class="col col-food-name" 
-                                        data-energy="{{$food->getEnergy()}}" 
-                                        data-protein="{{$food->getProtein()}}"
-                                        data-fat="{{$food->getFat()}}"
-                                        id="{{$food->id}}">
+                                    <div class="col col-food-name" data-energy="{{ $food->getEnergy() }}"
+                                        data-protein="{{ $food->getProtein() }}" data-fat="{{ $food->getFat() }}"
+                                        id="{{ $food->id }}">
                                         {{ $food->food_thai }}
                                     </div>
                                     <div class="col col-delete">
@@ -187,14 +186,17 @@
             cancel: ".ui-state-disabled",
             connectWith: ".ui-sortable-meal",
             cursor: "move",
-            cursorAt: { top: 5, left: 5 },
+            cursorAt: {
+                top: 5,
+                left: 5
+            },
             dropOnEmpty: false,
             remove: onSortableRemove,
             receive: onSortableReceive,
 
         });
 
-        function onSortableRemove(event, ui){
+        function onSortableRemove(event, ui) {
             var target = event.target;
             if (target.classList.contains("food-list")) {
                 ui.item.clone(true).appendTo(target);
@@ -202,7 +204,7 @@
             var parent = $(event.target).parents('.meal-panel');
         }
 
-        function onSortableReceive(event, ui){
+        function onSortableReceive(event, ui) {
             var parent = $(event.target).parents('.meal-panel');
             calculateNutrition(parent);
         }
@@ -211,7 +213,8 @@
         $('[data-toggle="tooltip"]').tooltip();
 
         $(".col-delete").on('click', onColDeleteClick);
-        function onColDeleteClick(event){
+
+        function onColDeleteClick(event) {
 
             var parent = $(this).parents('.meal-panel');
             $(this).parent().remove();
@@ -219,26 +222,29 @@
         }
 
         //calculate nutrition 
-        var targetNutrition = {!! json_encode($targetNutrition) !!};
+        var targetNutrition = JSON.parse('<?php echo json_encode($targetNutrition); ?>')
+
         initCalculation();
         initTarget();
-        
-        function initCalculation(){
-            $('.meal-panel').each(function(){
+
+
+        function initCalculation() {
+            $('.meal-panel').each(function() {
                 calculateNutrition($(this));
             });
         }
-        function initTarget(){
+
+        function initTarget() {
             var keys = Object.keys(targetNutrition);
-            $.each(keys, function(){
+            $.each(keys, function() {
                 var key = this;
-                var target = "."+key+" .target";
+                var target = "." + key + " .target";
                 var scale = targetNutrition[key];
                 $(target).text(scale[1] + "-" + scale[2]);
             });
         }
 
-        function calculateNutrition(parent){
+        function calculateNutrition(parent) {
             var sumEnergy = 0;
             var sumProtein = 0;
             var sumFat = 0;
@@ -247,12 +253,12 @@
             var currentFatDom = parent.find(".fat .current");
             var allFoodLog = parent.find(".col-food-name");
 
-            allFoodLog.each(function( index ) {
+            allFoodLog.each(function(index) {
                 sumEnergy += parseFloat($(this).attr("data-energy"));
                 sumProtein += parseFloat($(this).attr("data-protein"));
                 sumFat += parseFloat($(this).attr("data-fat"));
             });
-            
+
             currentEnergyDom.text(sumEnergy.toFixed(0));
             currentProteinDom.text(sumProtein.toFixed(0));
             currentFatDom.text(sumFat.toFixed(0));
@@ -263,28 +269,42 @@
 
         }
 
-        function updateNutritionBar(parent, key, sum){
+        function updateNutritionBar(parent, key, sum) {
             // update nutirion bar
             var scale = targetNutrition[key];
             //console.log(scale);
             var grade = "";
-            if (sum>=scale[3]){
+            if (sum >= scale[3]) {
                 grade = "toohigh";
-            }else if (sum>=scale[2]){
+            } else if (sum >= scale[2]) {
                 grade = "high";
-            }else if (sum>=scale[1]){
+            } else if (sum >= scale[1]) {
                 grade = "ok";
-            }else if (sum>=scale[0]){
+            } else if (sum >= scale[0]) {
                 grade = "low";
-            }else{
+            } else {
                 grade = "toolow";
             }
 
-            parent.find("."+key).find(".nut-bar").removeClass("selected");
-            parent.find("."+key).find(".nut-bar."+grade).addClass("selected");
+            parent.find("." + key).find(".nut-bar").removeClass("selected");
+            parent.find("." + key).find(".nut-bar." + grade).addClass("selected");
         }
 
 
+        let fillterSelect = [];
+
+        $('select[name="food-select"]').change(function() {
+            let value = $(this).val();
+            let
+        });
+
+
+
+
+
+
+        // var value = e.options[e.selectedIndex].value;
+        // var text = e.options[e.selectedIndex].text;
 
     </script>
 @endsection
