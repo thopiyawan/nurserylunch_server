@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PurAndCookUnit::class);
         $this->call(RecipeSeeder::class);
         $this->call(DirSeeder::class);
+        $this->call(FoodIngredientSeeder::class);
     }
 }
