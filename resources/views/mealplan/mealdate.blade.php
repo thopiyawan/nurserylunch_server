@@ -12,11 +12,9 @@
                     @if ($food->meal_code == 1 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
-                                <div class="col col-food-name" 
-                                    data-energy="{{$food->energy}}" 
-                                    data-protein="{{$food->protein}}"
-                                    data-fat="{{$food->fat}}"
-                                    id="{{$food->food_id}}">
+                                <div class="col col-food-name" data-energy="{{ $food->energy }}"
+                                    data-protein="{{ $food->protein }}" data-fat="{{ $food->fat }}"
+                                    id="{{ $food->food_id }}">
                                     {{ $food->food_thai }}
                                 </div>
                                 <div class="col col-delete">
@@ -47,11 +45,9 @@
                     @if ($food->meal_code == 2 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
-                                <div class="col col-food-name" 
-                                    data-energy="{{$food->energy}}" 
-                                    data-protein="{{$food->protein}}"
-                                    data-fat="{{$food->fat}}"
-                                    id="{{$food->food_id}}">
+                                <div class="col col-food-name" data-energy="{{ $food->energy }}"
+                                    data-protein="{{ $food->protein }}" data-fat="{{ $food->fat }}"
+                                    id="{{ $food->food_id }}">
                                     {{ $food->food_thai }}
                                 </div>
                                 <div class="col col-delete">
@@ -80,11 +76,9 @@
                     @if ($food->meal_code == 3 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
-                                <div class="col col-food-name" 
-                                    data-energy="{{$food->energy}}" 
-                                    data-protein="{{$food->protein}}"
-                                    data-fat="{{$food->fat}}"
-                                    id="{{$food->food_id}}">
+                                <div class="col col-food-name" data-energy="{{ $food->energy }}"
+                                    data-protein="{{ $food->protein }}" data-fat="{{ $food->fat }}"
+                                    id="{{ $food->food_id }}">
                                     {{ $food->food_thai }}
                                 </div>
                                 <div class="col col-delete">
@@ -113,11 +107,9 @@
                     @if ($food->meal_code == 4 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
-                                <div class="col col-food-name" 
-                                    data-energy="{{$food->energy}}" 
-                                    data-protein="{{$food->protein}}"
-                                    data-fat="{{$food->fat}}"
-                                    id="{{$food->food_id}}">
+                                <div class="col col-food-name" data-energy="{{ $food->energy }}"
+                                    data-protein="{{ $food->protein }}" data-fat="{{ $food->fat }}"
+                                    id="{{ $food->food_id }}">
                                     {{ $food->food_thai }}
                                 </div>
                                 <div class="col col-delete">
@@ -140,59 +132,59 @@
 
     <div class="col col-nutrition">
         <div class="mlabel">สารอาหาร</div>
-            <div class="energy">
-                <div class="nut-labels row">
-                    <div class="col col-lg-3">พลังงาน</div>
-                    <div class="col text-right"> 
-                     <span class="current"> 0 </span>
-                     <span> / </span>
-                     <span class="target"> //// </span>
-                     <span class="unit"> กิโลแคล </span>
-                    </div>
-                </div>
-                <div class="nut-bars">
-                    <div class="nut-bar toolow danger">น้อยเกิน</div>
-                    <div class="nut-bar low warning">น้อย</div>
-                    <div class="nut-bar ok">พอดี</div>
-                    <div class="nut-bar high warning">มาก</div>
-                    <div class="nut-bar toohigh danger">มากเกิน</div>
+        <div class="energy">
+            <div class="nut-labels row">
+                <div class="col col-lg-3">พลังงาน</div>
+                <div class="col text-right">
+                    <span class="current"> 0 </span>
+                    <span> / </span>
+                    <span class="target"> //// </span>
+                    <span class="unit"> กิโลแคล </span>
                 </div>
             </div>
-            <div class="protein">
-                <div class="nut-labels row">
-                    <div class="col col-lg-3">โปรตีน</div>
-                    <div class="col text-right"> 
-                     <span class="current"> 0 </span>
-                     <span> / </span>
-                     <span class="target"> 400-550 </span>
-                     <span class="unit"> แกรม </span>
-                    </div>
-                </div>
-                <div class="nut-bars">
-                    <div class="nut-bar toolow danger">น้อยเกิน</div>
-                    <div class="nut-bar low warning">น้อย</div>
-                    <div class="nut-bar ok">พอดี</div>
-                    <div class="nut-bar high warning">มาก</div>
-                    <div class="nut-bar toohigh danger">มากเกิน</div>
+            <div class="nut-bars">
+                <div class="nut-bar toolow danger">น้อยเกิน</div>
+                <div class="nut-bar low warning">น้อย</div>
+                <div class="nut-bar ok">พอดี</div>
+                <div class="nut-bar high warning">มาก</div>
+                <div class="nut-bar toohigh danger">มากเกิน</div>
+            </div>
+        </div>
+        <div class="protein">
+            <div class="nut-labels row">
+                <div class="col col-lg-3">โปรตีน</div>
+                <div class="col text-right">
+                    <span class="current"> 0 </span>
+                    <span> / </span>
+                    <span class="target"> 400-550 </span>
+                    <span class="unit"> แกรม </span>
                 </div>
             </div>
-            <div class="fat">
-                <div class="nut-labels row">
-                    <div class="col col-lg-3">ไขมัน</div>
-                    <div class="col text-right"> 
-                     <span class="current"> 0 </span>
-                     <span> / </span>
-                     <span class="target"> 400-550 </span>
-                     <span class="unit"> แกรม </span>
-                    </div>
-                </div>
-                <div class="nut-bars">
-                    <div class="nut-bar toolow danger">น้อยเกิน</div>
-                    <div class="nut-bar low warning">น้อย</div>
-                    <div class="nut-bar ok">พอดี</div>
-                    <div class="nut-bar high warning">มาก</div>
-                    <div class="nut-bar toohigh danger">มากเกิน</div>
+            <div class="nut-bars">
+                <div class="nut-bar toolow danger">น้อยเกิน</div>
+                <div class="nut-bar low warning">น้อย</div>
+                <div class="nut-bar ok">พอดี</div>
+                <div class="nut-bar high warning">มาก</div>
+                <div class="nut-bar toohigh danger">มากเกิน</div>
+            </div>
+        </div>
+        <div class="fat">
+            <div class="nut-labels row">
+                <div class="col col-lg-3">ไขมัน</div>
+                <div class="col text-right">
+                    <span class="current"> 0 </span>
+                    <span> / </span>
+                    <span class="target"> 400-550 </span>
+                    <span class="unit"> แกรม </span>
                 </div>
             </div>
+            <div class="nut-bars">
+                <div class="nut-bar toolow danger">น้อยเกิน</div>
+                <div class="nut-bar low warning">น้อย</div>
+                <div class="nut-bar ok">พอดี</div>
+                <div class="nut-bar high warning">มาก</div>
+                <div class="nut-bar toohigh danger">มากเกิน</div>
+            </div>
+        </div>
     </div>
 </div>

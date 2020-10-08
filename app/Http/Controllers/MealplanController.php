@@ -190,7 +190,6 @@ class MealplanController extends Controller
 				$data['food_type'] = 1;
 				$data['meal_date'] = $mealDate;
 				$data['school_id'] = $schoolId;
-				Debugbar::info($data);
 				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 1)->exists();
 				if($logExists){
 					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 1)->update($data);
@@ -207,7 +206,6 @@ class MealplanController extends Controller
 				$data['food_type'] = 1;
 				$data['meal_date'] = $mealDate;
 				$data['school_id'] = $schoolId;
-				Debugbar::info($data);
 				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 2)->exists();
 				if($logExists){
 					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 2)->update($data);
@@ -224,7 +222,6 @@ class MealplanController extends Controller
 				$data['food_type'] = 1;
 				$data['meal_date'] = $mealDate;
 				$data['school_id'] = $schoolId;
-				Debugbar::info($data);
 				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 3)->exists();
 				if($logExists){
 					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 3)->update($data);
@@ -241,7 +238,6 @@ class MealplanController extends Controller
 				$data['food_type'] = 1;
 				$data['meal_date'] = $mealDate;
 				$data['school_id'] = $schoolId;
-				Debugbar::info($data);
 				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 4)->exists();
 				if($logExists){
 					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 4)->update($data);
@@ -280,23 +276,34 @@ class MealplanController extends Controller
 	}
 
 	public function filterIngredient(Request $request){
+		
 
 		$input= $request -> all();
-		$filterInput = $input['filterSelected'];
-		$allFilter = array();
-
-
+		$foodFilter = [];
+		$filterInput = [];
+		$allFilter = array();		
+		
+		//check if have filterSelected from user  
+		if(isset($input['filterSelected'])){
+			$filterInput = $input['filterSelected'];
+		}
+		
+		//check if have filter by meat from user
 		if(isset($filterInput['meat'])){
 			foreach($filterInput['meat'] as $meatFilter){
 				array_push($allFilter, intval($meatFilter));
 			}
 		}
 
+		//check if have filter by vegetabel from user
+		
 		if(isset($filterInput['vegetable'])){
 			foreach($filterInput['vegetable'] as $vegetableFilter){
 				array_push($allFilter, intval($vegetableFilter));
 			}
 		}
+
+		//check if have filter by protein from user
 
 		if(isset($filterInput['protein'])){
 			foreach($filterInput['protein'] as $proteinFilter){
@@ -304,15 +311,28 @@ class MealplanController extends Controller
 			}
 		}
 
+		//get food_id that filter 
 		$filter = FoodIngredient::whereIn('ingredient_id', $allFilter)->get();	
 		$foodId = array();
+
 
 		foreach(	$filter as $food){
 			array_push($foodId, $food->food_id);
 		}
 
-		$foodFilter = Food::whereIn('id', $foodId)->get();	
-		return 'hello'
+		//checke if have filter return food that filtered 
+		//in case of not have any filted will return all food --> set by default 
+		if(isset($input['filterSelected'])){
+			$foodFilter = Food::whereIn('id', $foodId)->get();	
+		}else{
+			$foodFilter = Food::all();
+		}
+		foreach($foodFilter as $food)
+        {
+            $food->init();
+				}
+				
+		return view('mealplan.filterresult', ['foodList' => $foodFilter]);	
 	}
 
 }

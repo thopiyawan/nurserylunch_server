@@ -19,7 +19,6 @@
                 <div class="m-b">
                     <h4 class="">ตัวกรอง</h4>
                     @foreach ($in_groups as $ig)
-                        {{ Debugbar::info($ig->ingredient_group_eng_name) }}
                         <select id="" name="{{ $ig->ingredient_group_eng_name }}"
                             class="{{ $ig->ingredient_group_eng_name }}-select in-group-select" multiple="multiple"
                             data-style="btn-select-picker">
@@ -32,7 +31,7 @@
                 </div>
                 <div class="m-b">
                     <h4 class="">ผลลัพธ์</h4>
-                    <div class="">
+                    <div class="" id="filter-result">
                         @foreach ($foodList as $food)
                             <div class="ui-sortable food-list">
                                 <div class="menu-body">
@@ -327,8 +326,7 @@
                     filterSelected: fillterSelect
                 },
                 success: function(data) {
-                    //location.reload();
-                    alert(data)
+                    $("#filter-result").html(data);
                 }
             });
         }
