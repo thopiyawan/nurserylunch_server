@@ -54,23 +54,28 @@
         </aside>
     </div>
     <div id="wrapper">
-        <h1 class="page-title">แก้ไขเมนูอาหาร</h1>
+        <div class="row m-b">
+            <div class="col-lg-2">
+                <h1 class="page-title"> แก้ไขเมนูอาหาร </h1>
+            </div>
+            <div class="col-lg-3 heading-p-t">
+                <h3>
+                    <i class="fas fa-calendar-alt color-gray"></i>
+                    <span id="startDate"></span>
+                    <span id="startDate"></span>
+                    <span> - </span>
+                    <span id="endDate"></span>
+                </h3>
+            </div>
+            <div class="col-lg-4 heading-p-t">
+                <h3>
+                    <span><i class="fas fa-user-friends color-gray"></i></span>
+                    <span> เด็กอายุต่ำกว่า 1 ปี </span>
+                </h3>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-lg-3">
-                <span><i class="far fa-calendar-alt"></i></span>
-                <span id="startDate"></span>
-                <span id="startDate"></span>
-                <span> - </span>
-                <span id="endDate"></span>
-            </div>
-            <div class="col-lg-3">
-                <span><i class="fas fa-user-friends"></i></span>
-                <span> เด็กอายุต่ำกว่า 1 ปี </span>
-            </div>
-            <div class="col-lg-3">
-                <span><i class="fas fa-utensils"></i></i></span>
-                <span> อาหารปกติ</span>
-            </div>
+            
         </div>
         @foreach ($day_in_week as $key => $day)
             @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>
@@ -103,8 +108,15 @@
         $('.meal-panel.row.wednesday').attr("data-date", wednesdayDate)
         $('.meal-panel.row.thursday').attr("data-date", thursdayDate)
         $('.meal-panel.row.friday').attr("data-date", fridayDate)
-        $('#startDate').text(mondayDate.toLocaleDateString());
-        $('#endDate').text(fridayDate.toLocaleDateString());
+        $('#startDate').text(mondayDate.toLocaleDateString('th-TH', {
+              year: '2-digit',
+              month: 'short',
+              day: 'numeric',}))
+        $('#endDate').text(fridayDate.toLocaleDateString('th-TH', {
+              year: '2-digit',
+              month: 'short',
+              day: 'numeric',}))
+
 
         function handleClick() {
             let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];

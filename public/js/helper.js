@@ -57,6 +57,7 @@ $(function() {
         showOtherMonths: true,
         selectOtherMonths: true,
         showButtonPanel: true,
+        isBuddhist: true,
         onSelect: function(dateText, inst) {
             var date = $(this).datepicker("getDate");
             startDate = new Date(
@@ -69,13 +70,18 @@ $(function() {
                 date.getMonth(),
                 date.getDate() - date.getDay() + 7
             );
-            var dateFormat =
-                inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
             $("#startDate").text(
-                $.datepicker.formatDate(dateFormat, startDate, inst.settings)
+                startDate.toLocaleDateString('th-TH', {
+                year: '2-digit',
+                month: 'short',
+                day: 'numeric',})
             );
             $("#endDate").text(
-                $.datepicker.formatDate(dateFormat, endDate, inst.settings)
+                endDate.toLocaleDateString('th-TH', {
+                year: '2-digit',
+                month: 'short',
+                day: 'numeric',})
             );
             var mondayDate = new Date(
                 date.getFullYear(),
@@ -151,8 +157,8 @@ $(function() {
     });
     $.datepicker.regional["th"] = {
         closeText: "ปิด",
-        prevText: "เดือนที่แล้ว",
-        nextText: "เดือนหน้า;",
+        prevText: "",
+        nextText: ";",
         currentText: "สัปดาห์นี้",
         monthNames: [
             "มกราคม",
@@ -194,11 +200,11 @@ $(function() {
         dayNamesShort: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"],
         dayNamesMin: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"],
         weekHeader: "อาทิตย์",
-        dateFormat: "dd/mm/yy",
+        dateFormat: "dd M y",
         firstDay: 1,
         isRTL: false,
         showMonthAfterYear: false,
-        yearSuffix: ""
+        yearRange: '+443:+543'
     };
     $.datepicker.setDefaults($.datepicker.regional["th"]);
 
