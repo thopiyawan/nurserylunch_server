@@ -75,7 +75,7 @@
             </div>
         </div>
         <div class="row">
-            
+
         </div>
         @foreach ($day_in_week as $key => $day)
             @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>
@@ -109,13 +109,15 @@
         $('.meal-panel.row.thursday').attr("data-date", thursdayDate)
         $('.meal-panel.row.friday').attr("data-date", fridayDate)
         $('#startDate').text(mondayDate.toLocaleDateString('th-TH', {
-              year: '2-digit',
-              month: 'short',
-              day: 'numeric',}))
+            year: '2-digit',
+            month: 'short',
+            day: 'numeric',
+        }))
         $('#endDate').text(fridayDate.toLocaleDateString('th-TH', {
-              year: '2-digit',
-              month: 'short',
-              day: 'numeric',}))
+            year: '2-digit',
+            month: 'short',
+            day: 'numeric',
+        }))
 
 
         function handleClick() {
@@ -322,6 +324,11 @@
         $('select[name="protein"]').change(function() {
             let values = $(this).val();
             fillterSelect['protein'] = values
+            filterFoodList(fillterSelect)
+        });
+        $('select[name="fruit"]').change(function() {
+            let values = $(this).val();
+            fillterSelect['fruit'] = values
             filterFoodList(fillterSelect)
         });
 

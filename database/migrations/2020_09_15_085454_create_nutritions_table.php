@@ -24,6 +24,7 @@ class CreateNutritionsTable extends Migration
             $table->float('vitamin_a');
             $table->float('vitamin_b1');
             $table->float('vitamin_b2');
+            $table->float('vitamin_c');
             $table->float('iron');
             $table->float('zine');
             $table->float('calcium');

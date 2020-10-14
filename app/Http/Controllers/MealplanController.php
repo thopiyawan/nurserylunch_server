@@ -279,6 +279,7 @@ class MealplanController extends Controller
 		
 
 		$input= $request -> all();
+		Debugbar::info($input);
 		$foodFilter = [];
 		$filterInput = [];
 		$allFilter = array();		
@@ -310,6 +311,15 @@ class MealplanController extends Controller
 				array_push($allFilter, intval($proteinFilter));
 			}
 		}
+
+		if(isset($filterInput['fruit'])){
+			foreach($filterInput['fruit'] as $proteinFilter){
+				array_push($allFilter, intval($proteinFilter));
+			}
+		}
+
+
+		
 
 		//get food_id that filter 
 		$filter = FoodIngredient::whereIn('ingredient_id', $allFilter)->get();	

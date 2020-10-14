@@ -41,6 +41,19 @@ $(function() {
             addIconToSelect(".protein-select", this.value);
         });
 
+    $(".fruit-select")
+        .selectpicker()
+        .on("loaded.bs.select", addIconToSelect(".fruit-select", ""))
+        .on("changed.bs.select", function(
+            e,
+            clickedIndex,
+            isSelected,
+            previousValue
+        ) {
+            addIconToSelect(".fruit-select", this.value);
+        });
+        
+
     // --- date picker in week ---
     var startDate;
     var endDate;
@@ -235,6 +248,7 @@ $(function() {
     //--
 
     function addIconToSelect(className, val) {
+        console.log(className)
         var icon = "";
         var title = "";
         if (className == ".meat-select") {
@@ -246,6 +260,9 @@ $(function() {
         } else if (className == ".protein-select") {
             icon = "<i class='fas fa-egg'></i> ";
             title = "โปรตีน";
+        } else if(className ==".fruit-select"){
+            icon = "<i class='fas fa-couch'></i> ";
+            title = "ผลไม้";
         }
 
         if (val == "") {

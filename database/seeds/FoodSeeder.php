@@ -18,6 +18,7 @@ class FoodSeeder extends Seeder
         $csv = array_map('str_getcsv', file('database/seeds/database/food_data.csv'));
         foreach ($csv as $key => $item) {
             $food = new Food();
+            $food->id = $item[0];
             $food->food_group = $item[1];
             $food->food_thai = $item[2];
             $food->food_eng = $item[3];

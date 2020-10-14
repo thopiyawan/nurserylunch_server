@@ -23,13 +23,14 @@ class FoodNutritions extends Seeder
             $nutrition->vitamin_a = $item[5];
             $nutrition->vitamin_b1 = $item[6];
             $nutrition->vitamin_b2 = $item[7];
-            $nutrition->iron = $item[8];
-            $nutrition->zine = $item[9];
-            $nutrition->calcium = $item[10];
-            $nutrition->phosphorus = $item[11];
-            $nutrition->fiber = $item[12];
-            $nutrition->sodium = $item[13];
-            $nutrition->sugar = $item[14];
+            $nutrition->vitamin_c = $item[8];
+            $nutrition->iron = $item[9];
+            $nutrition->zine = $item[10];
+            $nutrition->calcium = $item[11];
+            $nutrition->phosphorus = $item[12];
+            $nutrition->fiber = $item[13];
+            $nutrition->sodium = $item[14];
+            $nutrition->sugar = $item[15];
             $nutrition->save();
         }
     }
