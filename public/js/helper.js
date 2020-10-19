@@ -66,6 +66,7 @@ $(function() {
         }, 1);
     };
 
+
     $("#week-picker").datepicker({
         showOtherMonths: true,
         selectOtherMonths: true,
@@ -148,8 +149,6 @@ $(function() {
                     }
                 },
                 success: function(data) {
-                    console.log("dkjfjd");
-                    console.log(data);
                     $("#meal-plan").html(data);
                 }
             });
@@ -164,7 +163,6 @@ $(function() {
             selectCurrentWeek();
         },
         _gotoToday: function(id) {
-            console.log("in go to today");
             $(".ui-datepicker-current-day").click();
         }
     });
@@ -248,7 +246,6 @@ $(function() {
     //--
 
     function addIconToSelect(className, val) {
-        console.log(className)
         var icon = "";
         var title = "";
         if (className == ".meat-select") {

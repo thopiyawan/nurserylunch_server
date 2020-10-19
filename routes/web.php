@@ -55,3 +55,4 @@ Route::post('/mealplan/foodlogs', 'MealplanController@addFood');
 Route::post('/mealplan/dateselect', 'MealplanController@dateSelect');
 
 Route::post('/mealplan/filterIngredient', 'MealplanController@filterIngredient');
+Route::get('/mealplan/livesearch', 'MealplanController@liveSearch');
