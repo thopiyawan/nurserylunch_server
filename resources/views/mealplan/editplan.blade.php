@@ -93,6 +93,7 @@
 @section('script')
     <script type="application/javascript">
         // your code
+        localStorage.setItem("weekHandle", 1)
         let mondayDate = new Date(localStorage.getItem('mondayDate'));
         let tuesdayDate = new Date(localStorage.getItem('tuesdayDate'));
         let wednesdayDate = new Date(localStorage.getItem('wednesdayDate'));

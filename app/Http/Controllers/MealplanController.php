@@ -37,12 +37,20 @@ class MealplanController extends Controller
 	}
 	public function editPlan(Request $request)							// Define the method name
     {
-    	$userId = auth()->user()->id;
+		
+	
+    $userId = auth()->user()->id;
 		$userSetting = Setting::find($userId);
+		
+		$data = $request->session()->all();
+		Debugbar::info($data );
 
 		$now = Carbon::now();
-		$weekStartDate = $now->startOfWeek()->format('Y-m-d');
-		$weekEndDate = $now->endOfWeek()->format('Y-m-d');
+		// $weekStartDate = $now->startOfWeek()->format('Y-m-d');
+		// $weekEndDate = $now->endOfWeek()->format('Y-m-d');
+		$weekStartDate =  $request->session()->get('startDateOfWeek');
+		$weekEndDate = $request->session()->get('endDateOfWeek');
+
 		$in_groups = IngredientGroup::all();        
 		$schoolId = auth()->user()->school_id;
 		$foods = Food::orderBy('id', 'asc')->paginate(10);

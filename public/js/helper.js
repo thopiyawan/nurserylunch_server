@@ -1,4 +1,19 @@
 console.log("in js");
+(function ($) {
+    $.extend($.datepicker, {
+        // Reference the orignal function so we can override it and call it later
+        _inlineDatepicker2: $.datepicker._inlineDatepicker,
+        // Override the _inlineDatepicker method
+        _inlineDatepicker: function (target, inst) {
+            // Call the original
+            this._inlineDatepicker2(target, inst);
+            var beforeShow = $.datepicker._get(inst, 'beforeShow');
+            if (beforeShow) {
+                beforeShow.apply(target, [target, inst]);
+            }
+        }
+    });
+}(jQuery));
 $(function() {
     //---- side menu
     $("#aside-menu").metisMenu();
@@ -59,6 +74,7 @@ $(function() {
     var endDate;
 
     var selectCurrentWeek = function() {
+        
         window.setTimeout(function() {
             $("#week-picker")
                 .find(".ui-datepicker-current-day a")
@@ -66,7 +82,7 @@ $(function() {
         }, 1);
     };
 
-
+    
     $("#week-picker").datepicker({
         showOtherMonths: true,
         selectOtherMonths: true,
@@ -127,6 +143,7 @@ $(function() {
             $("#wednesdayDate").text(wednesdayDate.getDate());
             $("#thursdayDate").text(thursdayDate.getDate());
             $("#fridayDate").text(fridayDate.getDate());
+            localStorage.setItem("startDateOfWeek", startDate)
             localStorage.setItem("mondayDate", mondayDate);
             localStorage.setItem("tuesdayDate", tuesdayDate);
             localStorage.setItem("wednesdayDate", wednesdayDate);
@@ -152,6 +169,18 @@ $(function() {
                     $("#meal-plan").html(data);
                 }
             });
+        },
+        beforeShow : function(date){
+            let lastState = localStorage.getItem("weekHandle")
+            if(lastState === "1"){
+                var currentDate = localStorage.getItem("startDateOfWeek")
+                console.log("currentDate", currentDate)
+                let dat = new Date(currentDate)
+                console.log("dat", dat)
+                $( "#week-picker" ).datepicker( "setDate", dat );
+                console.log("currentDate", currentDate)
+            }
+            localStorage.setItem("weekHandle", 0)
         },
         beforeShowDay: function(date) {
             var cssClass = "";
@@ -240,7 +269,6 @@ $(function() {
         }
     );
     $(document).on("click", "button.ui-datepicker-current", function() {
-        //console.log("click!");
         $(".ui-datepicker-today").click();
     });
     //--
