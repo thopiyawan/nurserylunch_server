@@ -41,10 +41,7 @@ class MealplanController extends Controller
 	
     $userId = auth()->user()->id;
 		$userSetting = Setting::find($userId);
-		
 		$data = $request->session()->all();
-		Debugbar::info($data );
-
 		$now = Carbon::now();
 		// $weekStartDate = $now->startOfWeek()->format('Y-m-d');
 		// $weekEndDate = $now->endOfWeek()->format('Y-m-d');
@@ -61,11 +58,57 @@ class MealplanController extends Controller
 		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
 		$dayInweek = dateInweek($weekStartDate);
 
-		$targetNutrition = array(
-			'energy' => array(322.5, 645, 967.5, 1290),
-			'protein' => array(21.45, 25.05, 28.65, 32.35),
-			'fat' => array(6.275, 12.55, 18.825, 25.1),
+		#ratio of energy in each meal 
+		$condition_nutrition_calulation = array("breakfast" => 0.2, "morningSnack" => 0.1, "lunch" => 0.3, "lunchSnack" => 0.1);
+		$percentageOfEnergy = 0;
+		#check condition for calulation energy each day from user setting 
+		if($userSetting->is_breakfast == 1){
+			$percentageOfEnergy += $condition_nutrition_calulation['breakfast'];
+		}
+		if($userSetting->is_morning_snack == 1){
+			$percentageOfEnergy += $condition_nutrition_calulation['morningSnack'];
+		}
+		if($userSetting->is_lunch == 1){
+			$percentageOfEnergy += $condition_nutrition_calulation['lunch'];
+		}
+		if($userSetting->is_afternoon_snack == 1){
+			$percentageOfEnergy += $condition_nutrition_calulation['lunchSnack'];
+		}
+
+		Debugbar::info($percentageOfEnergy);
+
+		$baseLineCondition = array(
+			"energy" => 645 * $percentageOfEnergy, 
+			"fat" => 25.08 * $percentageOfEnergy , 
+			"protein" => 12.55 * $percentageOfEnergy);
+
+		$energyCondition = array(
+			$baseLineCondition["energy"] * 0.5,  
+			$baseLineCondition["energy"],
+			$baseLineCondition["energy"] * 1.5,
+			$baseLineCondition['energy'] * 2.0
 		);
+		$proteinCondition = array(
+			$baseLineCondition["protein"] * 0.5,  
+			$baseLineCondition["protein"],
+			$baseLineCondition["protein"] * 1.5,
+			$baseLineCondition['protein'] * 2.0
+		);
+		$fatCondition = array(
+			$baseLineCondition["fat"] * 0.5,  
+			$baseLineCondition["fat"],
+			$baseLineCondition["fat"] * 1.5,
+			$baseLineCondition['fat'] * 2.0
+		);
+
+		$targetNutrition = array(
+			'energy' => $energyCondition,
+			'protein' => $proteinCondition,
+			'fat' => $fatCondition,
+		);
+
+		Debugbar::info($targetNutrition);
+
 		
     	return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'targetNutrition' =>$targetNutrition]);	// Return response to client
 	}
