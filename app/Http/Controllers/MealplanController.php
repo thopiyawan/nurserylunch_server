@@ -59,7 +59,8 @@ class MealplanController extends Controller
 			'fat' => array(6.275, 12.55, 18.825, 25.1),
 		);
 		
-    	return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'targetNutrition' =>$targetNutrition]);	// Return response to client
+    	return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'targetNutrition' => $targetNutrition]);	
+    	// Return response to client
 	}
 	public function addFood(Request $request)
 	{

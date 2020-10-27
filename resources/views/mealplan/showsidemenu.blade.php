@@ -11,15 +11,19 @@
 <div class="m-b">
     <h4 class="center"> สำหรับเด็กอายุ</h4>
     <ul class="nav nav-tab main-level" id="">
-        <li class="">
-            <a  href="#" class="active" id="" aria-expanded="false" >
-                <span class="">ต่ำกว่า 1 ปี</span>
-            </a>
-        </li>
-        <li class="">
-            <a  href="#" class="" id="" aria-expanded="false" >
-                <span class="">1 - 3 ปี</span>
-            </a>
-        </li>
+        @if ($userSetting->is_for_small == 1)
+            <li class="">
+                <a  href="#" class="active" id="" aria-expanded="false" >
+                    <span class="">ต่ำกว่า 1 ปี</span>
+                </a>
+            </li>
+        @endif
+        @if ($userSetting->is_for_big == 1)
+            <li class="">
+                <a  href="#" class="" id="" aria-expanded="false" >
+                    <span class="">1 - 3 ปี</span>
+                </a>
+            </li>
+        @endif
     </ul>
 </div>

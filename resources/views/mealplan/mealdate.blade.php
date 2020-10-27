@@ -1,7 +1,7 @@
 <div class="meal-panel row {{ $day }}">
     <div class="col col-day">
         <div class="mlabel">{{ $day_th }}</div>
-        <div class="mdate"><span id={{ $day }}></span></div>
+        <div class="mdate {{$day}}"><span id={{ $day }}></span></div>
     </div>
 
     @if ($userSetting->is_breakfast == 1)
@@ -40,7 +40,7 @@
     @if ($userSetting->is_morning_snack == 1)
         <div class="col col-meal" id="breakfast-snack-meal-{{ $day }}" date-date="123">
             <div class="mlabel">ว่างเช้า</div>
-            <div id="" class="ui-sortable ui-sortable-meal">
+            <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{$day}} {{$kelly_type}}" data-day="{{$day}}" data-meal="breakfast-snack" data-type="{{$kelly_type}}">
                 @foreach ($food_logs as $food)
                     @if ($food->meal_code == 2 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">

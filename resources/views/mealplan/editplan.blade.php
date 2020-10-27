@@ -54,7 +54,7 @@
         </aside>
     </div>
     <div id="wrapper">
-        <div class="row m-b">
+        <div class="row">
             <div class="col-lg-2">
                 <h1 class="page-title"> แก้ไขเมนูอาหาร </h1>
             </div>
@@ -73,21 +73,65 @@
                     <span> เด็กอายุต่ำกว่า 1 ปี </span>
                 </h3>
             </div>
+            <div class="col-lg-3 heading-p-t">
+                <button class="btn btn-primary pull-right" type="submit" name="update" value="school"
+                    onclick="handleClick()">บันทึกรายการอาหาร</button>
+            </div>
         </div>
         <div class="row">
 
         </div>
-        @foreach ($day_in_week as $key => $day)
-            @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>
-            $date_in_week[$key]])
-        @endforeach
-        <div class="form-group">
+
+        <div class="hpanel plan-panel">
+            <ul class="nav nav-tab">
+                <li class="">
+                    <a data-toggle="tab" href="#tab-1" aria-expanded="true" class="active">ต่ำกว่า 1 ปี (ปกติ)</a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#tab-2" aria-expanded="false">ต่ำกว่า 1 ปี (มุสลิม)</a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#tab-3" aria-expanded="false">ต่ำกว่า 1 ปี (แพ้กุ้ง)</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="">
+                        <div id="">
+                            @foreach ($day_in_week as $key => $day)
+                                @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' => $date_in_week[$key], 'kelly_type' => 'normal'])
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-2" class="tab-pane">
+                    <div class="">
+                        <div id="">
+                            @foreach ($day_in_week as $key => $day)
+                                @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>$date_in_week[$key], 'kelly_type' => 'special_muslim'])
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-3" class="tab-pane">
+                    <div class="">
+                        <div id="">
+                            @foreach ($day_in_week as $key => $day)
+                                @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>$date_in_week[$key], 'kelly_type' => 'special_shrimp'])
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="form-group">
             <div class="col-lg-8 col-sm-offset-4">
                 <button class="btn btn-default" type="">ยกเลิก</button>
                 <button class="btn btn-primary" type="submit" name="update" value="school"
                     onclick="handleClick()">บันทึกข้อมูล</button>
             </div>
-        </div>
+        </div> -->
     </div>
 @endsection
 @section('script')
@@ -98,11 +142,11 @@
         let wednesdayDate = new Date(localStorage.getItem('wednesdayDate'));
         let thursdayDate = new Date(localStorage.getItem('thursdayDate'));
         let fridayDate = new Date(localStorage.getItem('fridayDate'));
-        $('#monday').text(mondayDate.getDate())
-        $('#tuesday').text(tuesdayDate.getDate())
-        $('#wednesday').text(wednesdayDate.getDate())
-        $('#thursday').text(thursdayDate.getDate())
-        $('#friday').text(fridayDate.getDate())
+        $('.mdate.monday').text(mondayDate.getDate())
+        $('.mdate.tuesday').text(tuesdayDate.getDate())
+        $('.mdate.wednesday').text(wednesdayDate.getDate())
+        $('.mdate.thursday').text(thursdayDate.getDate())
+        $('.mdate.friday').text(fridayDate.getDate())
         $('.meal-panel.row.monday').attr("data-date", mondayDate)
         $('.meal-panel.row.tuesday').attr("data-date", tuesdayDate)
         $('.meal-panel.row.wednesday').attr("data-date", wednesdayDate)
@@ -221,6 +265,23 @@
         function onSortableReceive(event, ui) {
             var parent = $(event.target).parents('.meal-panel');
             calculateNutrition(parent);
+
+            //---
+            console.log(ui);
+            var parent = $(ui.item).parent();
+            var meal = parent.data('meal');
+            var day = parent.data('day');
+            var food_type = parent.data('type');
+            console.log(parent);
+            console.log(meal);
+
+            if(food_type == "normal"){
+                var slector = meal+"-"+day;
+                var target = $(".ui-sortable-meal."+slector).not(".normal");
+                var food_clone = ui.item.clone(true).addClass("ui-state-disabled");
+                food_clone.prependTo(target);
+            }
+            //ui.item.clone(true).appendTo();
         }
 
 
@@ -229,7 +290,6 @@
         $(".col-delete").on('click', onColDeleteClick);
 
         function onColDeleteClick(event) {
-
             var parent = $(this).parents('.meal-panel');
             $(this).parent().remove();
             calculateNutrition(parent);

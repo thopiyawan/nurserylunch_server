@@ -35,6 +35,8 @@ class UserController extends Controller				// Define the class name
         $school = School::where('id', $user->school_id)->first();
         $setting = Setting::where('school_id', $user->school_id)->first();
 
+
+
         switch ($request->input('update')) {
 
             case 'system':

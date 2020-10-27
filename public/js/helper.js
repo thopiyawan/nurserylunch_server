@@ -147,6 +147,7 @@ $(function() {
                         endDate: endDate.toLocaleDateString()
                     }
                 },
+                
                 success: function(data) {
                     console.log("dkjfjd");
                     console.log(data);
