@@ -1,22 +1,25 @@
-<div class="">
-    @foreach ($foodList as $food)
-        <div class="ui-sortable food-list">
-            <div class="menu-body">
-                <div class="col col-food-name" data-energy="{{ $food->getEnergy() }}"
-                    data-protein="{{ $food->getProtein() }}" data-fat="{{ $food->getFat() }}" id="{{ $food->id }}">
-                    {{ $food->food_thai }}
-                </div>
-                <div class="col col-delete">
-                    <a class="pull-right" data-toggle="modal" data-target="#editKidForm">
-                        <span><i class="fas fa-times"></i></span>
-                    </a>
+{{ Debugbar::info(gettype($foodList)) }}
+@if (gettype($foodList) == 'string')
+    <p>ไม่พบอาหารดังกล่าว</p>
+@else
+    <div class="">
+        @foreach ($foodList as $food)
+            <div class="ui-sortable food-list">
+                <div class="menu-body">
+                    <div class="col col-food-name" data-energy="{{ $food->getEnergy() }}"
+                        data-protein="{{ $food->getProtein() }}" data-fat="{{ $food->getFat() }}" id="{{ $food->id }}">
+                        {{ $food->food_thai }}
+                    </div>
+                    <div class="col col-delete">
+                        <a class="pull-right" data-toggle="modal" data-target="#editKidForm">
+                            <span><i class="fas fa-times"></i></span>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    @endforeach
-</div>
-
-
+        @endforeach
+    </div>
+@endif
 
 <script type="application/javascript">
     $(".ui-sortable").sortable({

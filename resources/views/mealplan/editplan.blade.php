@@ -137,6 +137,7 @@
 @section('script')
     <script type="application/javascript">
         // your code
+        localStorage.setItem("weekHandle", 1)
         let mondayDate = new Date(localStorage.getItem('mondayDate'));
         let tuesdayDate = new Date(localStorage.getItem('tuesdayDate'));
         let wednesdayDate = new Date(localStorage.getItem('wednesdayDate'));
@@ -188,7 +189,6 @@
                     let breakfastSnack = $(
                         `#breakfast-snack-meal-${day} > .ui-sortable .col-food-name`
                     )
-                    console.log("handleClick -> breakfastSnack", breakfastSnack)
                     let lunch = $(`#lunch-meal-${day} > .ui-sortable .col-food-name`)
                     let lunchSnack = $(`#lunch-snack-meal-${day} > .ui-sortable .col-food-name`)
                     mealLogs['mealDate'] = mealDate;
@@ -214,8 +214,6 @@
                     })
                     mealPlanData.push(mealLogs)
                 })
-                console.log('addLog function')
-                console.log(mealPlanData);
                 addFoodLogs(mealPlanData)
             })
         }
@@ -233,8 +231,8 @@
                     mealPlanData: mealPlanData
                 },
                 success: function(data) {
-                    //location.reload();
                     alert(data.success)
+                    location.reload();
                 }
             });
         }
@@ -336,7 +334,6 @@
             currentEnergyDom.text(sumEnergy.toFixed(0));
             currentProteinDom.text(sumProtein.toFixed(0));
             currentFatDom.text(sumFat.toFixed(0));
-
             updateNutritionBar(parent, "energy", sumEnergy);
             updateNutritionBar(parent, "protein", sumProtein);
             updateNutritionBar(parent, "fat", sumFat);
@@ -346,7 +343,6 @@
         function updateNutritionBar(parent, key, sum) {
             // update nutirion bar
             var scale = targetNutrition[key];
-            //console.log(scale);
             var grade = "";
             if (sum >= scale[3]) {
                 grade = "toohigh";
@@ -391,6 +387,25 @@
             fillterSelect['fruit'] = values
             filterFoodList(fillterSelect)
         });
+
+
+        $(document).on('keyup', '#searchMenu', function() {
+            var query = $(this).val();
+            fetch_live_search(query)
+        });
+
+        function fetch_live_search(query = '') {
+            $.ajax({
+                url: "/mealplan/livesearch",
+                method: 'GET',
+                data: {
+                    query: query
+                },
+                success: function(data) {
+                    $("#filter-result").html(data);
+                }
+            })
+        }
 
         function filterFoodList(fillterSelect) {
             $.ajaxSetup({

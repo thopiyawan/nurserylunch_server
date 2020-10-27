@@ -37,15 +37,23 @@ class MealplanController extends Controller
 	}
 	public function editPlan(Request $request)							// Define the method name
     {
-    	$userId = auth()->user()->id;
+		
+	
+    $userId = auth()->user()->id;
 		$userSetting = Setting::find($userId);
+		
+		$data = $request->session()->all();
+		Debugbar::info($data );
 
 		$now = Carbon::now();
-		$weekStartDate = $now->startOfWeek()->format('Y-m-d');
-		$weekEndDate = $now->endOfWeek()->format('Y-m-d');
+		// $weekStartDate = $now->startOfWeek()->format('Y-m-d');
+		// $weekEndDate = $now->endOfWeek()->format('Y-m-d');
+		$weekStartDate =  $request->session()->get('startDateOfWeek');
+		$weekEndDate = $request->session()->get('endDateOfWeek');
+
 		$in_groups = IngredientGroup::all();        
 		$schoolId = auth()->user()->school_id;
-		$foods = Food::all();
+		$foods = Food::orderBy('id', 'asc')->paginate(10);
 		foreach($foods as $food)
         {
             $food->init();
@@ -270,7 +278,6 @@ class MealplanController extends Controller
 		$request->session()->put('endDateOfWeek', $endDate);
 		$in_groups = IngredientGroup::all();        
 		$schoolId = auth()->user()->school_id;
-		$foods = Food::all();
 		$foodLogs = getLastLogs($userId, $startDate, $endDate);
 		$dayInweek = dateInweek($startDate);
 		return view('mealplan.mealpanel', ['logs' => $foodLogs,'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
@@ -280,7 +287,6 @@ class MealplanController extends Controller
 		
 
 		$input= $request -> all();
-		Debugbar::info($input);
 		$foodFilter = [];
 		$filterInput = [];
 		$allFilter = array();		
@@ -336,7 +342,7 @@ class MealplanController extends Controller
 		if(isset($input['filterSelected'])){
 			$foodFilter = Food::whereIn('id', $foodId)->get();	
 		}else{
-			$foodFilter = Food::all();
+			$foodFilter = Food::orderBy('id', 'asc')->paginate(10);
 		}
 		foreach($foodFilter as $food)
         {
@@ -346,7 +352,33 @@ class MealplanController extends Controller
 		return view('mealplan.filterresult', ['foodList' => $foodFilter]);	
 	}
 
+	public function liveSearch(Request $request){
+		$foodSearch = [];
+		$foodId = array();
+		if($request->ajax()){
+			$query = $request->get('query');
+			if($query != ''){
+				$foodSearch = Food::where('food_thai', 'like','%'.$query.'%')->get();	
+				$total_row = $foodSearch->count();
+			}else{
+				$foodSearch = Food::orderBy('id', 'asc')->paginate(10);
+				$total_row = $foodSearch->count();
+			}
+
+			if($total_row > 0){
+				foreach($foodSearch as $food)
+				{
+						$food->init();
+				}
+			}else{
+				$foodSearch = 'ไม่พบอาหารดังกล่าว';
+			}
+		}
+		return view('mealplan.filterresult', ['foodList' => $foodSearch]);
+	}
+
 }
+
 function getLastLogs($userId,$weekStartDate,$weekEndDate){
 		$lastLog = DB::select('
 			SELECT food_logs.food_id, food_logs.meal_code, foods.food_thai, food_logs.meal_date, 
