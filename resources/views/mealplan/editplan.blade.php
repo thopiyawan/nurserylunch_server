@@ -315,15 +315,43 @@
         $(".col-delete").on('click', onColDeleteClick);
 
         function onColDeleteClick(event) {
-            var mealPanel = $(this).parents('.meal-panel');
-            $(this).parent().remove();
-            calculateNutrition(parent);
+            var dayPanel = $(this).parents('.meal-panel');
+            var mealPanel = $(this).parents('.ui-sortable-meal');
+            var foodId = $(this).prev().attr("id");
+            console.log(foodId);
 
-            var slector = meal+"-"+day;
-            var target = $(".ui-sortable-meal."+slector).not(".is_for_small", ".is_for_big");
-            var food_clone = ui.item.clone(true).addClass("ui-state-disabled");
-            food_clone.prependTo(target);
-            
+            $(this).parent().remove();
+            calculateNutrition(dayPanel); 
+
+            //console.log(this);
+            var mealData = mealPanel.data('meal');
+            var day = mealPanel.data('day');
+            var mealType = mealPanel.data('type');
+            if(mealType == "is_for_small" || mealType == "is_for_big"){
+                console.log("normal");
+                var slector = mealData+"-"+day;
+                var targets = $(".ui-sortable-meal."+slector).not(".is_for_small", ".is_for_big");
+                
+                $.each(targets, function(){
+                    //console.log(this);
+                    var dayPanel = $(this).parents('.meal-panel');
+                    var sameItem = $(this).find("#"+foodId);
+                    sameItem.parent().remove();
+                    calculateNutrition(dayPanel); 
+
+
+                    // var targetType = $(this).data("type");
+
+                    // var cloneItem = foodItem.clone(true);
+
+                    // checkMealType(foodId, targetType, cloneItem);
+                    // cloneItem.prependTo(this);
+
+
+                    // var dayPanel = $(this).parents('.meal-panel');
+                    // calculateNutrition(dayPanel);                    
+                });
+            }
         }
 
         //calculate nutrition 
