@@ -37,10 +37,11 @@
         </div>
     @endif
 
+
     @if ($userSetting->is_morning_snack == 1)
         <div class="col col-meal" id="breakfast-snack-meal-{{ $day }}" date-date="123">
             <div class="mlabel">ว่างเช้า</div>
-            <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{$day}} {{$kelly_type}}" data-day="{{$day}}" data-meal="breakfast-snack" data-type="{{$kelly_type}}">
+            <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{$day}} {{$setting_id}}" data-day="{{$day}}" data-meal="breakfast-snack" data-type="{{$setting_id}}">
                 @foreach ($food_logs as $food)
                     @if ($food->meal_code == 2 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">

@@ -81,47 +81,32 @@
         <div class="row">
 
         </div>
-
         <div class="hpanel plan-panel">
             <ul class="nav nav-tab">
-                <li class="">
-                    <a data-toggle="tab" href="#tab-1" aria-expanded="true" class="active">ต่ำกว่า 1 ปี (ปกติ)</a>
-                </li>
-                <li class="">
-                    <a data-toggle="tab" href="#tab-2" aria-expanded="false">ต่ำกว่า 1 ปี (มุสลิม)</a>
-                </li>
-                <li class="">
-                    <a data-toggle="tab" href="#tab-3" aria-expanded="false">ต่ำกว่า 1 ปี (แพ้กุ้ง)</a>
-                </li>
+                @php $first = true; @endphp 
+                @foreach (array_keys($settings) as $setting_id)
+                    <li class="">
+                        <a data-toggle="tab" href="#{{$setting_id}}" aria-expanded="true" class="{{$first? 'active' : ''}}">
+                            {{$settings[$setting_id]}}
+                        </a>
+                    </li>
+                    @php $first = false; @endphp
+                @endforeach
             </ul>
             <div class="tab-content">
-                <div id="tab-1" class="tab-pane active">
-                    <div class="">
-                        <div id="">
-                            @foreach ($day_in_week as $key => $day)
-                                @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' => $date_in_week[$key], 'kelly_type' => 'normal'])
-                            @endforeach
+                @php $first = true; @endphp 
+                @foreach (array_keys($settings) as $setting_id)
+                    <div id="{{$setting_id}}" class="tab-pane {{$first? 'active' : ''}} ">
+                        <div class="">
+                            <div id="">
+                                @foreach ($day_in_week as $key => $day)
+                                    @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_id])
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="tab-2" class="tab-pane">
-                    <div class="">
-                        <div id="">
-                            @foreach ($day_in_week as $key => $day)
-                                @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>$date_in_week[$key], 'kelly_type' => 'special_muslim'])
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <div id="tab-3" class="tab-pane">
-                    <div class="">
-                        <div id="">
-                            @foreach ($day_in_week as $key => $day)
-                                @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>$date_in_week[$key], 'kelly_type' => 'special_shrimp'])
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
+                    @php $first = false; @endphp
+                @endforeach
             </div>
         </div>
 
@@ -261,25 +246,67 @@
         }
 
         function onSortableReceive(event, ui) {
-            var parent = $(event.target).parents('.meal-panel');
-            calculateNutrition(parent);
+            //console.log(event);
+            var dayPanel = $(event.target).parents('.meal-panel');
+            calculateNutrition(dayPanel);
 
-            //---
-            console.log(ui);
-            var parent = $(ui.item).parent();
-            var meal = parent.data('meal');
-            var day = parent.data('day');
-            var food_type = parent.data('type');
-            console.log(parent);
-            console.log(meal);
+            var foodItem = $(ui.item);
+            cloneFoodItem(foodItem);
+        }
 
-            if(food_type == "normal"){
-                var slector = meal+"-"+day;
-                var target = $(".ui-sortable-meal."+slector).not(".normal");
-                var food_clone = ui.item.clone(true).addClass("ui-state-disabled");
-                food_clone.prependTo(target);
+        function cloneFoodItem(foodItem){
+            //console.log(foodItem);
+            var foodId = foodItem.children(":first").attr("id");
+            //console.log(foodId);
+            var mealPanel = foodItem.parent()
+            var mealData = mealPanel.data('meal');
+            var day = mealPanel.data('day');
+            var mealType = mealPanel.data('type');
+
+            if(mealType == "is_for_small" || mealType == "is_for_big"){
+                var slector = mealData+"-"+day;
+                var targets = $(".ui-sortable-meal."+slector).not(".is_for_small", ".is_for_big");
+                //console.log(targets);
+                $.each(targets, function(){
+                    var targetType = $(this).data("type");
+
+                    var cloneItem = foodItem.clone(true);
+
+                    checkMealType(foodId, targetType, cloneItem);
+                    cloneItem.prependTo(this);
+
+
+                    var dayPanel = $(this).parents('.meal-panel');
+                    calculateNutrition(dayPanel);                    
+                });
+                
             }
-            //ui.item.clone(true).appendTo();
+        }
+
+        function checkMealType(id, type, cloneItem) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/mealplan/checkFoodType',
+                data: {
+                    foodId: id, 
+                    checkType: type
+                },
+                success: function(result) {
+                    console.log(id, type, result)
+                    var safe = result == 1 ? true:false; 
+                    if (safe){
+                        cloneItem.addClass("ui-state-disabled"); // safe to eat
+                    
+                    }else{
+                        cloneItem.addClass("ui-state-warning");
+                    }                    
+                }
+            });
         }
 
 
@@ -288,9 +315,15 @@
         $(".col-delete").on('click', onColDeleteClick);
 
         function onColDeleteClick(event) {
-            var parent = $(this).parents('.meal-panel');
+            var mealPanel = $(this).parents('.meal-panel');
             $(this).parent().remove();
             calculateNutrition(parent);
+
+            var slector = meal+"-"+day;
+            var target = $(".ui-sortable-meal."+slector).not(".is_for_small", ".is_for_big");
+            var food_clone = ui.item.clone(true).addClass("ui-state-disabled");
+            food_clone.prependTo(target);
+            
         }
 
         //calculate nutrition 
@@ -316,14 +349,14 @@
             });
         }
 
-        function calculateNutrition(parent) {
+        function calculateNutrition(panel) {
             var sumEnergy = 0;
             var sumProtein = 0;
             var sumFat = 0;
-            var currentEnergyDom = parent.find(".energy .current");
-            var currentProteinDom = parent.find(".protein .current");
-            var currentFatDom = parent.find(".fat .current");
-            var allFoodLog = parent.find(".col-food-name");
+            var currentEnergyDom = panel.find(".energy .current");
+            var currentProteinDom = panel.find(".protein .current");
+            var currentFatDom = panel.find(".fat .current");
+            var allFoodLog = panel.find(".col-food-name");
 
             allFoodLog.each(function(index) {
                 sumEnergy += parseFloat($(this).attr("data-energy"));
@@ -334,9 +367,9 @@
             currentEnergyDom.text(sumEnergy.toFixed(0));
             currentProteinDom.text(sumProtein.toFixed(0));
             currentFatDom.text(sumFat.toFixed(0));
-            updateNutritionBar(parent, "energy", sumEnergy);
-            updateNutritionBar(parent, "protein", sumProtein);
-            updateNutritionBar(parent, "fat", sumFat);
+            updateNutritionBar(panel, "energy", sumEnergy);
+            updateNutritionBar(panel, "protein", sumProtein);
+            updateNutritionBar(panel, "fat", sumFat);
 
         }
 

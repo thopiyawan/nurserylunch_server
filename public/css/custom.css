@@ -542,6 +542,12 @@ input[type=checkbox] {
 .ui-sortable.food-list .col-delete{
     display: none;
 }
+
+.ui-sortable .ui-state-warning{
+    border: #f7931e 1px solid;
+    box-shadow: 0 0 2px #f7931e;
+
+}
 .ui-datepicker .ui-datepicker-header{
     padding: 0 !important;
     border:none;
