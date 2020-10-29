@@ -251,7 +251,7 @@
             calculateNutrition(dayPanel);
 
             var foodItem = $(ui.item);
-            cloneFoodItem(foodItem);
+            //cloneFoodItem(foodItem);
         }
 
         function cloneFoodItem(foodItem){
@@ -349,7 +349,7 @@
 
 
                     // var dayPanel = $(this).parents('.meal-panel');
-                    // calculateNutrition(dayPanel);                    
+                    // calculateNutrition(dayPanel); 
                 });
             }
         }
