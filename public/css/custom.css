@@ -542,6 +542,12 @@ input[type=checkbox] {
 .ui-sortable.food-list .col-delete{
     display: none;
 }
+
+.ui-sortable .ui-state-warning{
+    border: #f7931e 1px solid;
+    box-shadow: 0 0 2px #f7931e;
+
+}
 .ui-datepicker .ui-datepicker-header{
     padding: 0 !important;
     border:none;
@@ -567,7 +573,7 @@ input[type=checkbox] {
     font-family: "Font Awesome 5 Free";
     position: relative;
 }
-.ui-datepicker-next span:before{
+.ui-datepicker-next-hover .ui-datepicker-next span:before, .ui-datepicker-next span:before{
     content: "\f054";
     font-family: "Font Awesome 5 Free";
     position: relative;
@@ -591,7 +597,7 @@ input[type=checkbox] {
     background-color: transparent; 
 }
 #week-picker .ui-state-hover{
-    background-color: var(--lightgray-fade);
+    background-color: transparent;
     border: none; 
 }
 #week-picker .ui-state-active{

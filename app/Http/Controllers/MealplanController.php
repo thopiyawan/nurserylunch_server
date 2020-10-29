@@ -9,6 +9,7 @@ use App\FoodLogs;
 use App\Setting;
 use App\EnergyLogs;
 use App\Nutrition;
+use App\Properties;
 use Illuminate\Http\Request;
 use Datetime;
 use Debugbar;
@@ -33,14 +34,23 @@ class MealplanController extends Controller
 		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
 		$dayInweek = dateInweek($weekStartDate);
 		
+
 		return view('mealplan.showplan', ['logs' => $foodLogs,'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
 	}
 	public function editPlan(Request $request)							// Define the method name
     {
 		
-	
-    $userId = auth()->user()->id;
-		$userSetting = Setting::find($userId);
+		$madeupAge = "small"; // ต้องแก้ให้ถูก
+
+    	$userId = auth()->user()->id;
+		$userSetting = Setting::find($userId); // ทำไมหาด้วย userId?
+		$settings = array(
+			"is_for_small" => "ต่ำกว่า 1 ปี (ปกติ)", 
+			"is_s_muslim" => "ต่ำกว่า 1 ปี (มุสลิม)",
+			"is_s_shrimp" => "ต่ำกว่า 1 ปี (แพ้กุ้ง)" 
+		); // ต้องแก้ให้ถูก
+
+		
 		$data = $request->session()->all();
 		$now = Carbon::now();
 		// $weekStartDate = $now->startOfWeek()->format('Y-m-d');
@@ -106,11 +116,8 @@ class MealplanController extends Controller
 			'protein' => $proteinCondition,
 			'fat' => $fatCondition,
 		);
-
-		Debugbar::info($targetNutrition);
-
-		
-    	return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'targetNutrition' =>$targetNutrition]);	// Return response to client
+    	return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'settings' => $settings,'targetNutrition' => $targetNutrition]);	
+    	// Return response to client
 	}
 	public function addFood(Request $request)
 	{
@@ -323,6 +330,20 @@ class MealplanController extends Controller
 		$foodLogs = getLastLogs($userId, $startDate, $endDate);
 		$dayInweek = dateInweek($startDate);
 		return view('mealplan.mealpanel', ['logs' => $foodLogs,'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
+	}
+
+	public function checkFoodType(Request $request){
+		$input = $request->all();
+		// $foodId = $input['foodId'];
+		// $checkType = $input['checkType'];
+
+		// $foodItem = Properties::where('food_id', $foodId)->get();
+
+		$safe = (bool)rand(0,1);
+		//$safe = true;
+
+		return $safe;
+
 	}
 
 	public function filterIngredient(Request $request){

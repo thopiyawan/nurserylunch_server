@@ -165,6 +165,7 @@ $(function() {
                         endDate: endDate.toLocaleDateString()
                     }
                 },
+                
                 success: function(data) {
                     $("#meal-plan").html(data);
                 }
@@ -198,7 +199,7 @@ $(function() {
     $.datepicker.regional["th"] = {
         closeText: "ปิด",
         prevText: "",
-        nextText: ";",
+        nextText: "",
         currentText: "สัปดาห์นี้",
         monthNames: [
             "มกราคม",
@@ -244,7 +245,6 @@ $(function() {
         firstDay: 1,
         isRTL: false,
         showMonthAfterYear: false,
-        yearRange: '+443:+543'
     };
     $.datepicker.setDefaults($.datepicker.regional["th"]);
 

@@ -54,7 +54,7 @@
         </aside>
     </div>
     <div id="wrapper">
-        <div class="row m-b">
+        <div class="row">
             <div class="col-lg-2">
                 <h1 class="page-title"> แก้ไขเมนูอาหาร </h1>
             </div>
@@ -73,21 +73,50 @@
                     <span> เด็กอายุต่ำกว่า 1 ปี </span>
                 </h3>
             </div>
+            <div class="col-lg-3 heading-p-t">
+                <button class="btn btn-primary pull-right" type="submit" name="update" value="school"
+                    onclick="handleClick()">บันทึกรายการอาหาร</button>
+            </div>
         </div>
         <div class="row">
 
         </div>
-        @foreach ($day_in_week as $key => $day)
-            @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' =>
-            $date_in_week[$key]])
-        @endforeach
-        <div class="form-group">
+        <div class="hpanel plan-panel">
+            <ul class="nav nav-tab">
+                @php $first = true; @endphp 
+                @foreach (array_keys($settings) as $setting_id)
+                    <li class="">
+                        <a data-toggle="tab" href="#{{$setting_id}}" aria-expanded="true" class="{{$first? 'active' : ''}}">
+                            {{$settings[$setting_id]}}
+                        </a>
+                    </li>
+                    @php $first = false; @endphp
+                @endforeach
+            </ul>
+            <div class="tab-content">
+                @php $first = true; @endphp 
+                @foreach (array_keys($settings) as $setting_id)
+                    <div id="{{$setting_id}}" class="tab-pane {{$first? 'active' : ''}} ">
+                        <div class="">
+                            <div id="">
+                                @foreach ($day_in_week as $key => $day)
+                                    @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_id])
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    @php $first = false; @endphp
+                @endforeach
+            </div>
+        </div>
+
+        <!-- <div class="form-group">
             <div class="col-lg-8 col-sm-offset-4">
                 <button class="btn btn-default" type="">ยกเลิก</button>
                 <button class="btn btn-primary" type="submit" name="update" value="school"
                     onclick="handleClick()">บันทึกข้อมูล</button>
             </div>
-        </div>
+        </div> -->
     </div>
 @endsection
 @section('script')
@@ -99,11 +128,11 @@
         let wednesdayDate = new Date(localStorage.getItem('wednesdayDate'));
         let thursdayDate = new Date(localStorage.getItem('thursdayDate'));
         let fridayDate = new Date(localStorage.getItem('fridayDate'));
-        $('#monday').text(mondayDate.getDate())
-        $('#tuesday').text(tuesdayDate.getDate())
-        $('#wednesday').text(wednesdayDate.getDate())
-        $('#thursday').text(thursdayDate.getDate())
-        $('#friday').text(fridayDate.getDate())
+        $('.mdate.monday').text(mondayDate.getDate())
+        $('.mdate.tuesday').text(tuesdayDate.getDate())
+        $('.mdate.wednesday').text(wednesdayDate.getDate())
+        $('.mdate.thursday').text(thursdayDate.getDate())
+        $('.mdate.friday').text(fridayDate.getDate())
         $('.meal-panel.row.monday').attr("data-date", mondayDate)
         $('.meal-panel.row.tuesday').attr("data-date", tuesdayDate)
         $('.meal-panel.row.wednesday').attr("data-date", wednesdayDate)
@@ -217,8 +246,67 @@
         }
 
         function onSortableReceive(event, ui) {
-            var parent = $(event.target).parents('.meal-panel');
-            calculateNutrition(parent);
+            //console.log(event);
+            var dayPanel = $(event.target).parents('.meal-panel');
+            calculateNutrition(dayPanel);
+
+            var foodItem = $(ui.item);
+            cloneFoodItem(foodItem);
+        }
+
+        function cloneFoodItem(foodItem){
+            //console.log(foodItem);
+            var foodId = foodItem.children(":first").attr("id");
+            //console.log(foodId);
+            var mealPanel = foodItem.parent()
+            var mealData = mealPanel.data('meal');
+            var day = mealPanel.data('day');
+            var mealType = mealPanel.data('type');
+
+            if(mealType == "is_for_small" || mealType == "is_for_big"){
+                var slector = mealData+"-"+day;
+                var targets = $(".ui-sortable-meal."+slector).not(".is_for_small", ".is_for_big");
+                //console.log(targets);
+                $.each(targets, function(){
+                    var targetType = $(this).data("type");
+
+                    var cloneItem = foodItem.clone(true);
+
+                    checkMealType(foodId, targetType, cloneItem);
+                    cloneItem.prependTo(this);
+
+
+                    var dayPanel = $(this).parents('.meal-panel');
+                    calculateNutrition(dayPanel);                    
+                });
+                
+            }
+        }
+
+        function checkMealType(id, type, cloneItem) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/mealplan/checkFoodType',
+                data: {
+                    foodId: id, 
+                    checkType: type
+                },
+                success: function(result) {
+                    console.log(id, type, result)
+                    var safe = result == 1 ? true:false; 
+                    if (safe){
+                        cloneItem.addClass("ui-state-disabled"); // safe to eat
+                    
+                    }else{
+                        cloneItem.addClass("ui-state-warning");
+                    }                    
+                }
+            });
         }
 
 
@@ -227,10 +315,43 @@
         $(".col-delete").on('click', onColDeleteClick);
 
         function onColDeleteClick(event) {
+            var dayPanel = $(this).parents('.meal-panel');
+            var mealPanel = $(this).parents('.ui-sortable-meal');
+            var foodId = $(this).prev().attr("id");
+            console.log(foodId);
 
-            var parent = $(this).parents('.meal-panel');
             $(this).parent().remove();
-            calculateNutrition(parent);
+            calculateNutrition(dayPanel); 
+
+            //console.log(this);
+            var mealData = mealPanel.data('meal');
+            var day = mealPanel.data('day');
+            var mealType = mealPanel.data('type');
+            if(mealType == "is_for_small" || mealType == "is_for_big"){
+                console.log("normal");
+                var slector = mealData+"-"+day;
+                var targets = $(".ui-sortable-meal."+slector).not(".is_for_small", ".is_for_big");
+                
+                $.each(targets, function(){
+                    //console.log(this);
+                    var dayPanel = $(this).parents('.meal-panel');
+                    var sameItem = $(this).find("#"+foodId);
+                    sameItem.parent().remove();
+                    calculateNutrition(dayPanel); 
+
+
+                    // var targetType = $(this).data("type");
+
+                    // var cloneItem = foodItem.clone(true);
+
+                    // checkMealType(foodId, targetType, cloneItem);
+                    // cloneItem.prependTo(this);
+
+
+                    // var dayPanel = $(this).parents('.meal-panel');
+                    // calculateNutrition(dayPanel);                    
+                });
+            }
         }
 
         //calculate nutrition 
@@ -256,14 +377,14 @@
             });
         }
 
-        function calculateNutrition(parent) {
+        function calculateNutrition(panel) {
             var sumEnergy = 0;
             var sumProtein = 0;
             var sumFat = 0;
-            var currentEnergyDom = parent.find(".energy .current");
-            var currentProteinDom = parent.find(".protein .current");
-            var currentFatDom = parent.find(".fat .current");
-            var allFoodLog = parent.find(".col-food-name");
+            var currentEnergyDom = panel.find(".energy .current");
+            var currentProteinDom = panel.find(".protein .current");
+            var currentFatDom = panel.find(".fat .current");
+            var allFoodLog = panel.find(".col-food-name");
 
             allFoodLog.each(function(index) {
                 sumEnergy += parseFloat($(this).attr("data-energy"));
@@ -274,9 +395,9 @@
             currentEnergyDom.text(sumEnergy.toFixed(0));
             currentProteinDom.text(sumProtein.toFixed(0));
             currentFatDom.text(sumFat.toFixed(0));
-            updateNutritionBar(parent, "energy", sumEnergy);
-            updateNutritionBar(parent, "protein", sumProtein);
-            updateNutritionBar(parent, "fat", sumFat);
+            updateNutritionBar(panel, "energy", sumEnergy);
+            updateNutritionBar(panel, "protein", sumProtein);
+            updateNutritionBar(panel, "fat", sumFat);
 
         }
 
