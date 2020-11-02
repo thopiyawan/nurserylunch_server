@@ -42,8 +42,10 @@ class MealplanController extends Controller
 		
 		$madeupAge = "small"; // ต้องแก้ให้ถูก
 
-    	$userId = auth()->user()->id;
-		$userSetting = Setting::find($userId); // ทำไมหาด้วย userId?
+
+		$userId = auth()->user()->id;
+		$schoolId = auth()->user()->school_id;
+		$userSetting = Setting::find($schoolId ); // ทำไมหาด้วย userId?
 		$settings = array(
 			"is_for_small" => "ต่ำกว่า 1 ปี (ปกติ)", 
 			"is_s_muslim" => "ต่ำกว่า 1 ปี (มุสลิม)",
@@ -85,7 +87,6 @@ class MealplanController extends Controller
 			$percentageOfEnergy += $condition_nutrition_calulation['lunchSnack'];
 		}
 
-		Debugbar::info($percentageOfEnergy);
 
 		$baseLineCondition = array(
 			"energy" => 645 * $percentageOfEnergy, 
@@ -347,12 +348,12 @@ class MealplanController extends Controller
 	}
 
 	public function filterIngredient(Request $request){
-		
 
 		$input= $request -> all();
 		$foodFilter = [];
 		$filterInput = [];
 		$allFilter = array();		
+		$foodIdArray = array(); //food array forboth  query
 		
 		//check if have filterSelected from user  
 		if(isset($input['filterSelected'])){
@@ -392,32 +393,59 @@ class MealplanController extends Controller
 		
 
 		//get food_id that filter 
+		$query = $request->get('query');
 		$filter = FoodIngredient::whereIn('ingredient_id', $allFilter)->get();	
-		$foodId = array();
+		$search = Food::where('food_thai', 'like','%'.$query.'%')->get();
 
+		$searchId = array();
+		$filterId = array();
 
-		foreach(	$filter as $food){
-			array_push($foodId, $food->food_id);
+		foreach($filter as $food){
+			array_push($filterId, $food->food_id);
 		}
 
+		foreach($search as $foodQuery){
+			array_push($searchId, $foodQuery->id);
+		}
+
+		if(isset($input['filterSelected']) && isset($input['query'])){
+			$foodIdArray = array_intersect($filterId, $searchId);
+		}
+		if(isset($input['query']) && !isset($input['filterSelected']) && !is_null($input['query'])){
+			$foodIdArray = $searchId;
+		}
+
+		if(isset($input['filterSelected']) && is_null($input['query'])){
+			$foodIdArray = array_intersect($filterId, $searchId);
+			$foodIdArray = $filterId;
+		}
+		
 		//checke if have filter return food that filtered 
 		//in case of not have any filted will return all food --> set by default 
-		if(isset($input['filterSelected'])){
-			$foodFilter = Food::whereIn('id', $foodId)->get();	
-		}else{
-			$foodFilter = Food::orderBy('id', 'asc')->paginate(10);
+		if(count($foodIdArray) > 0){
+			$foodFilter = Food::whereIn('id', $foodIdArray)->get();	
+			foreach($foodFilter as $food)
+			{
+					$food->init();
+			}
+			
 		}
-		foreach($foodFilter as $food)
-        {
-            $food->init();
-				}
-				
+		else{
+			if(!isset($input['filterSelected']) && !isset($input['query'])){
+				$foodFilter = Food::orderBy('id', 'asc')->paginate(10);
+			}else{
+				$foodFilter = 'ไม่พบอาหารดังกล่าว';
+			}
+		
+		}
+	
 		return view('mealplan.filterresult', ['foodList' => $foodFilter]);	
 	}
 
 	public function liveSearch(Request $request){
 		$foodSearch = [];
 		$foodId = array();
+
 		if($request->ajax()){
 			$query = $request->get('query');
 			if($query != ''){

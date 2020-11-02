@@ -83,24 +83,26 @@
         </div>
         <div class="hpanel plan-panel">
             <ul class="nav nav-tab">
-                @php $first = true; @endphp 
+                @php $first = true; @endphp
                 @foreach (array_keys($settings) as $setting_id)
                     <li class="">
-                        <a data-toggle="tab" href="#{{$setting_id}}" aria-expanded="true" class="{{$first? 'active' : ''}}">
-                            {{$settings[$setting_id]}}
+                        <a data-toggle="tab" href="#{{ $setting_id }}" aria-expanded="true"
+                            class="{{ $first ? 'active' : '' }}">
+                            {{ $settings[$setting_id] }}
                         </a>
                     </li>
                     @php $first = false; @endphp
                 @endforeach
             </ul>
             <div class="tab-content">
-                @php $first = true; @endphp 
+                @php $first = true; @endphp
                 @foreach (array_keys($settings) as $setting_id)
-                    <div id="{{$setting_id}}" class="tab-pane {{$first? 'active' : ''}} ">
+                    <div id="{{ $setting_id }}" class="tab-pane {{ $first ? 'active' : '' }} ">
                         <div class="">
                             <div id="">
                                 @foreach ($day_in_week as $key => $day)
-                                    @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key], 'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_id])
+                                    @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key],
+                                    'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_id])
                                 @endforeach
                             </div>
                         </div>
@@ -111,12 +113,12 @@
         </div>
 
         <!-- <div class="form-group">
-            <div class="col-lg-8 col-sm-offset-4">
-                <button class="btn btn-default" type="">ยกเลิก</button>
-                <button class="btn btn-primary" type="submit" name="update" value="school"
-                    onclick="handleClick()">บันทึกข้อมูล</button>
-            </div>
-        </div> -->
+                                                                                                                                                                                                                                                    <div class="col-lg-8 col-sm-offset-4">
+                                                                                                                                                                                                                                                        <button class="btn btn-default" type="">ยกเลิก</button>
+                                                                                                                                                                                                                                                        <button class="btn btn-primary" type="submit" name="update" value="school"
+                                                                                                                                                                                                                                                            onclick="handleClick()">บันทึกข้อมูล</button>
+                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                </div> -->
     </div>
 @endsection
 @section('script')
@@ -254,7 +256,7 @@
             //cloneFoodItem(foodItem);
         }
 
-        function cloneFoodItem(foodItem){
+        function cloneFoodItem(foodItem) {
             //console.log(foodItem);
             var foodId = foodItem.children(":first").attr("id");
             //console.log(foodId);
@@ -263,11 +265,11 @@
             var day = mealPanel.data('day');
             var mealType = mealPanel.data('type');
 
-            if(mealType == "is_for_small" || mealType == "is_for_big"){
-                var slector = mealData+"-"+day;
-                var targets = $(".ui-sortable-meal."+slector).not(".is_for_small", ".is_for_big");
+            if (mealType == "is_for_small" || mealType == "is_for_big") {
+                var slector = mealData + "-" + day;
+                var targets = $(".ui-sortable-meal." + slector).not(".is_for_small", ".is_for_big");
                 //console.log(targets);
-                $.each(targets, function(){
+                $.each(targets, function() {
                     var targetType = $(this).data("type");
 
                     var cloneItem = foodItem.clone(true);
@@ -277,9 +279,9 @@
 
 
                     var dayPanel = $(this).parents('.meal-panel');
-                    calculateNutrition(dayPanel);                    
+                    calculateNutrition(dayPanel);
                 });
-                
+
             }
         }
 
@@ -293,18 +295,18 @@
                 type: 'POST',
                 url: '/mealplan/checkFoodType',
                 data: {
-                    foodId: id, 
+                    foodId: id,
                     checkType: type
                 },
                 success: function(result) {
                     console.log(id, type, result)
-                    var safe = result == 1 ? true:false; 
-                    if (safe){
+                    var safe = result == 1 ? true : false;
+                    if (safe) {
                         cloneItem.addClass("ui-state-disabled"); // safe to eat
-                    
-                    }else{
+
+                    } else {
                         cloneItem.addClass("ui-state-warning");
-                    }                    
+                    }
                 }
             });
         }
@@ -321,23 +323,23 @@
             console.log(foodId);
 
             $(this).parent().remove();
-            calculateNutrition(dayPanel); 
+            calculateNutrition(dayPanel);
 
             //console.log(this);
             var mealData = mealPanel.data('meal');
             var day = mealPanel.data('day');
             var mealType = mealPanel.data('type');
-            if(mealType == "is_for_small" || mealType == "is_for_big"){
+            if (mealType == "is_for_small" || mealType == "is_for_big") {
                 console.log("normal");
-                var slector = mealData+"-"+day;
-                var targets = $(".ui-sortable-meal."+slector).not(".is_for_small", ".is_for_big");
-                
-                $.each(targets, function(){
+                var slector = mealData + "-" + day;
+                var targets = $(".ui-sortable-meal." + slector).not(".is_for_small", ".is_for_big");
+
+                $.each(targets, function() {
                     //console.log(this);
                     var dayPanel = $(this).parents('.meal-panel');
-                    var sameItem = $(this).find("#"+foodId);
+                    var sameItem = $(this).find("#" + foodId);
                     sameItem.parent().remove();
-                    calculateNutrition(dayPanel); 
+                    calculateNutrition(dayPanel);
 
 
                     // var targetType = $(this).data("type");
@@ -427,48 +429,51 @@
             vegetable: [],
             protein: []
         }
+        let query = ""
 
         $('select[name="meat"]').change(function() {
             let values = $(this).val();
             fillterSelect['meat'] = values
-            filterFoodList(fillterSelect)
+            filterFoodList(fillterSelect, query)
         });
         $('select[name="vegetable"]').change(function() {
             let values = $(this).val();
             fillterSelect['vegetable'] = values
-            filterFoodList(fillterSelect)
+            filterFoodList(fillterSelect, query)
         });
         $('select[name="protein"]').change(function() {
             let values = $(this).val();
             fillterSelect['protein'] = values
-            filterFoodList(fillterSelect)
+            filterFoodList(fillterSelect, query)
         });
         $('select[name="fruit"]').change(function() {
             let values = $(this).val();
             fillterSelect['fruit'] = values
-            filterFoodList(fillterSelect)
+            filterFoodList(fillterSelect, query)
         });
 
 
         $(document).on('keyup', '#searchMenu', function() {
-            var query = $(this).val();
-            fetch_live_search(query)
+            delay: 100,
+            query = $(this).val();
+            filterFoodList(fillterSelect, query)
         });
 
-        function fetch_live_search(query = '') {
-            $.ajax({
-                url: "/mealplan/livesearch",
-                method: 'GET',
-                data: {
-                    query: query
-                },
-                success: function(data) {
-                    $("#filter-result").html(data);
-                }
-            })
-        }
+        // function fetch_live_search(fillterSelect, query = '') {
+        //     $.ajax({
+        //         url: "/mealplan/filterIngredient",
+        //         method: 'GET',
+        //         data: {
+        //             filterSelected: fillterSelect,
+        //             query: query
+        //         },
+        //         success: function(data) {
+        //             $("#filter-result").html(data);
+        //         }
+        //     })
+        // }
 
-        function filterFoodList(fillterSelect) {
+        function filterFoodList(fillterSelect, query) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -478,13 +483,34 @@
                 type: 'POST',
                 url: '/mealplan/filterIngredient',
                 data: {
-                    filterSelected: fillterSelect
+                    query: query,
+                    filterSelected: fillterSelect,
                 },
                 success: function(data) {
+                    console.log("filterFoodList -> data", data)
+
                     $("#filter-result").html(data);
                 }
             });
         }
+
+        // function filterFoodList(fillterSelect) {
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: '/mealplan/filterIngredient',
+        //         data: {
+        //             filterSelected: fillterSelect
+        //         },
+        //         success: function(data) {
+        //             $("#filter-result").html(data);
+        //         }
+        //     });
+        // }
 
     </script>
 @endsection
