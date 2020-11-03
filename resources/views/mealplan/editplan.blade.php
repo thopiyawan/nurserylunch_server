@@ -6,6 +6,7 @@
     $date_in_week = $dayInweek;
     @endphp
     <div class="sidebar-scroll">
+
         <aside id="aside-menu" class="">
 
             <div id="navigation" style="overflow: hidden; width: auto; height: 100%;">
@@ -53,49 +54,59 @@
             </div>
         </aside>
     </div>
-    <div id="wrapper">
-        <div class="row">
-            <div class="col-lg-2">
+    <div id="wrapper" class="edit-plan">
+        <div class="row fixed-info-box">
+            <div class="col">
                 <h1 class="page-title"> แก้ไขเมนูอาหาร </h1>
             </div>
-            <div class="col-lg-3 heading-p-t">
-                <h3>
+            <div class="col heading-p-t">
+                <div>
                     <i class="fas fa-calendar-alt color-gray"></i>
                     <span id="startDate"></span>
                     <span id="startDate"></span>
                     <span> - </span>
                     <span id="endDate"></span>
-                </h3>
+                </div>
             </div>
-            <div class="col-lg-4 heading-p-t">
-                <h3>
+            <div class="col heading-p-t">
+                <div>
                     <span><i class="fas fa-user-friends color-gray"></i></span>
-                    <span> เด็กอายุต่ำกว่า 1 ปี</span>
-                </h3>
+                    <span> เด็กอายุต่ำกว่า 1 ปี </span>
+                </div>
             </div>
-            <div class="col-lg-3 heading-p-t">
-                <button class="btn btn-primary pull-right" type="submit" name="update" value="school"
-                    onclick="handleClick()">บันทึกรายการอาหาร</button>
+            <div class="col heading-p-t">
+                <span><i class="fas fa-utensils color-gray"></i></span>
+                <span id="food-type-span" class="food-type normal"> อาหารปกติ </span>
+
+                <!-- <select class="form-control" name="account">
+                        <option> อาหารปกติ</option>
+                        <option>อาหารมุสลิม</option>
+                        <option>สำหรับเด็กแพ้กุ้ง</option>
+                    </select> -->
+            </div>
+            <div class="col-lg-3">
+                <button id="copy-normal-btn" class="btn btn-primary pull-right" >คัดลอกเมนูจากอาหารปกติ</button>
             </div>
         </div>
         <div class="row">
 
         </div>
         <div class="hpanel plan-panel">
-
-            <ul class="nav nav-tab">
-
-                @php $first = true; @endphp
-                @foreach (array_keys($settings) as $setting_id)
-                    <li class="">
-                        <a data-toggle="tab" href="#{{ $setting_id }}" aria-expanded="true"
-                            class="{{ $first ? 'active' : '' }}">
-                            {{ $settings[$setting_id] }}
-                        </a>
-                    </li>
-                    @php $first = false; @endphp
-                @endforeach
-            </ul>
+            <div class="row">
+                <div class="col-lg-9">
+                    <ul class="nav nav-tab">
+                        @php $first = true; @endphp 
+                        @foreach (array_keys($settings) as $setting_id)
+                            <li class="">
+                                <a data-toggle="tab" data-detail="{{$settings[$setting_id]}}" href="#{{$setting_id}}" aria-expanded="true" class="type-tab {{$first? 'active' : ''}}">
+                                    {{$settings[$setting_id]}}
+                                </a>
+                            </li>
+                            @php $first = false; @endphp
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
             <div class="tab-content">
                 @php $first = true; @endphp
                 @foreach (array_keys($settings) as $setting_id)
@@ -114,13 +125,13 @@
             </div>
         </div>
 
-        <!-- <div class="form-group">
-                                                                                                                                                                                                                                                                                            <div class="col-lg-8 col-sm-offset-4">
-                                                                                                                                                                                                                                                                                                <button class="btn btn-default" type="">ยกเลิก</button>
-                                                                                                                                                                                                                                                                                                <button class="btn btn-primary" type="submit" name="update" value="school"
-                                                                                                                                                                                                                                                                                                    onclick="handleClick()">บันทึกข้อมูล</button>
-                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                        </div> -->
+        <div class="form-group">
+            <div class="col-lg-8 col-sm-offset-4">
+                <button class="btn btn-default" type="">ยกเลิก</button>
+                <button class="btn btn-primary" type="submit" name="update" value="school"
+                    onclick="handleClick()">บันทึกข้อมูล</button>
+            </div>
+        </div>
     </div>
 @endsection
 @section('script')
@@ -152,6 +163,28 @@
             month: 'short',
             day: 'numeric',
         }))
+        $("#copy-normal-btn").hide();
+        $("#copy-normal-btn").on("click", copyFood);
+        $('.type-tab').on('click', function(){
+           var type = "";
+           var target = $("#food-type-span");
+           var detail = $(this).data("detail");
+           var start = detail.indexOf("(");
+           var end = detail.indexOf(")");
+           var text = detail.substring(start+1, end);
+
+           $("#food-type-span").text("อาหาร"+text);
+
+           if(text == "ปกติ"){
+                target.removeClass("special");
+                target.addClass("normal");
+                $("#copy-normal-btn").hide();
+           }else{
+                target.removeClass("normal");
+                target.addClass("special");
+                $("#copy-normal-btn").show();
+           }
+        });
 
 
         function handleClick() {
@@ -257,6 +290,48 @@
             var foodItem = $(ui.item);
             //cloneFoodItem(foodItem);
         }
+        function copyFood(event, ui){
+            console.log("coppying");
+            //console.log(event);
+
+            var activePanel = $(".tab-pane.active");
+            var normalPanel = $("#is_for_small.tab-pane, #is_for_big.tab-pane");
+            //console.log(activePanel);
+            //console.log(normalPanel);
+
+            $.each(activePanel.find(".menu-body").not(".ui-sortable-placeholder"), function(){
+                $(this).remove();
+            });
+
+            var normalPlans = normalPanel.find(".ui-sortable-meal");
+            //console.log(normalPlans);
+            $.each(normalPlans, function(){
+                var meal = $(this).data("meal");
+                var day = $(this).data("day");
+                var slector = meal+"-"+day;
+
+                var target = activePanel.find(".ui-sortable-meal."+slector);//.find(".placeholder");
+                var foods = $(this).find(".menu-body").not(".ui-sortable-placeholder");
+
+                $.each(foods, function(){
+                    var foodItem = $(this);
+                    console.log(foodItem);
+
+                    var foodId = foodItem.children(":first").attr("id");
+                    var targetType = activePanel.data("type");
+
+                    var cloneItem = foodItem.clone(true);
+
+                    checkMealType(foodId, targetType, cloneItem);
+                    cloneItem.insertBefore(target.find(".placeholder"));
+
+                });
+            });
+            var dayPanels = activePanel.find('.meal-panel');
+            $.each(dayPanels, function(){
+                calculateNutrition($(this)); 
+            });
+        }
 
         function cloneFoodItem(foodItem) {
             //console.log(foodItem);
@@ -302,11 +377,11 @@
                 },
                 success: function(result) {
                     console.log(id, type, result)
-                    var safe = result == 1 ? true : false;
-                    if (safe) {
-                        cloneItem.addClass("ui-state-disabled"); // safe to eat
-
-                    } else {
+                    var safe = result == 1 ? true:false; 
+                    if (safe){
+                        //cloneItem.addClass("ui-state-disabled"); // safe to eat
+                    
+                    }else{
                         cloneItem.addClass("ui-state-warning");
                     }
                 }
@@ -328,34 +403,24 @@
             calculateNutrition(dayPanel);
 
             //console.log(this);
-            var mealData = mealPanel.data('meal');
-            var day = mealPanel.data('day');
-            var mealType = mealPanel.data('type');
-            if (mealType == "is_for_small" || mealType == "is_for_big") {
-                console.log("normal");
-                var slector = mealData + "-" + day;
-                var targets = $(".ui-sortable-meal." + slector).not(".is_for_small", ".is_for_big");
 
-                $.each(targets, function() {
-                    //console.log(this);
-                    var dayPanel = $(this).parents('.meal-panel');
-                    var sameItem = $(this).find("#" + foodId);
-                    sameItem.parent().remove();
-                    calculateNutrition(dayPanel);
-
-
-                    // var targetType = $(this).data("type");
-
-                    // var cloneItem = foodItem.clone(true);
-
-                    // checkMealType(foodId, targetType, cloneItem);
-                    // cloneItem.prependTo(this);
-
-
-                    // var dayPanel = $(this).parents('.meal-panel');
-                    // calculateNutrition(dayPanel); 
-                });
-            }
+            // delete cloned item
+            // var mealData = mealPanel.data('meal');
+            // var day = mealPanel.data('day');
+            // var mealType = mealPanel.data('type');
+            // if(mealType == "is_for_small" || mealType == "is_for_big"){
+            //     console.log("normal");
+            //     var slector = mealData+"-"+day;
+            //     var targets = $(".ui-sortable-meal."+slector).not(".is_for_small", ".is_for_big");
+                
+            //     $.each(targets, function(){
+            //         //console.log(this);
+            //         var dayPanel = $(this).parents('.meal-panel');
+            //         var sameItem = $(this).find("#"+foodId);
+            //         sameItem.parent().remove();
+            //         calculateNutrition(dayPanel); 
+            //     });
+            //}
         }
 
         //calculate nutrition 
