@@ -70,7 +70,7 @@
             <div class="col-lg-4 heading-p-t">
                 <h3>
                     <span><i class="fas fa-user-friends color-gray"></i></span>
-                    <span> เด็กอายุต่ำกว่า 1 ปี </span>
+                    <span> เด็กอายุต่ำกว่า 1 ปี</span>
                 </h3>
             </div>
             <div class="col-lg-3 heading-p-t">
@@ -82,7 +82,9 @@
 
         </div>
         <div class="hpanel plan-panel">
+
             <ul class="nav nav-tab">
+
                 @php $first = true; @endphp
                 @foreach (array_keys($settings) as $setting_id)
                     <li class="">
@@ -113,12 +115,12 @@
         </div>
 
         <!-- <div class="form-group">
-                                                                                                                                                                                                                                                    <div class="col-lg-8 col-sm-offset-4">
-                                                                                                                                                                                                                                                        <button class="btn btn-default" type="">ยกเลิก</button>
-                                                                                                                                                                                                                                                        <button class="btn btn-primary" type="submit" name="update" value="school"
-                                                                                                                                                                                                                                                            onclick="handleClick()">บันทึกข้อมูล</button>
-                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                            <div class="col-lg-8 col-sm-offset-4">
+                                                                                                                                                                                                                                                                                                <button class="btn btn-default" type="">ยกเลิก</button>
+                                                                                                                                                                                                                                                                                                <button class="btn btn-primary" type="submit" name="update" value="school"
+                                                                                                                                                                                                                                                                                                    onclick="handleClick()">บันทึกข้อมูล</button>
+                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                        </div> -->
     </div>
 @endsection
 @section('script')

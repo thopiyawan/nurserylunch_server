@@ -1,4 +1,3 @@
-{{ Debugbar::info(gettype($foodList)) }}
 @if (gettype($foodList) == 'string')
     <p>ไม่พบอาหารดังกล่าว</p>
 @else
@@ -34,7 +33,6 @@
         remove: onSortableRemove,
         receive: onSortableReceive,
     });
-
 
     function onSortableRemove(event, ui) {
         var target = event.target;

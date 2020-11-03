@@ -1,13 +1,14 @@
 <div class="meal-panel row {{ $day }}">
     <div class="col col-day">
         <div class="mlabel">{{ $day_th }}</div>
-        <div class="mdate {{$day}}"><span id={{ $day }}></span></div>
+        <div class="mdate {{ $day }}"><span id={{ $day }}></span></div>
     </div>
 
     @if ($userSetting->is_breakfast == 1)
         <div class="col col-meal" id="breakfast-meal-{{ $day }}" date-date="123">
             <div class="mlabel">เช้า</div>
-             <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{$day}} {{$setting_id}}" data-day="{{$day}}" data-meal="breakfast-snack" data-type="{{$setting_id}}">
+            <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{ $day }} {{ $setting_id }}"
+                data-day="{{ $day }}" data-meal="breakfast-snack" data-type="{{ $setting_id }}">
                 @foreach ($food_logs as $food)
                     @if ($food->meal_code == 1 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
@@ -66,7 +67,8 @@
     @if ($userSetting->is_morning_snack == 1)
         <div class="col col-meal" id="breakfast-snack-meal-{{ $day }}" date-date="123">
             <div class="mlabel">ว่างเช้า</div>
-            <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{$day}} {{$setting_id}}" data-day="{{$day}}" data-meal="breakfast-snack" data-type="{{$setting_id}}">
+            <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{ $day }} {{ $setting_id }}"
+                data-day="{{ $day }}" data-meal="breakfast-snack" data-type="{{ $setting_id }}">
                 @foreach ($food_logs as $food)
                     @if ($food->meal_code == 2 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
@@ -97,7 +99,8 @@
     @if ($userSetting->is_lunch == 1)
         <div class="col col-meal" id="lunch-meal-{{ $day }}">
             <div class="mlabel">กลางวัน</div>
-            <div id="" class="ui-sortable ui-sortable-meal lunch-{{$day}} {{$setting_id}}" data-day="{{$day}}" data-meal="lunch" data-type="{{$setting_id}}">
+            <div id="" class="ui-sortable ui-sortable-meal lunch-{{ $day }} {{ $setting_id }}" data-day="{{ $day }}"
+                data-meal="lunch" data-type="{{ $setting_id }}">
                 @foreach ($food_logs as $food)
                     @if ($food->meal_code == 3 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">
@@ -153,7 +156,8 @@
     @if ($userSetting->is_afternoon_snack)
         <div class="col col-meal" id="lunch-snack-meal-{{ $day }}">
             <div class="mlabel">ว่างบ่าย</div>
-            <div id="" class="ui-sortable ui-sortable-meal lunch-snack-{{$day}} {{$setting_id}}" data-day="{{$day}}" data-meal="lunch-snack" data-type="{{$setting_id}}">
+            <div id="" class="ui-sortable ui-sortable-meal lunch-snack-{{ $day }} {{ $setting_id }}"
+                data-day="{{ $day }}" data-meal="lunch-snack" data-type="{{ $setting_id }}">
                 @foreach ($food_logs as $food)
                     @if ($food->meal_code == 4 && $food->meal_date == $date_in_week)
                         <div class="ui-sortable ui-sortable-meal">

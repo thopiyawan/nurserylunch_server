@@ -46,10 +46,12 @@ class MealplanController extends Controller
 		$userId = auth()->user()->id;
 		$schoolId = auth()->user()->school_id;
 		$userSetting = Setting::find($schoolId ); // ทำไมหาด้วย userId?
+		Debugbar::info($userSetting);
+
 		$settings = array(
 			"is_for_small" => "ต่ำกว่า 1 ปี (ปกติ)", 
 			"is_s_muslim" => "ต่ำกว่า 1 ปี (มุสลิม)",
-			"is_s_shrimp" => "ต่ำกว่า 1 ปี (แพ้กุ้ง)" 
+			"is_s_shrimp" => "ต่ำกว่า 1 ปี (แพ้กุ้ง)",
 		); // ต้องแก้ให้ถูก
 
 		
@@ -438,36 +440,8 @@ class MealplanController extends Controller
 			}
 		
 		}
-	
 		return view('mealplan.filterresult', ['foodList' => $foodFilter]);	
 	}
-
-	public function liveSearch(Request $request){
-		$foodSearch = [];
-		$foodId = array();
-
-		if($request->ajax()){
-			$query = $request->get('query');
-			if($query != ''){
-				$foodSearch = Food::where('food_thai', 'like','%'.$query.'%')->get();	
-				$total_row = $foodSearch->count();
-			}else{
-				$foodSearch = Food::orderBy('id', 'asc')->paginate(10);
-				$total_row = $foodSearch->count();
-			}
-
-			if($total_row > 0){
-				foreach($foodSearch as $food)
-				{
-						$food->init();
-				}
-			}else{
-				$foodSearch = 'ไม่พบอาหารดังกล่าว';
-			}
-		}
-		return view('mealplan.filterresult', ['foodList' => $foodSearch]);
-	}
-
 }
 
 function getLastLogs($userId,$weekStartDate,$weekEndDate){
