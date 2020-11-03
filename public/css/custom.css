@@ -112,6 +112,9 @@ input[type=checkbox] {
 #wrapper.narrow-top{
     padding-top: 20px;
 }
+#wrapper.edit-plan{
+    padding-top: 80px;
+}
 #wrapper{
 	/*background: white;*/
     background: #f9f9f9;
@@ -210,11 +213,35 @@ input[type=checkbox] {
 .form-horizontal .control-label{
     text-align: right;
 }
+.fixed-info-box{
+    position: fixed;
+    left: 295px;
+    padding: 10px;
+    top: 60px;
+    width: calc(100% - 285px) !important;
+    height: 60px;
+    z-index: 100;
+    background-color: white;
+    background: #f9f9f9;
+    border-bottom: 1px solid #eaeaea;
+    /*box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.05), 1px 3px 6px 2px rgba(0, 0, 0, .1);*/
+
+}
+.food-type{
+    font-size: var(--font-size-p2);
+    font-weight: 600;
+}
+.food-type.normal{
+    color: #4db11e;
+}
+.food-type.special{
+    color: #c0392b;
+}
 .hr-line-dashed {
     border-top: 1px dotted #d8d8d8;
 }
 .heading-p-t{
-    padding-top: 4px;
+    padding-top: 10px;
 }
 .icon-primary{
     color: var(--primary);

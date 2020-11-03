@@ -26,7 +26,7 @@
                         </div>
                     @endif
                 @endforeach
-                <div class="ui-sortable">
+                <div class="placeholder">
                     <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
                         <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
                     </div>
@@ -69,7 +69,7 @@
             <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{$day}} {{$setting_id}}" data-day="{{$day}}" data-meal="breakfast-snack" data-type="{{$setting_id}}">
                 @foreach ($food_logs as $food)
                     @if ($food->meal_code == 2 && $food->meal_date == $date_in_week)
-                        <div class="ui-sortable ui-sortable-meal">
+                        <div class="">
                             <div class="menu-body">
                                 <div class="col col-food-name" data-energy="{{ $food->energy }}"
                                     data-protein="{{ $food->protein }}" data-fat="{{ $food->fat }}"
@@ -85,7 +85,7 @@
                         </div>
                     @endif
                 @endforeach
-                <div class="ui-sortable">
+                <div class="placeholder">
                     <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
                         <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
                     </div>
@@ -116,7 +116,7 @@
                         </div>
                     @endif
                 @endforeach
-                <div class="ui-sortable">
+                <div class="placeholder">
                     <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
                         <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
                     </div>
@@ -172,7 +172,7 @@
                         </div>
                     @endif
                 @endforeach
-                <div class="ui-sortable">
+                <div class="placeholder">
                     <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
                         <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
                     </div>
