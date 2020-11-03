@@ -17,7 +17,8 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "onokumus/metismenu": "dev-master"
+        "onokumus/metismenu": "dev-master",
+        "zachleigh/laravel-property-bag": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

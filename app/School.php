@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use LaravelPropertyBag\Settings\HasSettings;
 class School extends Model
 {
     //
-
+    use HasSettings;
 
 
     public function setting(){
