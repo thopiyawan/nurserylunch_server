@@ -77,29 +77,23 @@
             <div class="col heading-p-t">
                 <span><i class="fas fa-utensils color-gray"></i></span>
                 <span id="food-type-span" class="food-type normal"> อาหารปกติ </span>
-
-                <!-- <select class="form-control" name="account">
-                        <option> อาหารปกติ</option>
-                        <option>อาหารมุสลิม</option>
-                        <option>สำหรับเด็กแพ้กุ้ง</option>
-                    </select> -->
             </div>
             <div class="col-lg-3">
-                <button id="copy-normal-btn" class="btn btn-primary pull-right" >คัดลอกเมนูจากอาหารปกติ</button>
+                <button id="copy-normal-btn" class="btn btn-primary pull-right">คัดลอกเมนูจากอาหารปกติ</button>
             </div>
         </div>
         <div class="row">
-
         </div>
         <div class="hpanel plan-panel">
             <div class="row">
                 <div class="col-lg-9">
                     <ul class="nav nav-tab">
-                        @php $first = true; @endphp 
+                        @php $first = true; @endphp
                         @foreach (array_keys($settings) as $setting_id)
                             <li class="">
-                                <a data-toggle="tab" data-detail="{{$settings[$setting_id]}}" href="#{{$setting_id}}" aria-expanded="true" class="type-tab {{$first? 'active' : ''}}">
-                                    {{$settings[$setting_id]}}
+                                <a data-toggle="tab" data-detail="{{ $settings[$setting_id] }}" href="#{{ $setting_id }}"
+                                    aria-expanded="true" class="type-tab {{ $first ? 'active' : '' }}">
+                                    {{ $settings[$setting_id] }}
                                 </a>
                             </li>
                             @php $first = false; @endphp
@@ -107,6 +101,28 @@
                     </ul>
                 </div>
             </div>
+
+            {{-- <div class="row">
+                <div class="col-lg-9">
+                    <ul class="nav nav-tab">
+                        @php $first = true; @endphp
+                        @foreach ($settings2 as $key => $setting_value)
+                            {{ Debugbar::info($setting_value) }}
+                            <li class="">
+                                <a data-toggle="tab" data-detail="{{ $setting_value['food_type'] }}"
+                                    href="#{{ $setting_value['food_type'] }}" aria-expanded="true"
+                                    class="type-tab {{ $first ? 'active' : '' }}">
+                                    {{ $setting_value['food_type'] }}
+                                </a>
+                            </li>
+                            @php $first = false; @endphp
+                        @endforeach
+                    </ul>
+                </div>
+            </div> --}}
+
+
+
             <div class="tab-content">
                 @php $first = true; @endphp
                 @foreach (array_keys($settings) as $setting_id)
@@ -116,6 +132,7 @@
                                 @foreach ($day_in_week as $key => $day)
                                     @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key],
                                     'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_id])
+                                    <p>{{ $setting_id }}</p>
                                 @endforeach
                             </div>
                         </div>
@@ -123,6 +140,24 @@
                     @php $first = false; @endphp
                 @endforeach
             </div>
+
+            {{-- <div class="tab-content">
+                @php $first = true; @endphp
+                @foreach ($settings2 as $key => $setting_value)
+                    <div id={{ $setting_value['food_type'] }} class="tab-pane {{ $first ? 'active' : '' }} ">
+                        <div class="">
+                            <div id="">
+                                @foreach ($day_in_week as $key => $day)
+                                    @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key],
+                                    'date_in_week' => $date_in_week[$key], 'setting_id' => 'xxx'])
+                                    <p>{{ $setting_value['setting_description_thai'] }}</p>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    @php $first = false; @endphp
+                @endforeach
+            </div> --}}
         </div>
 
         <div class="form-group">
@@ -165,25 +200,25 @@
         }))
         $("#copy-normal-btn").hide();
         $("#copy-normal-btn").on("click", copyFood);
-        $('.type-tab').on('click', function(){
-           var type = "";
-           var target = $("#food-type-span");
-           var detail = $(this).data("detail");
-           var start = detail.indexOf("(");
-           var end = detail.indexOf(")");
-           var text = detail.substring(start+1, end);
+        $('.type-tab').on('click', function() {
+            var type = "";
+            var target = $("#food-type-span");
+            var detail = $(this).data("detail");
+            var start = detail.indexOf("(");
+            var end = detail.indexOf(")");
+            var text = detail.substring(start + 1, end);
 
-           $("#food-type-span").text("อาหาร"+text);
+            $("#food-type-span").text("อาหาร" + text);
 
-           if(text == "ปกติ"){
+            if (text == "ปกติ") {
                 target.removeClass("special");
                 target.addClass("normal");
                 $("#copy-normal-btn").hide();
-           }else{
+            } else {
                 target.removeClass("normal");
                 target.addClass("special");
                 $("#copy-normal-btn").show();
-           }
+            }
         });
 
 
@@ -290,7 +325,8 @@
             var foodItem = $(ui.item);
             //cloneFoodItem(foodItem);
         }
-        function copyFood(event, ui){
+
+        function copyFood(event, ui) {
             console.log("coppying");
             //console.log(event);
 
@@ -299,21 +335,21 @@
             //console.log(activePanel);
             //console.log(normalPanel);
 
-            $.each(activePanel.find(".menu-body").not(".ui-sortable-placeholder"), function(){
+            $.each(activePanel.find(".menu-body").not(".ui-sortable-placeholder"), function() {
                 $(this).remove();
             });
 
             var normalPlans = normalPanel.find(".ui-sortable-meal");
             //console.log(normalPlans);
-            $.each(normalPlans, function(){
+            $.each(normalPlans, function() {
                 var meal = $(this).data("meal");
                 var day = $(this).data("day");
-                var slector = meal+"-"+day;
+                var slector = meal + "-" + day;
 
-                var target = activePanel.find(".ui-sortable-meal."+slector);//.find(".placeholder");
+                var target = activePanel.find(".ui-sortable-meal." + slector); //.find(".placeholder");
                 var foods = $(this).find(".menu-body").not(".ui-sortable-placeholder");
 
-                $.each(foods, function(){
+                $.each(foods, function() {
                     var foodItem = $(this);
                     console.log(foodItem);
 
@@ -328,8 +364,8 @@
                 });
             });
             var dayPanels = activePanel.find('.meal-panel');
-            $.each(dayPanels, function(){
-                calculateNutrition($(this)); 
+            $.each(dayPanels, function() {
+                calculateNutrition($(this));
             });
         }
 
@@ -377,11 +413,11 @@
                 },
                 success: function(result) {
                     console.log(id, type, result)
-                    var safe = result == 1 ? true:false; 
-                    if (safe){
+                    var safe = result == 1 ? true : false;
+                    if (safe) {
                         //cloneItem.addClass("ui-state-disabled"); // safe to eat
-                    
-                    }else{
+
+                    } else {
                         cloneItem.addClass("ui-state-warning");
                     }
                 }
@@ -412,7 +448,7 @@
             //     console.log("normal");
             //     var slector = mealData+"-"+day;
             //     var targets = $(".ui-sortable-meal."+slector).not(".is_for_small", ".is_for_big");
-                
+
             //     $.each(targets, function(){
             //         //console.log(this);
             //         var dayPanel = $(this).parents('.meal-panel');
