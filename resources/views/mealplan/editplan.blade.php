@@ -85,7 +85,7 @@
         <div class="row">
         </div>
         <div class="hpanel plan-panel">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-lg-9">
                     <ul class="nav nav-tab">
                         @php $first = true; @endphp
@@ -100,30 +100,30 @@
                         @endforeach
                     </ul>
                 </div>
-            </div>
+            </div> --}}
 
-            {{-- <div class="row">
+            <div class="row">
                 <div class="col-lg-9">
                     <ul class="nav nav-tab">
                         @php $first = true; @endphp
                         @foreach ($settings2 as $key => $setting_value)
                             {{ Debugbar::info($setting_value) }}
                             <li class="">
-                                <a data-toggle="tab" data-detail="{{ $setting_value['food_type'] }}"
-                                    href="#{{ $setting_value['food_type'] }}" aria-expanded="true"
+                                <a data-toggle="tab" data-detail="{{ $setting_value['setting_description_thai'] }}"
+                                    href="#is_{{ $setting_value['food_type'] }}" aria-expanded="true"
                                     class="type-tab {{ $first ? 'active' : '' }}">
-                                    {{ $setting_value['food_type'] }}
+                                    {{ $setting_value['food_type'] . ' | ' . $setting_value['setting_description_thai'] }}
                                 </a>
                             </li>
                             @php $first = false; @endphp
                         @endforeach
                     </ul>
                 </div>
-            </div> --}}
+            </div>
 
 
 
-            <div class="tab-content">
+            {{-- <div class="tab-content">
                 @php $first = true; @endphp
                 @foreach (array_keys($settings) as $setting_id)
                     <div id="{{ $setting_id }}" class="tab-pane {{ $first ? 'active' : '' }} ">
@@ -132,25 +132,7 @@
                                 @foreach ($day_in_week as $key => $day)
                                     @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key],
                                     'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_id])
-                                    <p>{{ $setting_id }}</p>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    @php $first = false; @endphp
-                @endforeach
-            </div>
-
-            {{-- <div class="tab-content">
-                @php $first = true; @endphp
-                @foreach ($settings2 as $key => $setting_value)
-                    <div id={{ $setting_value['food_type'] }} class="tab-pane {{ $first ? 'active' : '' }} ">
-                        <div class="">
-                            <div id="">
-                                @foreach ($day_in_week as $key => $day)
-                                    @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key],
-                                    'date_in_week' => $date_in_week[$key], 'setting_id' => 'xxx'])
-                                    <p>{{ $setting_value['setting_description_thai'] }}</p>
+                                    <h>{{ $setting_id }}</h>
                                 @endforeach
                             </div>
                         </div>
@@ -158,6 +140,24 @@
                     @php $first = false; @endphp
                 @endforeach
             </div> --}}
+
+            <div class="tab-content">
+                @php $first = true; @endphp
+                @foreach ($settings2 as $key => $setting_value)
+                    <div id={{ 'is_' . $setting_value['food_type'] }} class="tab-pane {{ $first ? 'active' : '' }} ">
+                        <div class="">
+                            <div id="">
+                                @foreach ($day_in_week as $key => $day)
+                                    @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key],
+                                    'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_value['food_type']])
+                                    <p>{{ $setting_value['setting_description_thai'] . 'setting2' }}</p>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    @php $first = false; @endphp
+                @endforeach
+            </div>
         </div>
 
         <div class="form-group">
@@ -370,7 +370,8 @@
         }
 
         function cloneFoodItem(foodItem) {
-            //console.log(foodItem);
+
+
             var foodId = foodItem.children(":first").attr("id");
             //console.log(foodId);
             var mealPanel = foodItem.parent()

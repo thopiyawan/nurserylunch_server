@@ -177,7 +177,6 @@ class MealplanController extends Controller
 		
 	
 		$settings2 = array_merge($setting_for_small, $setting_for_big);
-		Debugbar::info($settings2);
 		$settings = array(
 			"is_for_small" => "ต่ำกว่า 1 ปี (ปกติ)", 
 			"is_s_muslim" => "ต่ำกว่า 1 ปี (มุสลิม)",
