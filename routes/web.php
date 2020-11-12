@@ -20,9 +20,10 @@ Auth::routes();
 Route::get('/', 'MealplanController@showPlan')->middleware('auth');
 Route::get('/mealplan/edit', 'MealplanController@editPlan')->middleware('auth');
 Route::get('/kids', 'KidController@showClassroom')->middleware('auth');
-Route::get('/download', function () {
-return view('download');
-})->middleware('auth');
+Route::get('/report', 'ReportController@index')->middleware('auth');
+// Route::get('/download', function () {
+// return view('download');
+// })->middleware('auth');
 Route::get('/setting', 'UserController@setting')->middleware('auth');
 
 Route::post('/setting', 'UserController@updateSetting');

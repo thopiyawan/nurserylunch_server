@@ -54,7 +54,7 @@
             </div>
         </aside>
     </div>
-    <div id="wrapper" class="edit-plan">
+    <div id="wrapper" class="meal-plan">
         <div class="row fixed-info-box">
             <div class="col">
                 <h1 class="page-title"> แก้ไขเมนูอาหาร </h1>
@@ -317,7 +317,7 @@
                     console.log(foodItem);
 
                     var foodId = foodItem.children(":first").attr("id");
-                    var targetType = activePanel.data("type");
+                    var targetType = activePanel.attr('id');
 
                     var cloneItem = foodItem.clone(true);
 
@@ -350,7 +350,7 @@
 
                     var cloneItem = foodItem.clone(true);
 
-                    checkMealType(foodId, targetType, cloneItem);
+                    checkMealType(foodId, "mealType", cloneItem);
                     cloneItem.prependTo(this);
 
 
@@ -372,7 +372,8 @@
                 url: '/mealplan/checkFoodType',
                 data: {
                     foodId: id, 
-                    checkType: type
+                    checkType: type,
+                    age: "age6_8mo"
                 },
                 success: function(result) {
                     console.log(id, type, result)

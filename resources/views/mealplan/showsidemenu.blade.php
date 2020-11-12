@@ -1,5 +1,5 @@
 <div class="m-b center">
-    <h4 class="">แสดงเมนูอาหารของสัปดาห์</h4>
+    <h4 class="text-center">แสดงเมนูอาหารของสัปดาห์</h4>
     <!-- <button class="btn btn-block btn-default m-b" type="" name="" value="">สัปดาห์นี้</button> -->
     <div id="week-picker"></div>
         <!-- <br /><br />

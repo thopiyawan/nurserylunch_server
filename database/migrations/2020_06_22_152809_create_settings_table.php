@@ -29,6 +29,7 @@ class CreateSettingsTable extends Migration
             $table->boolean('is_lunch')->default(1);
             $table->boolean('is_afternoon_snack')->default(1);
 
+
             $table->boolean('is_for_small')->default(0);
             $table->boolean('is_s_muslim')->default(0);
             $table->boolean('is_s_vege')->default(0);
