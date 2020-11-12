@@ -5,48 +5,56 @@
         @include('mealplan.showsidemenu')
 
     </aside>
-    <div id="wrapper" class="">
-        <div class="row">
-            <div class="col-lg-2">
-                <h1 class="page-title"> เมนูอาหาร </h1>
+    <div id="wrapper" class="meal-plan">
+        <div class="row fixed-info-box">
+            <div class="col">
+                <h1 class="page-title"> รายการอาหาร </h1>
             </div>
-            <div class="col-lg-3 heading-p-t">
-                <h3>
+            <div class="col heading-p-t">
+                <div>
                     <i class="fas fa-calendar-alt color-gray"></i>
                     <span id="startDate"></span>
                     <span id="startDate"></span>
                     <span> - </span>
                     <span id="endDate"></span>
-                </h3>
+                </div>
             </div>
-            
-            <div class="col-lg-4 heading-p-t">
-                <h3>
+            <div class="col heading-p-t">
+                <div>
                     <span><i class="fas fa-user-friends color-gray"></i></span>
                     <span> เด็กอายุต่ำกว่า 1 ปี </span>
-                </h3>
+                </div>
             </div>
-        
-            <div class="col-lg-3 heading-p-t pull-right">
+            <div class="col heading-p-t">
+                <span><i class="fas fa-utensils color-gray"></i></span>
+                <span id="food-type-span" class="food-type normal"> อาหารปกติ </span>
+
+                <!-- <select class="form-control" name="account">
+                        <option> อาหารปกติ</option>
+                        <option>อาหารมุสลิม</option>
+                        <option>สำหรับเด็กแพ้กุ้ง</option>
+                    </select> -->
+            </div>
+
+            <div class="col-lg-3 pull-right">
                  <a href="/mealplan/edit" class="btn btn-primary pull-right" type="" name="" value="">
                     <i class="fas fa-edit"></i>
                     แก้ไขรายการอาหาร
                 </a>
             </div>
-    
         </div>
 
         <div class="">
             <div class="hpanel plan-panel">
                 <ul class="nav nav-tab">
                     <li class="">
-                        <a data-toggle="tab" href="#tab-1" aria-expanded="true" class="active">ต่ำกว่า 1 ปี (ปกติ)</a>
+                        <a data-toggle="tab" href="#tab-1" aria-expanded="true" class="type-tab active">ต่ำกว่า 1 ปี (ปกติ)</a>
                     </li>
                     <li class="">
-                        <a data-toggle="tab" href="#tab-2" aria-expanded="false">ต่ำกว่า 1 ปี (มุสลิม)</a>
+                        <a data-toggle="tab" href="#tab-2" aria-expanded="false" class="type-tab">ต่ำกว่า 1 ปี (มุสลิม)</a>
                     </li>
                     <li class="">
-                        <a data-toggle="tab" href="#tab-3" aria-expanded="false">ต่ำกว่า 1 ปี (แพ้กุ้ง)</a>
+                        <a data-toggle="tab" href="#tab-3" aria-expanded="false" class="type-tab">ต่ำกว่า 1 ปี (แพ้กุ้ง)</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -72,5 +80,29 @@
                 </div>
             </div>
         </div>
+        <script type="application/javascript">
+
+            $('.type-tab').on('click', function(){
+               var type = "";
+               var target = $("#food-type-span");
+               var detail = $(this).data("detail");
+               var start = detail.indexOf("(");
+               var end = detail.indexOf(")");
+               var text = detail.substring(start+1, end);
+
+               $("#food-type-span").text("อาหาร"+text);
+
+               if(text == "ปกติ"){
+                    target.removeClass("special");
+                    target.addClass("normal");
+                    $("#copy-normal-btn").hide();
+               }else{
+                    target.removeClass("normal");
+                    target.addClass("special");
+                    $("#copy-normal-btn").show();
+               }
+            });
+
+        </script>
         
     @endsection

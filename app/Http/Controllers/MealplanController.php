@@ -9,7 +9,7 @@ use App\FoodLogs;
 use App\Setting;
 use App\EnergyLogs;
 use App\Nutrition;
-use App\Properties;
+use App\Propertie;
 use Illuminate\Http\Request;
 use Datetime;
 use Debugbar;
@@ -337,12 +337,23 @@ class MealplanController extends Controller
 
 	public function checkFoodType(Request $request){
 		$input = $request->all();
-		// $foodId = $input['foodId'];
-		// $checkType = $input['checkType'];
+		$foodId = $input['foodId'];
+		$checkType = $input['checkType'];
 
-		// $foodItem = Properties::where('food_id', $foodId)->get();
+		$foodItem = Propertie::where('food_id', $foodId)->first();
+		$safe = true;
+		$allRules = array(
+			"is_s_muslim" => "has_pork", 
+			"is_s_shrimp" => "has_shirmp"
+		);
+		$rule = $allRules[$checkType];
 
-		$safe = (bool)rand(0,1);
+		if($foodItem[$rule] == 1){
+			$safe = false;
+		}
+
+
+		//$safe = (bool)rand(0,1);
 		//$safe = true;
 
 		return $safe;

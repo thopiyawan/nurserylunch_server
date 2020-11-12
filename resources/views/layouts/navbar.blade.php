@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li class="">
-                    <a class="nav-link  {{ Request::is('download') ? 'active' : '' }}" href="{{ url('/download')}}" >
+                    <a class="nav-link  {{ Request::is('report') ? 'active' : '' }}" href="{{ url('/report')}}" >
                         <i class="fas fa-file-download"></i>
                         <span>รายงาน</span>
                     </a>
