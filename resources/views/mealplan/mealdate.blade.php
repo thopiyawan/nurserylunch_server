@@ -5,6 +5,7 @@
     </div>
 
     @if ($userSetting->is_breakfast == 1)
+
         <div class="col col-meal" id="breakfast-meal-{{ $day }}" date-date="123">
             <div class="mlabel">เช้า</div>
             <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{ $day }} {{ $setting_id }}"

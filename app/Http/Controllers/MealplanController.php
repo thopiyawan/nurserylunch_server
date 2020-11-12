@@ -9,7 +9,8 @@ use App\FoodLogs;
 use App\Setting;
 use App\EnergyLogs;
 use App\Nutrition;
-use App\Propertie;
+use App\Properties;
+use App\SettingDescription;
 use Illuminate\Http\Request;
 use Datetime;
 use Debugbar;
@@ -46,13 +47,9 @@ class MealplanController extends Controller
 		$userId = auth()->user()->id;
 		$schoolId = auth()->user()->school_id;
 		$userSetting = Setting::find($schoolId ); // ทำไมหาด้วย userId?
-		Debugbar::info($userSetting);
+		$settingDescription = SettingDescription::all();
 
-		$settings = array(
-			"is_for_small" => "ต่ำกว่า 1 ปี (ปกติ)", 
-			"is_s_muslim" => "ต่ำกว่า 1 ปี (มุสลิม)",
-			"is_s_shrimp" => "ต่ำกว่า 1 ปี (แพ้กุ้ง)",
-		); // ต้องแก้ให้ถูก
+	
 
 		
 		$data = $request->session()->all();
@@ -119,7 +116,77 @@ class MealplanController extends Controller
 			'protein' => $proteinCondition,
 			'fat' => $fatCondition,
 		);
-    	return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'settings' => $settings,'targetNutrition' => $targetNutrition]);	
+
+
+		$userSettingArray = $userSetting->toArray();
+		$userSettingArray = array_slice($userSettingArray, 11);
+		$settings_enable = array();
+
+	
+
+		foreach($settingDescription as $key => $val){
+			//[description id  for foodtype in food log, value]
+			if(isset($userSettingArray[$val->setting_description_english])){
+				$settings_enable[$val->setting_description_english] = ["food_type" => $key + 1, "value" => $userSettingArray[$val->setting_description_english], "setting_description_thai" => $val->setting_description_thai];
+			}
+		}
+		
+
+
+
+		//define setting for less 1 year 
+		$setting_small_key = array('is_s_muslim', 'is_s_vege', 
+		'is_s_vegan', 'is_s_milk', 'is_s_breastmilk', 'is_s_egg', 'is_s_wheat',
+		'is_s_shrimp', 'is_s_shell', 'is_s_crab', 'is_s_fish', 'is_s_peanut', 'is_s_soybean');
+
+		$setting_big_key = array('is_b_muslim', 'is_b_vege', 
+		'is_b_vegan', 'is_b_milk', 'is_b_breastmilk', 'is_b_egg', 'is_b_wheat',
+		'is_b_shrimp', 'is_b_shell', 'is_b_crab', 'is_b_fish', 'is_b_peanut', 'is_b_soybean');
+
+
+		$setting_for_small = array("is_for_small" => ["food_type" => 8, 'setting_description_thai' => "ต่ำกว่า 1 ปี (ปกติ)"]);
+		$setting_for_big = array("is_for_big" => ["food_type" => 22, 'setting_description_thai' => "1-3 ปี (ปกติ)"]);
+
+
+
+
+		if($settings_enable['is_for_small']['value'] == 1){
+			foreach($setting_small_key as $value){
+				$setting_value = $settings_enable[$value];
+				if($setting_value['value'] == 1){
+					$temp = array();
+					$temp['food_type'] = $setting_value['food_type'];
+					$temp['setting_description_thai'] = 'ต่ำกว่า 1 ปี ('.$setting_value['setting_description_thai'] . ')';
+					$setting_for_small[$value] = $temp;
+					
+				}
+			}
+		}
+
+		if($settings_enable['is_for_big']['value'] == 1){
+			foreach($setting_big_key as $value){
+				$setting_value = $settings_enable[$value];
+				if($setting_value['value'] == 1){
+					$temp = array();
+					$temp['food_type'] = $setting_value['food_type'];
+					$temp['setting_description_thai'] = '1-3 ปี ('.$setting_value['setting_description_thai'] . ')';
+					$setting_for_big[$value] = $temp;
+				}
+			}
+		}
+		
+	
+		$settings2 = array_merge($setting_for_small, $setting_for_big);
+		$settings = array(
+			"is_for_small" => "ต่ำกว่า 1 ปี (ปกติ)", 
+			"is_s_muslim" => "ต่ำกว่า 1 ปี (มุสลิม)",
+			"is_s_shrimp" => "ต่ำกว่า 1 ปี (แพ้กุ้ง)",
+		); // ต้องแก้ให้ถูก
+		// Debugbar::info($settings);
+
+
+
+    return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'settings' => $settings, 'settings2' => $settings2,'targetNutrition' => $targetNutrition]);	
     	// Return response to client
 	}
 	public function addFood(Request $request)
