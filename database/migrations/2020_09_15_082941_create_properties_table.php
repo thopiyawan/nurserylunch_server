@@ -27,7 +27,7 @@ class CreatePropertiesTable extends Migration
             $table->boolean('has_flour')->default(1);
             $table->timestamps();
         });
-        
+    
     }
 
     /**

@@ -22,7 +22,8 @@
             <div class="col heading-p-t">
                 <div>
                     <span><i class="fas fa-user-friends color-gray"></i></span>
-                    <span> เด็กอายุต่ำกว่า 1 ปี </span>
+                    <span> เด็กอายุ</span>
+                    <span id="age-range-span"> ต่ำกว่า 1 ปี</span>
                 </div>
             </div>
             <div class="col heading-p-t">
@@ -82,6 +83,12 @@
         </div>
         <script type="application/javascript">
 
+            $('.age-tab').on('click', function(){
+               var age = $(this).data("age");
+               var text = age == "is_for_small" ? "ต่ำกว่า 1 ปี":"1-3 ปี";
+               $("#age-range-span").text(text);
+            
+            });
             $('.type-tab').on('click', function(){
                var type = "";
                var target = $("#food-type-span");

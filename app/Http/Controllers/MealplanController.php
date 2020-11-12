@@ -35,6 +35,7 @@ class MealplanController extends Controller
 		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
 		$dayInweek = dateInweek($weekStartDate);
 		
+		
 
 		return view('mealplan.showplan', ['logs' => $foodLogs,'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
 	}

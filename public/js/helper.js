@@ -143,7 +143,7 @@ $(function() {
             $("#wednesdayDate").text(wednesdayDate.getDate());
             $("#thursdayDate").text(thursdayDate.getDate());
             $("#fridayDate").text(fridayDate.getDate());
-            localStorage.setItem("startDateOfWeek", startDate)
+            localStorage.setItem("startDateOfWeek", startDate);
             localStorage.setItem("mondayDate", mondayDate);
             localStorage.setItem("tuesdayDate", tuesdayDate);
             localStorage.setItem("wednesdayDate", wednesdayDate);
