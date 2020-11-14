@@ -40,7 +40,7 @@ a.text-highlight:hover{
 }
 h1{ font-size: var(--font-size-p4);}
 h2{ font-size: var(--font-size-p3);}
-h3{ font-size: var(--font-size-p1);}
+h3{ font-size: var(--font-size-p2);}
 h4{ font-size: var(--font-size-p1);}
 
 h1.page-title{
@@ -245,6 +245,9 @@ input[type=checkbox] {
 }
 .icon-primary{
     color: var(--primary);
+}
+.icon-success{
+    color: #4db11e;
 }
 .kid-panel .kid-name{
     color: var(--primary);
@@ -468,6 +471,13 @@ input[type=checkbox] {
     width: 19.5%;
     margin-left: -1%;
 }
+.modal-content.success{
+    padding: 40px 20px 0px 20px;
+}
+.modal-content.success .btn{
+    width: 130px;
+    height: 50px;
+}
 .nut-bar.danger.selected{background: #c0392b;}
 .nut-bar.warning.selected{background: #f7931e;}
 .nut-bar.ok.selected{background: #7ac943;}
@@ -537,6 +547,10 @@ input[type=checkbox] {
 }
 .text-center{
     text-align: center;
+}
+.text-success{
+    color: #4db11e !important;
+    font-weight: 400;
 }
 .ui-sortable .menu-body{
     background-color: white; 

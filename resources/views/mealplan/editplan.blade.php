@@ -110,7 +110,7 @@
                             {{ Debugbar::info($setting_value) }}
                             <li class="">
                                 <a data-toggle="tab" data-detail="{{ $setting_value['setting_description_thai'] }}"
-                                    href="#is_{{ $setting_value['food_type'] }}" aria-expanded="true"
+                                    href="#type_{{ $setting_value['food_type'] }}" aria-expanded="true"
                                     class="type-tab {{ $first ? 'active' : '' }}">
                                     {{ $setting_value['food_type'] . ' | ' . $setting_value['setting_description_thai'] }}
                                 </a>
@@ -144,7 +144,7 @@
             <div class="tab-content">
                 @php $first = true; @endphp
                 @foreach ($settings as $key => $setting_value)
-                    <div id="{{ 'is_' . $setting_value['food_type'] }}" data-type="{{$setting_value['food_type']}}" class="tab-pane {{ $first ? 'active' : '' }} ">
+                    <div id="{{ 'type_' . $setting_value['food_type'] }}" data-type="{{$setting_value['food_type']}}" class="tab-pane {{ $first ? 'active' : '' }} ">
                         <div class="">
                             <div id="">
                                 @foreach ($day_in_week as $key => $day)
@@ -168,6 +168,20 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="savedModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content success">
+            <div class="modal-body text-center">
+                <i class="far icon-success fa-check-circle fa-4x m-b"></i>
+                <!-- <h3 class="text-success modal-title m-b">บันทึกสำรับอาหารสำเร็จเรียบร้อย</h3> -->
+                <h1 class="text-success m-b">บันทึกสำรับอาหารสำเร็จเรียบร้อย</h1>
+                
+                <button type="button" class="btn success btn-default m-b" data-dismiss="modal"> OK </button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
     <script type="application/javascript">
@@ -297,7 +311,8 @@
                     mealPlanData: mealPlanData
                 },
                 success: function(data) {
-                    alert(data.success)
+                    //alert(data.success)
+                    $('#savedModal').modal('show');
                     //location.reload();
                     //console.log("mealPlanData", mealPlanData);
                 }
@@ -341,7 +356,7 @@
             //console.log(event);
 
             var activePanel = $(".tab-pane.active");
-            var normalPanel = $("#is_for_small.tab-pane, #is_for_big.tab-pane");
+            var normalPanel = $("#type_8.tab-pane, #type_22.tab-pane");
             //console.log(activePanel);
             //console.log(normalPanel);
 
