@@ -46,7 +46,7 @@
         </div>
 
         <div class="">
-            <div class="hpanel plan-panel">
+            <!-- <div class="hpanel plan-panel">
                 <ul class="nav nav-tab">
                     <li class="">
                         <a data-toggle="tab" href="#tab-1" aria-expanded="true" class="type-tab active">ต่ำกว่า 1 ปี (ปกติ)</a>
@@ -79,7 +79,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            <div id="meal-plan"></div>
         </div>
         <script type="application/javascript">
 

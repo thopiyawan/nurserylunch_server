@@ -11,7 +11,7 @@
             <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{ $day }} {{ $setting_id }}"
                 data-day="{{ $day }}" data-meal="breakfast-snack" data-type="{{ $setting_id }}">
                 @foreach ($food_logs as $food)
-                    @if ($food->meal_code == 1 && $food->meal_date == $date_in_week)
+                    @if ($food->meal_code == 1 && $food->meal_date == $date_in_week && $food->food_type == $setting_id)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
                                 <div class="col col-food-name" data-energy="{{ $food->energy }}"
@@ -71,7 +71,7 @@
             <div id="" class="ui-sortable ui-sortable-meal breakfast-snack-{{ $day }} {{ $setting_id }}"
                 data-day="{{ $day }}" data-meal="breakfast-snack" data-type="{{ $setting_id }}">
                 @foreach ($food_logs as $food)
-                    @if ($food->meal_code == 2 && $food->meal_date == $date_in_week)
+                    @if ($food->meal_code == 2 && $food->meal_date == $date_in_week && $food->food_type == $setting_id)
                         <div class="">
                             <div class="menu-body">
                                 <div class="col col-food-name" data-energy="{{ $food->energy }}"
@@ -103,7 +103,7 @@
             <div id="" class="ui-sortable ui-sortable-meal lunch-{{ $day }} {{ $setting_id }}" data-day="{{ $day }}"
                 data-meal="lunch" data-type="{{ $setting_id }}">
                 @foreach ($food_logs as $food)
-                    @if ($food->meal_code == 3 && $food->meal_date == $date_in_week)
+                    @if ($food->meal_code == 3 && $food->meal_date == $date_in_week && $food->food_type == $setting_id)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
                                 <div class="col col-food-name" data-energy="{{ $food->energy }}"
@@ -160,7 +160,7 @@
             <div id="" class="ui-sortable ui-sortable-meal lunch-snack-{{ $day }} {{ $setting_id }}"
                 data-day="{{ $day }}" data-meal="lunch-snack" data-type="{{ $setting_id }}">
                 @foreach ($food_logs as $food)
-                    @if ($food->meal_code == 4 && $food->meal_date == $date_in_week)
+                    @if ($food->meal_code == 4 && $food->meal_date == $date_in_week && $food->food_type == $setting_id)
                         <div class="ui-sortable ui-sortable-meal">
                             <div class="menu-body">
                                 <div class="col col-food-name" data-energy="{{ $food->energy }}"

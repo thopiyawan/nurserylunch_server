@@ -106,7 +106,7 @@
                 <div class="col-lg-9">
                     <ul class="nav nav-tab">
                         @php $first = true; @endphp
-                        @foreach ($settings2 as $key => $setting_value)
+                        @foreach ($settings as $key => $setting_value)
                             {{ Debugbar::info($setting_value) }}
                             <li class="">
                                 <a data-toggle="tab" data-detail="{{ $setting_value['setting_description_thai'] }}"
@@ -143,14 +143,14 @@
 
             <div class="tab-content">
                 @php $first = true; @endphp
-                @foreach ($settings2 as $key => $setting_value)
-                    <div id={{ 'is_' . $setting_value['food_type'] }} class="tab-pane {{ $first ? 'active' : '' }} ">
+                @foreach ($settings as $key => $setting_value)
+                    <div id="{{ 'is_' . $setting_value['food_type'] }}" data-type="{{$setting_value['food_type']}}" class="tab-pane {{ $first ? 'active' : '' }} ">
                         <div class="">
                             <div id="">
                                 @foreach ($day_in_week as $key => $day)
                                     @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key],
                                     'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_value['food_type']])
-                                    <p>{{ $setting_value['setting_description_thai'] . 'setting2' }}</p>
+                                    <p>--- {{ $setting_value['setting_description_thai'] . 'setting' }} ----</p>
                                 @endforeach
                             </div>
                         </div>
@@ -164,7 +164,7 @@
             <div class="col-lg-8 col-sm-offset-4">
                 <button class="btn btn-default" type="">ยกเลิก</button>
                 <button class="btn btn-primary" type="submit" name="update" value="school"
-                    onclick="handleClick()">บันทึกข้อมูล</button>
+                    onclick="saveLogs()">บันทึกข้อมูล</button>
             </div>
         </div>
     </div>
@@ -222,56 +222,65 @@
         });
 
 
-        function handleClick() {
-            let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-            let morningList = []
+        function saveLogs() {
             $(document).ready(function() {
                 let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+                let morningList = []
+               
+                //let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
                 let mondayData = new Date($('.meal-panel.row.monday').data('date'))
                 let tuesdayData = new Date($('.meal-panel.row.tuesday').data('date'))
                 let wednesdayData = new Date($('.meal-panel.row.wednesday').data('date'))
                 let thursdayData = new Date($('.meal-panel.row.thursday').data('date'))
                 let fridayData = new Date($('.meal-panel.row.friday').data('date'))
                 let mealPlanData = []
-                day_in_week.forEach((day) => {
-                    let mealLogs = {
-                        mealDate: "",
-                        breakfast: [],
-                        breakfastSnack: [],
-                        lunch: [],
-                        lunchSnack: [],
-                    }
-                    let mealDate = new Date($(`.meal-panel.row.${day}`).data('date')).toLocaleDateString()
-                    let breakfast = $(`#breakfast-meal-${day} > .ui-sortable .col-food-name`)
-                    let breakfastSnack = $(
-                        `#breakfast-snack-meal-${day} > .ui-sortable .col-food-name`
-                    )
-                    let lunch = $(`#lunch-meal-${day} > .ui-sortable .col-food-name`)
-                    let lunchSnack = $(`#lunch-snack-meal-${day} > .ui-sortable .col-food-name`)
-                    mealLogs['mealDate'] = mealDate;
-                    $.each(breakfast, function(key, value) {
-                        if (value.id !== "") {
-                            mealLogs['breakfast'].push(value.id)
+                var panels = $(".tab-pane");
+                $.each(panels, function() {
+                    var type = $(this).data("type");
+
+                    day_in_week.forEach((day) => {
+                        let mealLogs = {
+                            mealDate: "",
+                            food_type: type,
+                            breakfast: [],
+                            breakfastSnack: [],
+                            lunch: [],
+                            lunchSnack: [],
                         }
+                        let mealDate = new Date($(`.meal-panel.row.${day}`).data('date')).toLocaleDateString()
+                        let breakfast = $(this).find('#breakfast-meal-'+day+' > .ui-sortable .col-food-name')
+                        let breakfastSnack = $(this).find('#breakfast-snack-meal-'+day+' > .ui-sortable .col-food-name')
+                        //console.log("breakfastSnack", breakfastSnack);
+                        let lunch = $(this).find('#lunch-meal-'+day+' > .ui-sortable .col-food-name')
+                        let lunchSnack = $(this).find('#lunch-snack-meal-'+day+' > .ui-sortable .col-food-name')
+
+                        mealLogs['mealDate'] = mealDate;
+                        $.each(breakfast, function(key, value) {
+                            if (value.id !== "") {
+                                mealLogs['breakfast'].push(value.id)
+                            }
+                        })
+                        $.each(breakfastSnack, function(key, value) {
+                            if (value.id !== "") {
+                                mealLogs['breakfastSnack'].push(value.id)
+                            }
+                        })
+                        $.each(lunch, function(key, value) {
+                            if (value.id !== "") {
+                                mealLogs['lunch'].push(value.id)
+                            }
+                        })
+                        $.each(lunchSnack, function(key, value) {
+                            if (value.id !== "") {
+                                mealLogs['lunchSnack'].push(value.id)
+                            }
+                        })
+                        mealPlanData.push(mealLogs)
                     })
-                    $.each(breakfastSnack, function(key, value) {
-                        if (value.id !== "") {
-                            mealLogs['breakfastSnack'].push(value.id)
-                        }
-                    })
-                    $.each(lunch, function(key, value) {
-                        if (value.id !== "") {
-                            mealLogs['lunch'].push(value.id)
-                        }
-                    })
-                    $.each(lunchSnack, function(key, value) {
-                        if (value.id !== "") {
-                            mealLogs['lunchSnack'].push(value.id)
-                        }
-                    })
-                    mealPlanData.push(mealLogs)
                 })
+                //console.log("mealPlanData", mealPlanData);
                 addFoodLogs(mealPlanData)
+                //console.log("mealPlanData", mealPlanData);
             })
         }
 
@@ -289,7 +298,8 @@
                 },
                 success: function(data) {
                     alert(data.success)
-                    location.reload();
+                    //location.reload();
+                    //console.log("mealPlanData", mealPlanData);
                 }
             });
         }

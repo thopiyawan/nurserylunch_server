@@ -165,7 +165,6 @@ $(function() {
                         endDate: endDate.toLocaleDateString()
                     }
                 },
-                
                 success: function(data) {
                     $("#meal-plan").html(data);
                 }
