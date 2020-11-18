@@ -107,12 +107,15 @@
                     <ul class="nav nav-tab">
                         @php $first = true; @endphp
                         @foreach ($settings as $key => $setting_value)
-                            {{ Debugbar::info($setting_value) }}
+
                             <li class="">
                                 <a data-toggle="tab" data-detail="{{ $setting_value['setting_description_thai'] }}"
                                     href="#is_{{ $setting_value['food_type'] }}" aria-expanded="true"
                                     class="type-tab {{ $first ? 'active' : '' }}">
+                                    {{--
                                     {{ $setting_value['food_type'] . ' | ' . $setting_value['setting_description_thai'] }}
+                                    --}}
+                                    {{ $setting_value['setting_description_thai'] }}
                                 </a>
                             </li>
                             @php $first = false; @endphp
@@ -144,13 +147,13 @@
             <div class="tab-content">
                 @php $first = true; @endphp
                 @foreach ($settings as $key => $setting_value)
-                    <div id="{{ 'is_' . $setting_value['food_type'] }}" data-type="{{$setting_value['food_type']}}" class="tab-pane {{ $first ? 'active' : '' }} ">
+                    <div id="{{ 'is_' . $setting_value['food_type'] }}" data-type="{{ $setting_value['food_type'] }}"
+                        class="tab-pane {{ $first ? 'active' : '' }} ">
                         <div class="">
                             <div id="">
                                 @foreach ($day_in_week as $key => $day)
                                     @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key],
                                     'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_value['food_type']])
-                                    <p>--- {{ $setting_value['setting_description_thai'] . 'setting' }} ----</p>
                                 @endforeach
                             </div>
                         </div>
@@ -226,7 +229,7 @@
             $(document).ready(function() {
                 let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
                 let morningList = []
-               
+
                 //let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
                 let mondayData = new Date($('.meal-panel.row.monday').data('date'))
                 let tuesdayData = new Date($('.meal-panel.row.tuesday').data('date'))
@@ -247,12 +250,17 @@
                             lunch: [],
                             lunchSnack: [],
                         }
-                        let mealDate = new Date($(`.meal-panel.row.${day}`).data('date')).toLocaleDateString()
-                        let breakfast = $(this).find('#breakfast-meal-'+day+' > .ui-sortable .col-food-name')
-                        let breakfastSnack = $(this).find('#breakfast-snack-meal-'+day+' > .ui-sortable .col-food-name')
+                        let mealDate = new Date($(`.meal-panel.row.${day}`).data('date'))
+                            .toLocaleDateString()
+                        let breakfast = $(this).find('#breakfast-meal-' + day +
+                            ' > .ui-sortable .col-food-name')
+                        let breakfastSnack = $(this).find('#breakfast-snack-meal-' + day +
+                            ' > .ui-sortable .col-food-name')
                         //console.log("breakfastSnack", breakfastSnack);
-                        let lunch = $(this).find('#lunch-meal-'+day+' > .ui-sortable .col-food-name')
-                        let lunchSnack = $(this).find('#lunch-snack-meal-'+day+' > .ui-sortable .col-food-name')
+                        let lunch = $(this).find('#lunch-meal-' + day +
+                            ' > .ui-sortable .col-food-name')
+                        let lunchSnack = $(this).find('#lunch-snack-meal-' + day +
+                            ' > .ui-sortable .col-food-name')
 
                         mealLogs['mealDate'] = mealDate;
                         $.each(breakfast, function(key, value) {
@@ -419,7 +427,7 @@
                 type: 'POST',
                 url: '/mealplan/checkFoodType',
                 data: {
-                    foodId: id, 
+                    foodId: id,
                     checkType: type,
                     age: "age6_8mo"
                 },
