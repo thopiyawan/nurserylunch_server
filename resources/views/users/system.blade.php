@@ -44,7 +44,7 @@
         <!-- small kids -->
         <label class="control-label bold">จัดอาหารสำหรับเด็กอายุต่ำกว่า 1 ปี</label>
         <div class="checkbox">
-            <input id="for_small" type="checkbox" value="{{ $setting->is_for_small }}" name="is_for_small" {{$setting->is_for_small ? 'checked' : ''}} disabled> 
+            <input id="for_small" type="checkbox" value="{{ $setting->is_for_small }}" name="is_for_small" {{$setting->is_for_small ? 'checked' : ''}} > 
             <label>จัดอาหารสำหรับเด็กอายุต่ำกว่า 1 ปี</label>
         </div>
         <label class="control-label bold">จัดอาหารพิเศษสำหรับเด็กอายุต่ำกว่า 1 ปี</label>
@@ -126,7 +126,7 @@
         <!-- big kids -->
         <label class="control-label bold">จัดอาหารสำหรับเด็กอายุ 1 - 3 ปี</label>
         <div class="checkbox">
-            <input type="checkbox" value="{{ $setting->is_for_big }}" name="is_for_big" {{$setting->is_for_big ? 'checked' : ''}} disabled> 
+            <input type="checkbox" value="{{ $setting->is_for_big }}" name="is_for_big" {{$setting->is_for_big ? 'checked' : ''}}> 
             <label>จัดอาหารสำหรับเด็กอายุ 1 - 3 ปี</label>
         </div>
         <label class="control-label bold">จัดอาหารพิเศษสำหรับเด็กอายุ 1 - 3 ปี</label>

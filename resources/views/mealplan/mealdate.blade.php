@@ -1,5 +1,5 @@
 <div class="meal-panel row {{ $day }}">
-    <div class="col col-day">
+    <div class="col col-lg-1 col-day">
         <div class="mlabel">{{ $day_th }}</div>
         <div class="mdate {{ $day }}"><span id={{ $day }}></span></div>
     </div>
@@ -34,33 +34,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div id="" class="ui-sortable ui-sortable-meal">
-                @foreach ($food_logs as $food)
-                    @if ($food->meal_code == 1 && $food->meal_date == $date_in_week)
-                        <div class="ui-sortable ui-sortable-meal">
-                            <div class="menu-body">
-                                <div class="col col-food-name" data-energy="{{ $food->energy }}"
-                                    data-protein="{{ $food->protein }}" data-fat="{{ $food->fat }}"
-                                    id="{{ $food->food_id }}">
-                                    {{ $food->food_thai }}
-                                </div>
-                                <div class="col col-delete">
-                                    <a class="pull-right">
-                                        <span><i class="fas fa-times"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                @endforeach
-                <div class="ui-sortable">
-                    <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
-                        <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="right"
-                    title="" data-original-title="Tooltip on left">Hello</button>
-            </div> -->
         </div>
     @endif
 
@@ -126,31 +99,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div id="" class="ui-sortable ui-sortable-meal">
-                @foreach ($food_logs as $food)
-                    @if ($food->meal_code == 3 && $food->meal_date == $date_in_week)
-                        <div class="ui-sortable ui-sortable-meal">
-                            <div class="menu-body">
-                                <div class="col col-food-name" data-energy="{{ $food->energy }}"
-                                    data-protein="{{ $food->protein }}" data-fat="{{ $food->fat }}"
-                                    id="{{ $food->food_id }}">
-                                    {{ $food->food_thai }}
-                                </div>
-                                <div class="col col-delete">
-                                    <a class="pull-right">
-                                        <span><i class="fas fa-times"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                @endforeach
-                <div class="ui-sortable">
-                    <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
-                        <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
-                    </div>
-                </div>
-            </div> -->
         </div>
     @endif
 
@@ -183,31 +131,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div id="" class="ui-sortable ui-sortable-meal">
-                @foreach ($food_logs as $food)
-                    @if ($food->meal_code == 4 && $food->meal_date == $date_in_week)
-                        <div class="ui-sortable ui-sortable-meal">
-                            <div class="menu-body">
-                                <div class="col col-food-name" data-energy="{{ $food->energy }}"
-                                    data-protein="{{ $food->protein }}" data-fat="{{ $food->fat }}"
-                                    id="{{ $food->food_id }}">
-                                    {{ $food->food_thai }}
-                                </div>
-                                <div class="col col-delete">
-                                    <a class="pull-right">
-                                        <span><i class="fas fa-times"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                @endforeach
-                <div class="ui-sortable">
-                    <div class="text-center menu-body ui-sortable-handle ui-sortable-placeholder ui-state-disabled">
-                        <span class=""><i class="fa fa-hand-pointer-o"></i>วางที่นี่</span>
-                    </div>
-                </div>
-            </div> -->
         </div>
     @endif
 

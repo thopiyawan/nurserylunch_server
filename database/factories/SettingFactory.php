@@ -30,7 +30,7 @@ $factory->define(Setting::class, function (Faker $faker) {
         'is_lunch'=> true, 
         'is_afternoon_snack'=> true, 
 
-        'is_for_small'=> false,
+        'is_for_small'=> true,
         'is_s_muslim'=> false,
         'is_s_vege'=> false,
         'is_s_vegan'=> false,
