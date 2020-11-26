@@ -12,14 +12,14 @@ class IngredientSeeder extends Seeder
     public function run()
     {
         $group = array( "meat" => "เนื้อสัตว์", 
-                        "vegetable" => "ผัก", 
                         "protein" => "โปรตีน",
+                        "vegetable" => "ผัก", 
                         'fruit' => "ผลไม้" );
 
         $allIngredients = array(
             "meat" => array("หมู", "ไก่", "ปลา", "กุ้ง", "ตับ", "เนื้อ"), 
-            "vegetable" => array("ผักใบเขียว", "ฝักทอง", "แครอท"),
             "protein" => array("ไข่", "เต้าหู้", "ถั่ว", "นม"),
+            "vegetable" => array("ผักใบเขียว", "ฝักทอง", "แครอท"),
             "fruit" => array("ผลไม้เนื้อนิ่ม", "ผลไม้เนื้อแข็ง")
         );
 

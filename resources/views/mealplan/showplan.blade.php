@@ -36,7 +36,7 @@
         <div class="col-lg-3 pull-right">
              <a href="/mealplan/edit" class="btn btn-primary pull-right" type="" name="" value="">
                 <i class="fas fa-edit"></i>
-                แก้ไขรายการอาหาร
+                จัดการรายการอาหาร
             </a>
         </div>
     </div>

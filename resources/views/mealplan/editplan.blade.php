@@ -61,7 +61,7 @@
             </div>
             <div class="col heading-p-t">
                 <div>
-                    <i class="fas fa-calendar-alt color-gray"></i>
+                    <i class="fas fa-calendar-alt"></i>
                     <span id="startDate"></span>
                     <span id="startDate"></span>
                     <span> - </span>
@@ -504,9 +504,12 @@
 
 
         function initCalculation() {
-            $('.meal-panel').each(function() {
-                calculateNutrition($(this));
-            });
+            var mealPanel = $('.meal-panel');
+            if (mealPanel.children("#menu-body").length > 0){
+                mealPanel.each(function() {
+                    calculateNutrition($(this));
+                });
+            }
         }
 
         function initTarget() {

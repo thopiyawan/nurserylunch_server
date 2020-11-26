@@ -137,64 +137,73 @@
     </div>
     <hr>
     <div class="row">
-        <div class="mlabel">สารอาหาร</div>
-        <div class="col col-nutrition">        
-            <div class="energy">
-                <div class="nut-labels row">
-                    <div class="col col-lg-3">พลังงาน</div>
-                    <div class="col text-right">
-                        <span class="current"> 0 </span>
-                        <span> / </span>
-                        <span class="target"> //// </span>
-                        <span class="unit"> กิโลแคล </span>
+        <!-- <div class="col-lg-1">
+            <div class="mlabel">สารอาหาร</div>
+        </div> -->
+        <div class="col-lg-11">
+            <div class="row">
+                <div class="col-lg-1 no-padding-right">
+                    <div class="mlabel">สารอาหาร</div>
+                </div>
+                <div class="col col-nutrition">        
+                    <div class="energy">
+                        <div class="nut-labels row">
+                            <div class="col col-lg-3">พลังงาน</div>
+                            <div class="col text-right">
+                                <span class="current"> 0 </span>
+                                <span> / </span>
+                                <span class="target"> //// </span>
+                                <span class="unit"> กิโลแคลอรี่ </span>
+                            </div>
+                        </div>
+                        <div class="nut-bars">
+                            <div class="nut-bar toolow danger">น้อยเกิน</div>
+                            <div class="nut-bar low warning">น้อย</div>
+                            <div class="nut-bar ok">พอดี</div>
+                            <div class="nut-bar high warning">มาก</div>
+                            <div class="nut-bar toohigh danger">มากเกิน</div>
+                        </div>
                     </div>
                 </div>
-                <div class="nut-bars">
-                    <div class="nut-bar toolow danger">น้อยเกิน</div>
-                    <div class="nut-bar low warning">น้อย</div>
-                    <div class="nut-bar ok">พอดี</div>
-                    <div class="nut-bar high warning">มาก</div>
-                    <div class="nut-bar toohigh danger">มากเกิน</div>
-                </div>
-            </div>
-        </div>
-        <div class="col col-nutrition">  
-            <div class="protein">
-                <div class="nut-labels row">
-                    <div class="col col-lg-3">โปรตีน</div>
-                    <div class="col text-right">
-                        <span class="current"> 0 </span>
-                        <span> / </span>
-                        <span class="target"> 400-550 </span>
-                        <span class="unit"> แกรม </span>
+                <div class="col col-nutrition">  
+                    <div class="protein">
+                        <div class="nut-labels row">
+                            <div class="col col-lg-3">โปรตีน</div>
+                            <div class="col text-right">
+                                <span class="current"> 0 </span>
+                                <span> / </span>
+                                <span class="target"> 400-550 </span>
+                                <span class="unit"> กรัม </span>
+                            </div>
+                        </div>
+                        <div class="nut-bars">
+                            <div class="nut-bar toolow danger">น้อยเกิน</div>
+                            <div class="nut-bar low warning">น้อย</div>
+                            <div class="nut-bar ok">พอดี</div>
+                            <div class="nut-bar high warning">มาก</div>
+                            <div class="nut-bar toohigh danger">มากเกิน</div>
+                        </div>
                     </div>
                 </div>
-                <div class="nut-bars">
-                    <div class="nut-bar toolow danger">น้อยเกิน</div>
-                    <div class="nut-bar low warning">น้อย</div>
-                    <div class="nut-bar ok">พอดี</div>
-                    <div class="nut-bar high warning">มาก</div>
-                    <div class="nut-bar toohigh danger">มากเกิน</div>
-                </div>
-            </div>
-        </div>
-        <div class="col col-nutrition">  
-            <div class="fat">
-                <div class="nut-labels row">
-                    <div class="col col-lg-3">ไขมัน</div>
-                    <div class="col text-right">
-                        <span class="current"> 0 </span>
-                        <span> / </span>
-                        <span class="target"> 400-550 </span>
-                        <span class="unit"> แกรม </span>
+                <div class="col col-nutrition">  
+                    <div class="fat">
+                        <div class="nut-labels row">
+                            <div class="col col-lg-3">ไขมัน</div>
+                            <div class="col text-right">
+                                <span class="current"> 0 </span>
+                                <span> / </span>
+                                <span class="target"> 400-550 </span>
+                                <span class="unit"> กรัม </span>
+                            </div>
+                        </div>
+                        <div class="nut-bars">
+                            <div class="nut-bar toolow danger">น้อยเกิน</div>
+                            <div class="nut-bar low warning">น้อย</div>
+                            <div class="nut-bar ok">พอดี</div>
+                            <div class="nut-bar high warning">มาก</div>
+                            <div class="nut-bar toohigh danger">มากเกิน</div>
+                        </div>
                     </div>
-                </div>
-                <div class="nut-bars">
-                    <div class="nut-bar toolow danger">น้อยเกิน</div>
-                    <div class="nut-bar low warning">น้อย</div>
-                    <div class="nut-bar ok">พอดี</div>
-                    <div class="nut-bar high warning">มาก</div>
-                    <div class="nut-bar toohigh danger">มากเกิน</div>
                 </div>
             </div>
         </div>

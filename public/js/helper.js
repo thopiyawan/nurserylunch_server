@@ -83,7 +83,7 @@ $(function() {
             icon = "<i class='fas fa-egg'></i> ";
             title = "โปรตีน";
         } else if(className ==".fruit-select"){
-            icon = "<i class='fas fa-couch'></i> ";
+            icon = "<i class='fas fa-apple-alt'></i>";
             title = "ผลไม้";
         }
 
