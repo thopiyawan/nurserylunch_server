@@ -13,14 +13,14 @@
     <ul class="nav nav-tab main-level age-range" id="">
         @if ($userSetting->is_for_small == 1)
             <li class="">
-                <a  href="#" class="age-tab active" id="" data-age="is_for_small" aria-expanded="false" >
+                <a  href="#" class="age-tab" id="8" data-age="is_for_small" aria-expanded="false" >
                     <span class="">ต่ำกว่า 1 ปี</span>
                 </a>
             </li>
         @endif
         @if ($userSetting->is_for_big == 1)
             <li class="">
-                <a  href="#" class="age-tab" id="" data-age="is_for_big"  aria-expanded="false" >
+                <a  href="#" class="age-tab" id="22" data-age="is_for_big"  aria-expanded="false" >
                     <span class="">1 - 3 ปี</span>
                 </a>
             </li>

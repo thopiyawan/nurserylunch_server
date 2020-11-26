@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
     @php
-    $day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-    $day_in_week_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสดี", "ศุกร์"];
-    $date_in_week = $dayInweek;
+        $day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+        $day_in_week_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสดี", "ศุกร์"];
+        $date_in_week = $dayInweek;
     @endphp
     <div class="sidebar-scroll">
 
@@ -71,8 +71,9 @@
             <div class="col heading-p-t">
                 <div>
                     <span><i class="fas fa-user-friends color-gray"></i></span>
-                    <span> เด็กอายุต่ำกว่า 1 ปี </span>
+                     <span id="age-range-span"> ต่ำกว่า 1 ปี</span>
                 </div>
+
             </div>
             <div class="col heading-p-t">
                 <span><i class="fas fa-utensils color-gray"></i></span>
@@ -110,11 +111,9 @@
 
                             <li class="">
                                 <a data-toggle="tab" data-detail="{{ $setting_value['setting_description_thai'] }}"
-                                    href="#is_{{ $setting_value['food_type'] }}" aria-expanded="true"
+                                    href="#type_{{ $setting_value['food_type'] }}" aria-expanded="true"
                                     class="type-tab {{ $first ? 'active' : '' }}">
-                                    {{--
-                                    {{ $setting_value['food_type'] . ' | ' . $setting_value['setting_description_thai'] }}
-                                    --}}
+                                    <!-- {{ $setting_value['food_type'] . ' | ' . $setting_value['setting_description_thai'] }} -->
                                     {{ $setting_value['setting_description_thai'] }}
                                 </a>
                             </li>
@@ -147,13 +146,13 @@
             <div class="tab-content">
                 @php $first = true; @endphp
                 @foreach ($settings as $key => $setting_value)
-                    <div id="{{ 'is_' . $setting_value['food_type'] }}" data-type="{{ $setting_value['food_type'] }}"
-                        class="tab-pane {{ $first ? 'active' : '' }} ">
+                    <div id="{{ 'type_' . $setting_value['food_type'] }}" data-type="{{$setting_value['food_type']}}" class="tab-pane {{ $first ? 'active' : '' }} ">
                         <div class="">
                             <div id="">
                                 @foreach ($day_in_week as $key => $day)
                                     @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key],
                                     'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_value['food_type']])
+                                   <!--  <p>--- {{ $setting_value['setting_description_thai'] . 'setting' }} ----</p> -->
                                 @endforeach
                             </div>
                         </div>
@@ -171,11 +170,30 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="savedModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content success">
+            <div class="modal-body text-center">
+                <i class="far icon-success fa-check-circle fa-4x m-b"></i>
+                <!-- <h3 class="text-success modal-title m-b">บันทึกสำรับอาหารสำเร็จเรียบร้อย</h3> -->
+                <h1 class="text-success m-b">บันทึกสำรับอาหารสำเร็จเรียบร้อย</div>
+                
+                <button type="button" class="btn success btn-default m-b" data-dismiss="modal"> OK </button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
     <script type="application/javascript">
         // your code
         localStorage.setItem("weekHandle", 1)
+        let foodType = localStorage.getItem('foodType');
+        var text = foodType == 8 ? "เด็กอายุต่ำกว่า 1 ปี" : "เด็กอายุ 1-3 ปี";
+        $("#age-range-span").text(text);
+
+        //console.log("foodType", foodType);
         let mondayDate = new Date(localStorage.getItem('mondayDate'));
         let tuesdayDate = new Date(localStorage.getItem('tuesdayDate'));
         let wednesdayDate = new Date(localStorage.getItem('wednesdayDate'));
@@ -305,7 +323,8 @@
                     mealPlanData: mealPlanData
                 },
                 success: function(data) {
-                    alert(data.success)
+                    //alert(data.success)
+                    $('#savedModal').modal('show');
                     //location.reload();
                     //console.log("mealPlanData", mealPlanData);
                 }
@@ -349,7 +368,7 @@
             //console.log(event);
 
             var activePanel = $(".tab-pane.active");
-            var normalPanel = $("#is_for_small.tab-pane, #is_for_big.tab-pane");
+            var normalPanel = $("#type_8.tab-pane, #type_22.tab-pane");
             //console.log(activePanel);
             //console.log(normalPanel);
 
@@ -388,8 +407,6 @@
         }
 
         function cloneFoodItem(foodItem) {
-
-
             var foodId = foodItem.children(":first").attr("id");
             //console.log(foodId);
             var mealPanel = foodItem.parent()
@@ -636,4 +653,5 @@
         // }
 
     </script>
+    <!-- <script src="{{ asset('js/getfoodlogs.js') }}"></script> -->
 @endsection

@@ -54,6 +54,7 @@ Route::get('/kid/deletegrowth/{id}', 'KidController@deleteGrowth')->name('kid.de
 Route::post('/mealplan/foodlogs', 'MealplanController@addFood');
 
 Route::post('/mealplan/dateselect', 'MealplanController@dateSelect');
+
 Route::post('/mealplan/checkFoodType', 'MealplanController@checkFoodType');
 
 Route::post('/mealplan/filterIngredient', 'MealplanController@filterIngredient');

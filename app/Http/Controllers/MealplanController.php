@@ -32,10 +32,10 @@ class MealplanController extends Controller
 		}
 		dateInweek($weekStartDate);
 		$userId = auth()->user()->id;
-		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
+		// $foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
 		$dayInweek = dateInweek($weekStartDate);
 		
-		return view('mealplan.showplan', ['logs' => $foodLogs,'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
+		return view('mealplan.showplan', ['dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
 	}
 	public function editPlan(Request $request)							// Define the method name
     {
@@ -48,15 +48,13 @@ class MealplanController extends Controller
 		$userSetting = Setting::find($schoolId ); 
 		$settingDescription = SettingDescription::all();
 
-	
-
-		
 		$data = $request->session()->all();
 		$now = Carbon::now();
-		// $weekStartDate = $now->startOfWeek()->format('Y-m-d');
-		// $weekEndDate = $now->endOfWeek()->format('Y-m-d');
 		$weekStartDate =  $request->session()->get('startDateOfWeek');
 		$weekEndDate = $request->session()->get('endDateOfWeek');
+		$inputFoodType = $request->session()->get('inputFoodType');
+		//Debugbar::info("food type".$inputFoodType);
+		//$inputFoodType = 8;
 	
 
 		$in_groups = IngredientGroup::all();        
@@ -66,7 +64,7 @@ class MealplanController extends Controller
         {
             $food->init();
         }
-		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
+		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate, $inputFoodType);
 		$dayInweek = dateInweek($weekStartDate);
 
 		#ratio of energy in each meal 
@@ -93,22 +91,22 @@ class MealplanController extends Controller
 			"protein" => 12.55 * $percentageOfEnergy);
 
 		$energyCondition = array(
-			$baseLineCondition["energy"] * 0.5,  
-			$baseLineCondition["energy"],
-			$baseLineCondition["energy"] * 1.5,
-			$baseLineCondition['energy'] * 2.0
+			number_format($baseLineCondition["energy"] * 0.5, 0),  
+			number_format($baseLineCondition["energy"], 0),
+			number_format($baseLineCondition["energy"] * 1.5, 0),
+			number_format($baseLineCondition["energy"] * 2.0, 0)
 		);
 		$proteinCondition = array(
-			$baseLineCondition["protein"] * 0.5,  
-			$baseLineCondition["protein"],
-			$baseLineCondition["protein"] * 1.5,
-			$baseLineCondition['protein'] * 2.0
+			number_format($baseLineCondition["protein"] * 0.5, 1),  
+			number_format($baseLineCondition["protein"], 1),
+			number_format($baseLineCondition["protein"] * 1.5, 1),
+			number_format($baseLineCondition["protein"] * 2.0, 1)
 		);
 		$fatCondition = array(
-			$baseLineCondition["fat"] * 0.5,  
-			$baseLineCondition["fat"],
-			$baseLineCondition["fat"] * 1.5,
-			$baseLineCondition['fat'] * 2.0
+			number_format($baseLineCondition["fat"] * 0.5, 1),
+			number_format($baseLineCondition["fat"], 1),
+			number_format($baseLineCondition["fat"] * 1.5, 1),
+			number_format($baseLineCondition["fat"] * 2.0, 1)
 		);
 
 		$targetNutrition = array(
@@ -136,7 +134,7 @@ class MealplanController extends Controller
 		//define setting for less 1 year
 	
 
-		$selectedAge = "is_for_small"; 
+		//$selectedAge = "is_for_small"; 
 		$settings = array();
 		$setting_small_key = array('is_s_muslim', 'is_s_vege', 
 		'is_s_vegan', 'is_s_milk', 'is_s_breastmilk', 'is_s_egg', 'is_s_wheat',
@@ -151,7 +149,7 @@ class MealplanController extends Controller
 		$setting_for_big = array("is_for_big" => ["food_type" => 22, 'setting_description_thai' => "1-3 ปี (ปกติ)"]);
 
 
-		if($selectedAge == "is_for_small"){
+		if($inputFoodType == 8){
 			$settings = $setting_for_small;
 			foreach($setting_small_key as $value){
 				$setting_value = $settings_enable[$value];
@@ -163,9 +161,7 @@ class MealplanController extends Controller
 					
 				}
 			}
-		}
-
-		if($selectedAge == "is_for_big"){
+		}else if($inputFoodType == 22){
 			$settings = $setting_for_big;
 			foreach($setting_big_key as $value){
 				$setting_value = $settings_enable[$value];
@@ -177,8 +173,6 @@ class MealplanController extends Controller
 				}
 			}
 		}
-
-
 
 
 		if($userSettingArray['is_for_small']){
@@ -234,6 +228,8 @@ class MealplanController extends Controller
 			$nutritionColumns = array_diff($nutritionColumns, ['id', 'meal_code', 'food_type', 'meal_date', 'school_id', 'created_at', 	'updated_at']);
 			$energyLog = [];
 			//loop for each date meal plan
+			//Debugbar::info($mealPlanData);
+
 			foreach($mealPlanData as $key => $value){
 				$date = new DateTime($value['mealDate']);
 				$mealDate = $date->format('Y-m-d');
@@ -421,24 +417,46 @@ class MealplanController extends Controller
 
 	public function dateSelect(Request $request)
 	{
+		Debugbar::info("dateselect---");
 		$userId = auth()->user()->id;
 		$userSetting = Setting::find($userId);
 		$now = Carbon::now();
+
+
 		$input = $request->all();
 		$userId = auth()->user()->id;
 		$inputStartDate = $input['date']['startDate'];
 		$inputEndDate = $input['date']['endDate'];
+		//$inputFoodType = 8;
+		$inputFoodType = $input['foodType'];
+		Debugbar::info("dateselect".$inputFoodType);
+
 		$startDate = new DateTime($inputStartDate);
 		$endDate = new DateTime($inputEndDate);
 		$startDate = $startDate->format('Y-m-d');
 		$endDate = $endDate->format('Y-m-d');
 		$request->session()->put('startDateOfWeek', $startDate);
 		$request->session()->put('endDateOfWeek', $endDate);
+		$request->session()->put('inputFoodType', $inputFoodType);
+
 		$in_groups = IngredientGroup::all();        
 		$schoolId = auth()->user()->school_id;
-		$foodLogs = getLastLogs($userId, $startDate, $endDate);
+		$foodLogs = getLastLogs($userId, $startDate, $endDate, $inputFoodType);
 		$dayInweek = dateInweek($startDate);
-		return view('mealplan.mealpanel', ['logs' => $foodLogs,'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
+		$dateData = array(
+			array("monday", "จันทร์", $dayInweek[0]),
+			array("tuesday", "อังคาร", $dayInweek[1]),
+			array("wednesday", "พุธ", $dayInweek[2]),
+			array("thursday", "พฤหัสบดี", $dayInweek[3]),
+			array("friday", "ศุกร์", $dayInweek[4]),
+		);
+		$mealSetting = array(
+			array(1, "เช้า", $userSetting->is_breakfast), 
+			array(2, "ว่างเช้า", $userSetting->is_morning_snack), 
+			array(3, "กลางวัน", $userSetting->is_lunch), 
+			array(4, "ว่างบ่าย", $userSetting->is_afternoon_snack), 
+		);
+		return view('mealplan.mealpanel', ['logs' => $foodLogs, 'mealSetting' => $mealSetting, 'dateData' => $dateData,  'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
 	}
 
 	public function checkFoodType(Request $request){
@@ -561,15 +579,20 @@ class MealplanController extends Controller
 	}
 }
 
-function getLastLogs($userId,$weekStartDate,$weekEndDate){
+function getLastLogs($userId,$weekStartDate,$weekEndDate, $inputFoodType){
+		$foodTypeList = $inputFoodType == 8 ? range(8,21) : range(22,35);
+		//$foodTypeListQ = '('.implode(",", $foodTypeList).')';
+		$foodTypeListQ = implode(",", $foodTypeList);
+		Debugbar::info("foodTypeListQ". $foodTypeListQ);
 		$lastLog = DB::select('
-			SELECT food_logs.food_id, food_logs.meal_code, food_logs.food_type, foods.food_thai, food_logs.meal_date, 
+			SELECT food_logs.food_id, food_logs.meal_code, food_logs.food_type, setting_description.setting_description_thai, foods.food_thai, food_logs.meal_date, 
 			nutritions.energy, nutritions.protein, nutritions.fat
 			FROM food_logs 
 			LEFT JOIN foods on food_logs.food_id = foods.id 
 			LEFT JOIN nutritions on food_logs.food_id = nutritions.food_id 
-			WHERE user_id = ? &&  food_logs.meal_date BETWEEN ? AND ?', 
-			[$userId, $weekStartDate, $weekEndDate]);
+			LEFT JOIN setting_description on food_logs.food_type = setting_description.id 
+			WHERE user_id = ? &&  food_logs.meal_date BETWEEN ? AND ? && food_logs.food_type IN ('.$foodTypeListQ.')', 
+			[$userId, $weekStartDate, $weekEndDate, $foodTypeListQ]);
 	return $lastLog;
 }
 function dateInweek($weekStartDate){
