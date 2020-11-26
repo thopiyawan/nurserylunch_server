@@ -132,6 +132,8 @@ class MealplanController extends Controller
 		
 
 		//define setting for less 1 year
+	
+
 		//$selectedAge = "is_for_small"; 
 		$settings = array();
 		$setting_small_key = array('is_s_muslim', 'is_s_vege', 
@@ -171,15 +173,40 @@ class MealplanController extends Controller
 				}
 			}
 		}
-		
+
+
+		if($userSettingArray['is_for_small']){
+			foreach($setting_small_key as $value){
+				$setting_value = $settings_enable[$value];
+				if($setting_value['value'] == 1){
+					$temp = array();
+					$temp['food_type'] = $setting_value['food_type'];
+					$temp['setting_description_thai'] = '1-3 ปี ('.$setting_value['setting_description_thai'] . ')';
+					$setting_for_small[$value] = $temp;
+				}
+			}
+		}else{
+			$setting_for_small = array();
+		}
+
+		if($userSettingArray['is_for_big']){
+			foreach($setting_big_key as $value){
+				$setting_value = $settings_enable[$value];
+				if($setting_value['value'] == 1){
+					$temp = array();
+					$temp['food_type'] = $setting_value['food_type'];
+					$temp['setting_description_thai'] = '1-3 ปี ('.$setting_value['setting_description_thai'] . ')';
+					$setting_for_big[$value] = $temp;
+				}
+			}
+		}else{
+			$setting_for_big = array();
+		}
+
 	
-		//$settings2 = array_merge($setting_for_small, $setting_for_big);
-		// $settings = array(
-		// 	"is_for_small" => "ต่ำกว่า 1 ปี (ปกติ)", 
-		// 	"is_s_muslim" => "ต่ำกว่า 1 ปี (มุสลิม)",
-		// 	"is_s_shrimp" => "ต่ำกว่า 1 ปี (แพ้กุ้ง)",
-		// ); // ต้องแก้ให้ถูก
-		// Debugbar::info($settings);
+		$settings = array_merge($setting_for_small, $setting_for_big);
+		
+
 
 
 
@@ -207,10 +234,12 @@ class MealplanController extends Controller
 				$date = new DateTime($value['mealDate']);
 				$mealDate = $date->format('Y-m-d');
 				$foodType = $value['food_type'];
+
 				//$deletedRows = FoodLogs::where('meal_date', $mealDate)->delete();
 				FoodLogs::where([['meal_date', $mealDate], ['food_type', $foodType]])->delete();
 				$dateEnergy = ["mealdate" => $mealDate];
 				array_push($energyLog, $dateEnergy);
+				$energyLog[$key]["foodtype"] = $foodType;
 				if(isset($value['breakfast'])){
 					$nutritionMealSum = [];
 					foreach($nutritionColumns as $columnName){
@@ -236,13 +265,11 @@ class MealplanController extends Controller
 					$energyLog[$key]["breakfast"]  = $nutritionMealSum;
 				}
 				if(isset($value['breakfastSnack'])){
-					Debugbar::info("breakfastSnack");
 					$nutritionMealSum = [];
 					foreach($nutritionColumns as $columnName){
 						$nutritionMealSum[$columnName] = 0;
 					};
 					foreach ($value['breakfastSnack'] as $pos_breakfastSnack => $breakfastSnackFood) {
-						Debugbar::info($value['food_type']);
 						FoodLogs::create(
 									[
 										'meal_code' => 2,
@@ -315,7 +342,9 @@ class MealplanController extends Controller
 
 
 		foreach($energyLog as $logPerDate){
+			
 			$mealDate = $logPerDate['mealdate'];
+			$foodType = $logPerDate['foodtype'];
 
 			if(isset($logPerDate['breakfast'])){
 				$data = $logPerDate['breakfast']; 
@@ -323,9 +352,9 @@ class MealplanController extends Controller
 				$data['food_type'] = $foodType;
 				$data['meal_date'] = $mealDate;
 				$data['school_id'] = $schoolId;
-				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 1)->exists();
+				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 1)->where('food_type', $foodType)->exists();
 				if($logExists){
-					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 1)->update($data);
+					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 1)->where('food_type', $foodType)->update($data);
 				}else{
 					EnergyLogs::create(
 						$data
@@ -339,9 +368,9 @@ class MealplanController extends Controller
 				$data['food_type'] = $foodType;
 				$data['meal_date'] = $mealDate;
 				$data['school_id'] = $schoolId;
-				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 2)->exists();
+				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 2)->where('food_type', $foodType)->exists();
 				if($logExists){
-					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 2)->update($data);
+					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 2)->where('food_type', $foodType)->update($data);
 				}else{
 					EnergyLogs::create(
 						$data
@@ -355,9 +384,9 @@ class MealplanController extends Controller
 				$data['food_type'] = $foodType;
 				$data['meal_date'] = $mealDate;
 				$data['school_id'] = $schoolId;
-				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 3)->exists();
+				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 3)->where('food_type', $foodType)->exists();
 				if($logExists){
-					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 3)->update($data);
+					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 3)->where('food_type', $foodType)->update($data);
 				}else{
 					EnergyLogs::create(
 						$data
@@ -371,9 +400,9 @@ class MealplanController extends Controller
 				$data['food_type'] = $foodType;
 				$data['meal_date'] = $mealDate;
 				$data['school_id'] = $schoolId;
-				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 4)->exists();
+				$logExists = EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 4)->where('food_type', $foodType)->exists();
 				if($logExists){
-					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 4)->update($data);
+					EnergyLogs::where('meal_date', $mealDate)->where('meal_code', 4)->where('food_type', $foodType)->update($data);
 				}else{
 					EnergyLogs::create(
 						$data
