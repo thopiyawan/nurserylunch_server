@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,800&display=swap');
 
 :root{
     /*COLOR*/
@@ -26,8 +27,11 @@ body{
     font-weight: 200;
 }
 a.text-highlight, h1.text-highlight, h2.text-highlight, h3.text-highlight, h4.text-highlight, h5.text-highlight, h6.text-highlight, 
-p.text-highlight{
+.text-highlight{
     color: var(--primary);
+}
+.text-italic{
+    font-style: italic;
 }
 a.link {
     text-decoration: underline;
@@ -40,7 +44,7 @@ a.text-highlight:hover{
 }
 h1{ font-size: var(--font-size-p4);}
 h2{ font-size: var(--font-size-p3);}
-h3{ font-size: var(--font-size-p1);}
+h3{ font-size: var(--font-size-p2);}
 h4{ font-size: var(--font-size-p1);}
 
 h1.page-title{
@@ -246,6 +250,9 @@ input[type=checkbox] {
 .icon-primary{
     color: var(--primary);
 }
+.icon-success{
+    color: #4db11e;
+}
 .kid-panel .kid-name{
     color: var(--primary);
     font-size: var( --font-size-p2);
@@ -259,8 +266,12 @@ input[type=checkbox] {
     margin-bottom: 10px;
 
 }
-.kid-panel .light-icon{
+.light-icon{
     color: var(--lightgray);
+}
+
+.gray-icon{
+    color: var(--gray);
 }
 .kid-panel .title{
     color: var(--darkgray);
@@ -422,18 +433,19 @@ input[type=checkbox] {
 .meal-panel.thursday{border-left: 5px solid #f7931e;}
 .meal-panel.friday{border-left: 5px solid #3fa6f2;}
 .meal-panel>.col{
-    float: left !important;
+    /*float: left !important;
     flex-basis: unset;
-    flex-grow: unset;
+    flex-grow: unset;*/
     padding-left: 8px;
     padding-right: 8px; 
 }
 .meal-panel .col-day{
-    width: 5%;
-    padding-left: 0px;
+    /*width: 6%;
+    padding-left: 0px;*/
+    margin-right: -12px;
 }
 .meal-panel .col-meal{
-    width: 24%;
+    width: 31%;
     /*padding-right: 12px;*/
 }
 .meal-panel .col-nutrition{width: 23%;}
@@ -451,6 +463,11 @@ input[type=checkbox] {
 .meal-panel .mrecipe{
     font-weight: 300;
 }
+.meal-panel .mrecipe ul{
+    padding-left: 15px;
+    margin-bottom: 4px;
+    font-family: "Sarabun", "Open Sans";
+}
 .meal-panel .nut-labels{
     margin-bottom: -7px;
     font-size: var(--font-size-m2);
@@ -467,6 +484,13 @@ input[type=checkbox] {
     text-align: center;
     width: 19.5%;
     margin-left: -1%;
+}
+.modal-content.success{
+    padding: 40px 20px 0px 20px;
+}
+.modal-content.success .btn{
+    width: 130px;
+    height: 50px;
 }
 .nut-bar.danger.selected{background: #c0392b;}
 .nut-bar.warning.selected{background: #f7931e;}
@@ -538,6 +562,10 @@ input[type=checkbox] {
 .text-center{
     text-align: center;
 }
+.text-success{
+    color: #4db11e !important;
+    font-weight: 400;
+}
 .ui-sortable .menu-body{
     background-color: white; 
     border: 1px solid #e0e0e0;  
@@ -546,6 +574,7 @@ input[type=checkbox] {
     padding: 4px 10px;
     margin-bottom: 4px;
     position: relative;
+    font-family: "Sarabun", "OPen Sans";
 }
 
 .ui-sortable-placeholder {

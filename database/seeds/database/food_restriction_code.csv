@@ -1,35 +1,35 @@
-1,1,is_weekday,วันจันทร์ - วันศุกร์
-2,2,is_saturday,วันเสาร์
-3,3,is_sunday,วันอาทิตย์
-4,4,is_breakfast,เช้า
-5,5,is_morning_snack,ว่างเช้า
-6,6,is_lunch,กลางวัน
-7,7,is_afternoon_snack,ว่างบ่าย
-8,8,is_for_small,จัดอาหารสำหรับเด็กอายุต่ำกว่า 1 ปี
+1,1,is_weekday,วันจันทร์ - วันศุกร์, 
+2,2,is_saturday,วันเสาร์, 
+3,3,is_sunday,วันอาทิตย์, 
+4,4,is_breakfast,เช้า, 
+5,5,is_morning_snack,ว่างเช้า, 
+6,6,is_lunch,กลางวัน, 
+7,7,is_afternoon_snack,ว่างบ่าย, 
+8,8,is_for_small,จัดอาหารสำหรับเด็กอายุต่ำกว่า 1 ปี,ปกติ
 9,9,is_s_muslim,อาหารมุสลิม
 10,10,is_s_vege,อาหารมังสวิรัติ
 11,11,is_s_vegan,อาหารเจ
-12,12,is_s_milk,นมวัว
-13,13,is_s_breastmilk,นมแม่
-14,14,is_s_egg,ไข่ไก่
-15,15,is_s_wheat,แป้งสาลี
-16,16,is_s_shrimp,กุ้ง
-17,17,is_s_shell,หอย
-18,18,is_s_crab,ปู
-19,19,is_s_fish,ปลา
-20,20,is_s_peanut,ถั่วลิสง
-21,21,is_s_soybean,ถั่วเหลือง
+12,12,is_s_milk,แพ้นมวัว
+13,13,is_s_breastmilk,แพ้นมแม่
+14,14,is_s_egg,แพ้ไข่ไก่
+15,15,is_s_wheat,แพ้แป้งสาลี
+16,16,is_s_shrimp,แพ้กุ้ง
+17,17,is_s_shell,แพ้หอย
+18,18,is_s_crab,แพ้ปู
+19,19,is_s_fish,แพ้ปลา
+20,20,is_s_peanut,แพ้ถั่วลิสง
+21,21,is_s_soybean,แพ้ถั่วเหลือง
 22,22,is_for_big,จัดอาหารสำหรับเด็กอายุมากกว่า 1-3 ปี
 23,23,is_b_muslim,อาหารมุสลิม
 24,24,is_b_vege,อาหารมังสวิรัติ
 25,25,is_b_vegan,อาหารเจ
-26,26,is_b_milk,นมวัว
-27,27,is_b_breastmilk,นมแม่
-28,28,is_b_egg,ไข่ไก่
-29,29,is_b_wheat,แป้งสาลี
-30,30,is_b_shrimp,กุ้ง
-31,31,is_b_shell,หอย
-32,32,is_b_crab,ปู
-33,33,is_b_fish,ปลา
-34,34,is_b_peanut,ถั่วลิสง
-35,35,is_b_soybean,ถั่วเหลือง
+26,26,is_b_milk,แพ้นมวัว
+27,27,is_b_breastmilk,แพ้นมแม่
+28,28,is_b_egg,แพ้ไข่ไก่
+29,29,is_b_wheat,แพ้แป้งสาลี
+30,30,is_b_shrimp,แพ้กุ้ง
+31,31,is_b_shell,แพ้หอย
+32,32,is_b_crab,แพ้ปู
+33,33,is_b_fish,แพ้ปลา
+34,34,is_b_peanut,แพ้ถั่วลิสง
+35,35,is_b_soybean,แพ้ถั่วเหลือง
