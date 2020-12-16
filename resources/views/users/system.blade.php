@@ -85,11 +85,11 @@
                 {{ $setting->is_s_milk ? 'checked' : '' }}>
             <label>นมวัว</label>
         </div>
-        <div class="checkbox checkbox-inline">
+        <!-- <div class="checkbox checkbox-inline">
             <input class="for_small" type="checkbox" value="{{ $setting->is_s_breastmilk }}" name="is_s_breastmilk"
                 {{ $setting->is_s_breastmilk ? 'checked' : '' }}>
             <label>นมแม่</label>
-        </div>
+        </div> -->
         <div class="checkbox checkbox-inline">
             <input class="for_small" type="checkbox" value="{{ $setting->is_s_egg }}" name="is_s_egg"
                 {{ $setting->is_s_egg ? 'checked' : '' }}>
@@ -109,7 +109,7 @@
                 {{ $setting->is_s_shrimp ? 'checked' : '' }}>
             <label>กุ้ง</label>
         </div>
-        <div class="checkbox checkbox-inline">
+        <!-- <div class="checkbox checkbox-inline">
             <input class="for_small" type="checkbox" value="{{ $setting->is_s_shell }}" name="is_s_shell"
                 {{ $setting->is_s_shell ? 'checked' : '' }}>
             <label>หอย</label>
@@ -118,7 +118,7 @@
             <input class="for_small" type="checkbox" value="{{ $setting->is_s_crab }}" name="is_s_crab"
                 {{ $setting->is_s_crab ? 'checked' : '' }}>
             <label>ปู</label>
-        </div>
+        </div> -->
         <div class="checkbox checkbox-inline">
             <input class="for_small" type="checkbox" value="{{ $setting->is_s_fish }}" name="is_s_fish"
                 {{ $setting->is_s_fish ? 'checked' : '' }}>
@@ -181,11 +181,11 @@
                 {{ $setting->is_b_milk ? 'checked' : '' }}>
             <label>นมวัว</label>
         </div>
-        <div class="checkbox checkbox-inline">
+        <!-- <div class="checkbox checkbox-inline">
             <input type="checkbox" value="{{ $setting->is_b_breastmilk }}" name="is_b_breastmilk"
                 {{ $setting->is_b_breastmilk ? 'checked' : '' }}>
             <label>นมแม่</label>
-        </div>
+        </div> -->
         <div class="checkbox checkbox-inline">
             <input type="checkbox" value="{{ $setting->is_b_egg }}" name="is_b_egg"
                 {{ $setting->is_b_egg ? 'checked' : '' }}>
@@ -205,7 +205,7 @@
                 {{ $setting->is_b_shrimp ? 'checked' : '' }}>
             <label>กุ้ง</label>
         </div>
-        <div class="checkbox checkbox-inline">
+        <!-- <div class="checkbox checkbox-inline">
             <input type="checkbox" value="{{ $setting->is_b_shell }}" name="is_b_shell"
                 {{ $setting->is_b_shell ? 'checked' : '' }}>
             <label>หอย</label>
@@ -214,7 +214,7 @@
             <input type="checkbox" value="{{ $setting->is_b_crab }}" name="is_b_crab"
                 {{ $setting->is_b_crab ? 'checked' : '' }}>
             <label>ปู</label>
-        </div>
+        </div> -->
         <div class="checkbox checkbox-inline">
             <input type="checkbox" value="{{ $setting->is_b_fish }}" name="is_b_fish"
                 {{ $setting->is_b_fish ? 'checked' : '' }}>

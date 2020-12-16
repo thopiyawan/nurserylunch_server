@@ -59,8 +59,10 @@
                                 </script>
                             @endif
                     </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเพิ่ม</button>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเพิ่ม</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -72,7 +74,7 @@
         <div class="modal-content">
             <!-- <div class="color-line "></div>             -->
             <div class="modal-body">
-                <h4 class="modal-title">เพิ่มเด็กใหม่</h4>
+                <h4 class="modal-title">เด็กใหม่</h4>
                 <form method="POST" action="/kid/create" class="form-horizontal">   
                     @csrf 
                         <div class="form-group">
@@ -164,8 +166,10 @@
                         <label class="control-label">บันทึกจากผู้ดูแล</label>
                         <textarea name="" class="form-control" rows="4"></textarea> 
                     </div> -->
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเพิ่ม</button>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเพิ่ม</button>
+                    </div>
                 </form>
             </div>
         </div>

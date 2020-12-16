@@ -11,6 +11,8 @@
             @endforeach
         </select>
     </div>
-    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-    <button class="btn btn-primary" type="submit" name="" value="">บันทึกการเปลี่ยนแปลง</button>
+    <div class="text-center">
+        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+        <button class="btn btn-primary" type="submit" name="" value="">บันทึกการเปลี่ยนแปลง</button>
+    </div>
 </form>

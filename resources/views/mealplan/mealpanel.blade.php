@@ -2,7 +2,7 @@
 <!-- foreach ($dateData as $key => $value) {    -->
     <div class="meal-panel row {{$date[0]}}">
         <div class="col col-day col-lg-1">
-            <div class="mlabel">{{$date[1]}}</div>
+            <div class="mlabel">{{$date[1]}} </div>
             <div class="mdate"><span id="{{$date[0]}}Date">{{ date('d', strtotime($date[2])) }}</span></div>
         </div>
         @foreach ($mealSetting as $meal)

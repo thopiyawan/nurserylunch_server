@@ -8,3 +8,4 @@ class Propertie extends Model
 {
     //
 }
+

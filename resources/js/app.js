@@ -42,6 +42,5 @@ window.$ = window.jQuery = $;
 
 import 'jquery-ui/ui/widgets/sortable.js';
 import 'jquery-ui/ui/widgets/datepicker.js';
-
-
+import 'html2canvas/dist/html2canvas.min.js';
 

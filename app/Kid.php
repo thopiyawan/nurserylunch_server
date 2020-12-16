@@ -17,6 +17,9 @@ class Kid extends Model
 	public function growth_entries(){
         return $this->hasMany(GrowthEntry::class);
     }
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
     public function getAge()
     {
 		$age = \Carbon\Carbon::parse($this->birthday)->diff(\Carbon\Carbon::now())->format('%y ปี %m เดือน %d วัน');
@@ -104,6 +107,7 @@ class Kid extends Model
         $lastest =  GrowthEntry::where('kid_id', $this->id)->latest('date')->first();
         return $lastest;
     }
+
     public function getGrowthEntries()
     {
     	$entries = GrowthEntry::where('kid_id', $this->id)->orderBy('date', 'ASC')->get();
@@ -111,6 +115,14 @@ class Kid extends Model
     		$en->datestring = date('d/m/Y', strtotime($en->date));
     	}
     	return $entries;
+    }
+    public function getNotes()
+    {
+        $notes = Comment::where('kid_id', $this->id)->orderBy('date', 'ASC')->get();
+        foreach ($notes as $n) {
+            $n->datestring = date('d/m/Y', strtotime($n->date));
+        }
+        return $notes;
     }
     public function getMilk($type)
     {

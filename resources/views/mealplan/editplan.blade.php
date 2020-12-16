@@ -35,9 +35,22 @@
                     <div class="" id="filter-result">
                         @foreach ($foodList as $food)
                             <div class="ui-sortable food-list">
-                                <div class="menu-body">
-                                    <div class="col col-food-name" data-energy="{{ $food->getEnergy() }}"
-                                        data-protein="{{ $food->getProtein() }}" data-fat="{{ $food->getFat() }}"
+                                <div class="menu-body food">
+                                    <div class="col col-food-name" 
+                                        data-energy="{{ $food->energy }}"
+                                        data-protein="{{ $food->protein }}" 
+                                        data-fat="{{ $food->fat }}" 
+                                        data-carbohydrate="{{ $food->carbohydrate }}"
+                                        data-vitamin_a="{{ $food->vitamin_a }}"
+                                        data-vitamin_b1="{{ $food->vitamin_b1 }}"
+                                        data-vitamin_b2="{{ $food->vitamin_b2 }}"
+                                        data-vitamin_c="{{ $food->vitamin_c }}"
+                                        data-iron="{{ $food->iron }}"
+                                        data-calcium="{{ $food->calcium }}"
+                                        data-phosphorus="{{ $food->phosphorus }}"
+                                        data-fiber="{{ $food->fiber }}"
+                                        data-sodium="{{ $food->sodium }}"
+                                        data-sugar="{{ $food->sugar }}"
                                         id="{{ $food->id }}">
                                         {{ $food->food_thai }}
                                     </div>
@@ -86,23 +99,6 @@
         <div class="row">
         </div>
         <div class="hpanel plan-panel">
-            {{-- <div class="row">
-                <div class="col-lg-9">
-                    <ul class="nav nav-tab">
-                        @php $first = true; @endphp
-                        @foreach (array_keys($settings) as $setting_id)
-                            <li class="">
-                                <a data-toggle="tab" data-detail="{{ $settings[$setting_id] }}" href="#{{ $setting_id }}"
-                                    aria-expanded="true" class="type-tab {{ $first ? 'active' : '' }}">
-                                    {{ $settings[$setting_id] }}
-                                </a>
-                            </li>
-                            @php $first = false; @endphp
-                        @endforeach
-                    </ul>
-                </div>
-            </div> --}}
-
             <div class="row">
                 <div class="col-lg-9">
                     <ul class="nav nav-tab">
@@ -110,7 +106,9 @@
                         @foreach ($settings as $key => $setting_value)
 
                             <li class="">
-                                <a data-toggle="tab" data-detail="{{ $setting_value['setting_description_thai'] }}"
+                                <a data-toggle="tab" 
+                                    data-detail="{{ $setting_value['setting_description_thai'] }}"
+                                    data-type="{{$setting_value['food_type']}}"
                                     href="#type_{{ $setting_value['food_type'] }}" aria-expanded="true"
                                     class="type-tab {{ $first ? 'active' : '' }}">
                                     <!-- {{ $setting_value['food_type'] . ' | ' . $setting_value['setting_description_thai'] }} -->
@@ -122,26 +120,6 @@
                     </ul>
                 </div>
             </div>
-
-
-
-            {{-- <div class="tab-content">
-                @php $first = true; @endphp
-                @foreach (array_keys($settings) as $setting_id)
-                    <div id="{{ $setting_id }}" class="tab-pane {{ $first ? 'active' : '' }} ">
-                        <div class="">
-                            <div id="">
-                                @foreach ($day_in_week as $key => $day)
-                                    @include('mealplan.mealdate', ['day' => $day, 'day_th' => $day_in_week_th[$key],
-                                    'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_id])
-                                    <h>{{ $setting_id }}</h>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    @php $first = false; @endphp
-                @endforeach
-            </div> --}}
 
             <div class="tab-content">
                 @php $first = true; @endphp
@@ -163,7 +141,7 @@
         </div>
 
         <div class="form-group">
-            <div class="col-lg-8 col-sm-offset-4">
+            <div class="text-center">
                 <button class="btn btn-default" type="">ยกเลิก</button>
                 <button class="btn btn-primary" type="submit" name="update" value="school"
                     onclick="saveLogs()">บันทึกข้อมูล</button>
@@ -177,9 +155,11 @@
             <div class="modal-body text-center">
                 <i class="far icon-success fa-check-circle fa-4x m-b"></i>
                 <!-- <h3 class="text-success modal-title m-b">บันทึกสำรับอาหารสำเร็จเรียบร้อย</h3> -->
-                <h1 class="text-success m-b">บันทึกสำรับอาหารสำเร็จเรียบร้อย</div>
-                
-                <button type="button" class="btn success btn-default m-b" data-dismiss="modal"> OK </button>
+                <h1 class="text-success">บันทึกสำรับอาหารสำเร็จเรียบร้อย</h1>
+                <h1 class="text-danger">* The result is for reference only </h1>
+                <div class="text-center">
+                    <button type="button" class="btn success btn-default m-b" data-dismiss="modal"> OK </button>
+                </div>
             </div>
         </div>
     </div>
@@ -204,11 +184,11 @@
         $('.mdate.wednesday').text(wednesdayDate.getDate())
         $('.mdate.thursday').text(thursdayDate.getDate())
         $('.mdate.friday').text(fridayDate.getDate())
-        $('.meal-panel.row.monday').attr("data-date", mondayDate)
-        $('.meal-panel.row.tuesday').attr("data-date", tuesdayDate)
-        $('.meal-panel.row.wednesday').attr("data-date", wednesdayDate)
-        $('.meal-panel.row.thursday').attr("data-date", thursdayDate)
-        $('.meal-panel.row.friday').attr("data-date", fridayDate)
+        $('.meal-panel.monday').attr("data-date", mondayDate)
+        $('.meal-panel.tuesday').attr("data-date", tuesdayDate)
+        $('.meal-panel.wednesday').attr("data-date", wednesdayDate)
+        $('.meal-panel.thursday').attr("data-date", thursdayDate)
+        $('.meal-panel.friday').attr("data-date", fridayDate)
         $('#startDate').text(mondayDate.toLocaleDateString('th-TH', {
             year: '2-digit',
             month: 'short',
@@ -222,7 +202,9 @@
         $("#copy-normal-btn").hide();
         $("#copy-normal-btn").on("click", copyFood);
         $('.type-tab').on('click', function() {
-            var type = "";
+            var type = $(this).data("type");
+            foodType = type;
+
             var target = $("#food-type-span");
             var detail = $(this).data("detail");
             var start = detail.indexOf("(");
@@ -249,11 +231,11 @@
                 let morningList = []
 
                 //let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-                let mondayData = new Date($('.meal-panel.row.monday').data('date'))
-                let tuesdayData = new Date($('.meal-panel.row.tuesday').data('date'))
-                let wednesdayData = new Date($('.meal-panel.row.wednesday').data('date'))
-                let thursdayData = new Date($('.meal-panel.row.thursday').data('date'))
-                let fridayData = new Date($('.meal-panel.row.friday').data('date'))
+                let mondayData = new Date($('.meal-panel.monday').data('date'))
+                let tuesdayData = new Date($('.meal-panel.tuesday').data('date'))
+                let wednesdayData = new Date($('.meal-panel.wednesday').data('date'))
+                let thursdayData = new Date($('.meal-panel.thursday').data('date'))
+                let fridayData = new Date($('.meal-panel.friday').data('date'))
                 let mealPlanData = []
                 var panels = $(".tab-pane");
                 $.each(panels, function() {
@@ -268,8 +250,7 @@
                             lunch: [],
                             lunchSnack: [],
                         }
-                        let mealDate = new Date($(`.meal-panel.row.${day}`).data('date'))
-                            .toLocaleDateString()
+                        let mealDate = new Date($(`.meal-panel.${day}`).data('date')).toLocaleDateString()
                         let breakfast = $(this).find('#breakfast-meal-' + day +
                             ' > .ui-sortable .col-food-name')
                         let breakfastSnack = $(this).find('#breakfast-snack-meal-' + day +
@@ -355,22 +336,20 @@
         }
 
         function onSortableReceive(event, ui) {
-            //console.log(event);
             var dayPanel = $(event.target).parents('.meal-panel');
             calculateNutrition(dayPanel);
-
-            var foodItem = $(ui.item);
             //cloneFoodItem(foodItem);
+            
+            if(foodType != 8 && foodType != 22){
+                var foodItem = ui.item;
+                var foodId = foodItem.children(":first").attr("id");
+                checkMealType(foodId, foodType, foodItem);
+            }
         }
 
         function copyFood(event, ui) {
-            console.log("coppying");
-            //console.log(event);
-
             var activePanel = $(".tab-pane.active");
             var normalPanel = $("#type_8.tab-pane, #type_22.tab-pane");
-            //console.log(activePanel);
-            //console.log(normalPanel);
 
             $.each(activePanel.find(".menu-body").not(".ui-sortable-placeholder"), function() {
                 $(this).remove();
@@ -391,7 +370,7 @@
                     console.log(foodItem);
 
                     var foodId = foodItem.children(":first").attr("id");
-                    var targetType = activePanel.attr('id');
+                    var targetType = activePanel.data("type");
 
                     var cloneItem = foodItem.clone(true);
 
@@ -406,35 +385,35 @@
             });
         }
 
-        function cloneFoodItem(foodItem) {
-            var foodId = foodItem.children(":first").attr("id");
-            //console.log(foodId);
-            var mealPanel = foodItem.parent()
-            var mealData = mealPanel.data('meal');
-            var day = mealPanel.data('day');
-            var mealType = mealPanel.data('type');
+        // function cloneFoodItem(foodItem) {
+        //     var foodId = foodItem.children(":first").attr("id");
+        //     //console.log(foodId);
+        //     var mealPanel = foodItem.parent()
+        //     var mealData = mealPanel.data('meal');
+        //     var day = mealPanel.data('day');
+        //     var mealType = mealPanel.data('type');
 
-            if (mealType == "is_for_small" || mealType == "is_for_big") {
-                var slector = mealData + "-" + day;
-                var targets = $(".ui-sortable-meal." + slector).not(".is_for_small", ".is_for_big");
-                //console.log(targets);
-                $.each(targets, function() {
-                    var targetType = $(this).data("type");
+        //     if (mealType == "is_for_small" || mealType == "is_for_big") {
+        //         var slector = mealData + "-" + day;
+        //         var targets = $(".ui-sortable-meal." + slector).not(".is_for_small", ".is_for_big");
+        //         //console.log(targets);
+        //         $.each(targets, function() {
+        //             var targetType = $(this).data("type");
 
-                    var cloneItem = foodItem.clone(true);
+        //             var cloneItem = foodItem.clone(true);
 
-                    checkMealType(foodId, "mealType", cloneItem);
-                    cloneItem.prependTo(this);
+        //             checkMealType(foodId, "mealType", cloneItem);
+        //             cloneItem.prependTo(this);
 
 
-                    var dayPanel = $(this).parents('.meal-panel');
-                    calculateNutrition(dayPanel);
-                });
+        //             var dayPanel = $(this).parents('.meal-panel');
+        //             calculateNutrition(dayPanel);
+        //         });
 
-            }
-        }
-
+        //     }
+        // }
         function checkMealType(id, type, cloneItem) {
+            console.log("checktype", type);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -449,7 +428,7 @@
                     age: "age6_8mo"
                 },
                 success: function(result) {
-                    console.log(id, type, result)
+                    //console.log(id, type, result)
                     var safe = result == 1 ? true : false;
                     if (safe) {
                         //cloneItem.addClass("ui-state-disabled"); // safe to eat
@@ -460,7 +439,6 @@
                 }
             });
         }
-
 
         $('[data-toggle="tooltip"]').tooltip();
 
@@ -504,12 +482,24 @@
 
 
         function initCalculation() {
-            var mealPanel = $('.meal-panel');
-            if (mealPanel.children("#menu-body").length > 0){
-                mealPanel.each(function() {
+            var mealPanel = $('.meal-panel');            
+            mealPanel.each(function() {
+                if($(this).find(".menu-body.food").length > 0){
                     calculateNutrition($(this));
-                });
-            }
+                }
+
+                var type = $(this).data("type");
+                console.log("init cal" + type);
+                if(type != 8 && type != 22){
+                    var foods = $(this).find(".menu-body").not(".ui-sortable-placeholder");
+                    $.each(foods, function() {
+                        var foodItem = $(this);
+                        var foodId = foodItem.children(":first").attr("id");
+                        checkMealType(foodId, type, foodItem);
+                    });
+                }
+            });
+            
         }
 
         function initTarget() {
@@ -523,47 +513,99 @@
         }
 
         function calculateNutrition(panel) {
-            var sumEnergy = 0;
-            var sumProtein = 0;
-            var sumFat = 0;
-            var currentEnergyDom = panel.find(".energy .current");
-            var currentProteinDom = panel.find(".protein .current");
-            var currentFatDom = panel.find(".fat .current");
+            var sum = {
+                'energy':0,
+                'protein':0,
+                'fat':0,
+                "carbohydrate":0,
+                "vitamin_a":0,
+                "vitamin_b1":0,
+                "vitamin_b2":0,
+                "vitamin_c":0,
+                "iron":0,
+                "calcium":0,
+                "phosphorus":0,
+                "fiber":0,
+                "sodium":0,
+                "sugar":0,
+            }
+            
             var allFoodLog = panel.find(".col-food-name");
-
-            allFoodLog.each(function(index) {
-                sumEnergy += parseFloat($(this).attr("data-energy"));
-                sumProtein += parseFloat($(this).attr("data-protein"));
-                sumFat += parseFloat($(this).attr("data-fat"));
+            allFoodLog.each(function(log) {
+                for (var key in sum) {
+                    sum[key] += parseFloat($(this).attr("data-"+key));
+                }
             });
 
-            currentEnergyDom.text(sumEnergy.toFixed(0));
-            currentProteinDom.text(sumProtein.toFixed(0));
-            currentFatDom.text(sumFat.toFixed(0));
-            updateNutritionBar(panel, "energy", sumEnergy);
-            updateNutritionBar(panel, "protein", sumProtein);
-            updateNutritionBar(panel, "fat", sumFat);
+            for (var key in sum) {
+                var dom = panel.find("."+key+" .current");
+                dom.text(sum[key].toFixed(0));
+                updateNutritionBar(panel, key, sum[key]);
+            }
+
+            // var currentEnergyDom = panel.find(".energy .current");
+            // var currentProteinDom = panel.find(".protein .current");
+            // var currentFatDom = panel.find(".fat .current");
+            // currentEnergyDom.text(sumEnergy.toFixed(0));
+            // currentProteinDom.text(sumProtein.toFixed(0));
+            // currentFatDom.text(sumFat.toFixed(0));
+            // updateNutritionBar(panel, "energy", sumEnergy);
+            // updateNutritionBar(panel, "protein", sumProtein);
+            // updateNutritionBar(panel, "fat", sumFat);
 
         }
 
         function updateNutritionBar(parent, key, sum) {
             // update nutirion bar
             var scale = targetNutrition[key];
-            var grade = "";
-            if (sum >= scale[3]) {
-                grade = "toohigh";
-            } else if (sum >= scale[2]) {
-                grade = "high";
-            } else if (sum >= scale[1]) {
-                grade = "ok";
-            } else if (sum >= scale[0]) {
-                grade = "low";
-            } else {
-                grade = "toolow";
-            }
 
-            parent.find("." + key).find(".nut-bar").removeClass("selected");
-            parent.find("." + key).find(".nut-bar." + grade).addClass("selected");
+            if($(parent).find(".menu-body.food").length == 0){
+                // console.log("zero");
+                if (key == "protein" || key == "fat" || key == "energy"){
+                    parent.find("." + key).find(".nut-bar").removeClass("selected");
+                }else{
+                    var dom = parent.find("." + key).find(".nut-bar");
+                    dom.text("พอดี");
+                    dom.removeClass("warning");
+                    dom.removeClass("ok");
+                }
+            }else{
+
+
+                if (key == "protein" || key == "fat" || key == "energy"){
+                    var grade = "";
+                    parent.find("." + key).find(".nut-bar").removeClass("selected");
+                    if (sum >= scale[3]){
+                        grade = "toohigh";
+                    } else if (sum >= scale[2]) {
+                        grade = "high";
+                    } else if (sum >= scale[1]) {
+                        grade = "ok";
+                    } else if (sum >= scale[0]) {
+                        grade = "low";
+                    } else if (sum > 0){
+                        grade = "toolow";
+                    }
+                    if (grade != ""){
+                        parent.find("." + key).find(".nut-bar." + grade).addClass("selected");
+                    }
+                }else{
+                    var dom = parent.find("." + key).find(".nut-bar");
+                    dom.text("พอดี");
+                    dom.removeClass("warning");
+                    dom.removeClass("ok");
+                    if (sum >= scale[1]) {
+                        dom.text("มาก");
+                        dom.addClass("warning");
+                    } else if (sum >= scale[0]) {
+                        dom.text("พอดี");
+                        dom.addClass("ok");
+                    } else{
+                        dom.text("น้อย");
+                        dom.addClass("warning");
+                    }
+                }
+            }
         }
 
 

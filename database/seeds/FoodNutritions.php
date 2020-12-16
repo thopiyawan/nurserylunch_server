@@ -32,6 +32,7 @@ class FoodNutritions extends Seeder
             $nutrition->sodium = $item[14];
             $nutrition->sugar = $item[15];
             $nutrition->save();
+            
         }
     }
 }

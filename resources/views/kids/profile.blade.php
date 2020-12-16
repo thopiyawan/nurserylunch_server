@@ -73,6 +73,63 @@
             </div>
             <div class="hpanel kid-panel">
                 <div class="panel-body">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h4 class="title"> ข้อความจากผู้ดูแล </h4>
+                                <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
+                            </div>
+                            <div class="col-lg-4">
+                                <!-- <a class="pull-right" data-toggle="modal" data-target="#editNotesForm">
+                                    <span> <i class="fas fa-pen"></i> แก้ไข</span>
+                                </a> -->
+                                <a class="pull-right" data-toggle="modal" data-target="#createNoteForm">
+                                    <span> <i class="fas fa-plus"></i> เพิ่ม </span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="note-card">
+                            
+                            @if($kid->getNotes() == null)
+                                <span>ยังไม่มีข้อความบันทึก</span>
+                            @else
+                                @foreach ($kid->getNotes() as $note)
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <div class="">
+                                                <i class="fas fa-calendar-alt gray-icon"></i>
+                                                <span>{{$note->datestring}}</span>
+                                            </div>
+                                            <div>{{$note->content}}</div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="pull-right">
+                                                <a class="" data-toggle="modal" data-target="#editNoteForm{{$note->id}}">
+                                                    <span> <i class="fas fa-pen"></i> แก้ไข</span>
+                                                </a>
+                                                <div class="btn-group open">
+                                                    <button data-toggle="dropdown" class="btn btn-outline dropdown-toggle btn-sm" aria-expanded="true"> 
+                                                        <i class="fas fa-trash"></i> 
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="/kid/deletenote/{{$note->id}}">ลบออกถาวร</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="hpanel kid-panel">
+                <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-8">
                             <h4 class="title"> ข้อจำกัดอาหาร </h4>
@@ -164,29 +221,6 @@
                             </div>
                         </div>
                     @endif
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="hpanel kid-panel">
-                <div class="panel-body">
-                    <div class="">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <h4 class="title"> บันทึกจากผู้ดูแล </h4>
-                                <!-- <div class="update">อัพเดทล่าสุดเมื่อ 2 เดือนที่แล้ว</div> -->
-                            </div>
-                            <div class="col-lg-4">
-                                <a class="pull-right" data-toggle="modal" data-target="#editNotesForm">
-                                    <span> <i class="fas fa-pen"></i> แก้ไข</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="note-card">
-                            {{$kid->notes? $kid->notes: 'ยังไม่มีข้อความบันทึก'}}
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="hpanel kid-panel">
@@ -325,34 +359,79 @@
                                 </select>
                             </div>
                         </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    </div>
+
+
                 </form>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="editNotesForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+
+<div class="modal fade" id="createNoteForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- <div class="color-line "></div>             -->
             <div class="modal-body"> 
-                <h4 class="modal-title">แก้ไขข้อความ</h4>
-                <form method="POST" action="/kid/editnotes/{{$kid->id}}" class="form-horizontal">   
-                    @csrf 
+                <h4 class="modal-title">เพิ่มข้อความจากผู้ดูแล</h4>
+                <form method="POST" action="/kid/createnote/{{$kid->id}}" class="form-horizontal">   
+                    @csrf
                     <div class="form-group">
-                        <label class="control-label">บันทึกจากผู้ดูแล</label>
+                        <label class="control-label">วันที่</label>
                         <div class="">
-                            <textarea type="textarea" value="{{$kid->notes}}" name="notes" rows="5" class="form-control">{{$kid->notes}}</textarea>
+                            <input type="date" id="" name="date" value="" class="form-control" placeholder="วว/ดด/ปปปป">
                         </div>
                     </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    <div class="form-group">
+                        <label class="control-label">ข้อความ</label>
+                        <textarea type="textarea" value="" name="content" rows="5" class="form-control"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@foreach ($kid->getNotes() as $note)
+<div class="modal fade" id="editNoteForm{{$note->id}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body"> 
+                <h4 class="modal-title"> แก้ไขข้อความจากผู้ดูแล </h4>
+                <form method="POST" action="/kid/editnote/{{$kid->id}}" class="form-horizontal">   
+                    @csrf
+                    <input type="hidden" id="" name="note_id" value="{{$note->id}}">
+                    <div class="form-group">
+                        <label class="control-label">วันที่</label>
+                        <div class="">
+                            <input type="date" id="" name="date" value="{{$note->date}}" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">บันทึกจากผู้ดูแล</label>
+                        <div class="">
+                            <textarea type="textarea" value="{{$note->content}}" name="content" rows="5" class="form-control">{{$note->content}}</textarea>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                        <!-- <button class="btn btn-danger pull-right" type="submit" name="create" value="">ลบออก</button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
 <div class="modal fade" id="editRestrictionForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -385,9 +464,10 @@
                             </div>
                         </div>
                     @endforeach
-                    
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -422,8 +502,10 @@
                             </select>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -455,8 +537,10 @@
                             <input type="number" min="0" id="milk-input-box" step=".1" name="box" value="{{$kid->getMilk('box')}}" class="form-control">
                         </div>
                     </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -479,9 +563,11 @@
                 </div>
                 <form method="POST" action="/kid/deleterestriction/{{$rest['id']}}" class="form-horizontal text-center">   
                     @csrf
-                    <input type="hidden" id="" name="kid_id" value="{{$kid->id}}">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">ลบ</button>
+                    <div class="text-center">
+                        <input type="hidden" id="" name="kid_id" value="{{$kid->id}}">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">ลบ</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -503,9 +589,11 @@
                 </div>
                 <form method="POST" action="/kid/withdraw/{{$kid->id}}" class="form-horizontal text-center">   
                     @csrf
-                    <input type="hidden" id="" name="kid_id" value="{{$kid->id}}">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ไม่, ฉันไม่ต้องการลบ</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">ใช่, ฉันต้องการลบออก</button>
+                    <div class="text-center">
+                        <input type="hidden" id="" name="kid_id" value="{{$kid->id}}">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ไม่, ฉันไม่ต้องการลบ</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">ใช่, ฉันต้องการลบออก</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -538,8 +626,10 @@
                             <input type="number" id="" name="weight" step=".1" value="" class="form-control">
                         </div>
                     </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -582,9 +672,11 @@
                             <input type="number" id="" name="weight" step=".1" value="{{$entry->weight}}" class="form-control">
                         </div>
                     </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
-                    <button class="btn btn-danger pull-right" type="submit" name="create" value="">ลบออก</button>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button class="btn btn-primary" type="submit" name="create" value="">บันทึกการเปลี่ยนแปลง</button>
+                        <!-- <button class="btn btn-danger pull-right" type="submit" name="create" value="">ลบออก</button> -->
+                    </div>
                 </form>
             </div>
         </div>

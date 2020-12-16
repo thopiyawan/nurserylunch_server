@@ -7,6 +7,7 @@ use App\User;
 use App\School;
 use App\Classroom;
 use App\Kid;
+use App\Comment;
 use App\FoodRestriction;
 use App\GrowthEntry;
 
@@ -295,6 +296,44 @@ class KidController extends Controller
         return redirect('kid/'.$id);
 
     }
+
+    public function createNote(Request $request, $id = null)
+    {
+        $kid = Kid::where('id', $id)->first();
+        $date = date("Y-m-d", strtotime($request["date"]));
+        $note = Comment::create([
+            'date' => $date,
+            'content' => $request['content'],
+        ]);
+        $note->save();
+
+        $kid->comments()->save($note);
+        return redirect('kid/'.$id);
+    }
+    public function editNote(Request $request, $id = null)
+    {
+        $kid_id = $id;
+        
+        $kid = Kid::where('id', $kid_id)->first();
+        $note = Comment::where('id', $request['note_id'])->first();
+        
+        $date = date('Y-m-d', strtotime($request['date']));
+        $note->date = $date;
+        $note->content = $request['content'];
+
+        $note->save();
+
+        return redirect('kid/'.$kid_id);
+
+    }
+    public function deleteNote(Request $request, $id = null)
+    {
+        $note = Comment::where('id', $id)->first();
+        $note->delete();
+        return redirect()->back();
+    }
+
+
     public function createGrowth(Request $request, $id = null)
     {
         $kid = Kid::where('id', $id)->first();

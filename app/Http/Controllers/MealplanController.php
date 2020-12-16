@@ -9,7 +9,7 @@ use App\FoodLogs;
 use App\Setting;
 use App\EnergyLogs;
 use App\Nutrition;
-use App\Properties;
+use App\Propertie;
 use App\SettingDescription;
 use Illuminate\Http\Request;
 use Datetime;
@@ -22,7 +22,8 @@ class MealplanController extends Controller
 	public function showPlan($startDate = null, $endDate = null)
 	{
 		$userId = auth()->user()->id;
-		$userSetting = Setting::find($userId);
+		$schoolId = auth()->user()->school_id;
+		$userSetting = Setting::find($schoolId);
 		$now = Carbon::now();
 		$weekStartDate = $now->startOfWeek()->format('Y-m-d');
 		$weekEndDate = $now->endOfWeek()->format('Y-m-d');
@@ -31,7 +32,6 @@ class MealplanController extends Controller
 			$weekEndDate = $endDate;
 		}
 		dateInweek($weekStartDate);
-		$userId = auth()->user()->id;
 		// $foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate);
 		$dayInweek = dateInweek($weekStartDate);
 		
@@ -39,10 +39,6 @@ class MealplanController extends Controller
 	}
 	public function editPlan(Request $request)							// Define the method name
     {
-		
-		//$madeupAge = "small"; // ต้องแก้ให้ถูก
-
-
 		$userId = auth()->user()->id;
 		$schoolId = auth()->user()->school_id;
 		$userSetting = Setting::find($schoolId ); 
@@ -55,7 +51,12 @@ class MealplanController extends Controller
 		$inputFoodType = $request->session()->get('inputFoodType');
 		//Debugbar::info("food type".$inputFoodType);
 		//$inputFoodType = 8;
-	
+		$mealSetting = array(
+			array(1, "เช้า", $userSetting->is_breakfast, "breakfast-meal"), 
+			array(2, "ว่างเช้า", $userSetting->is_morning_snack, "breakfast-snack-meal"), 
+			array(3, "กลางวัน", $userSetting->is_lunch, "lunch-meal"), 
+			array(4, "ว่างบ่าย", $userSetting->is_afternoon_snack, "lunch-snack-meal"), 
+		);
 
 		$in_groups = IngredientGroup::all();        
 		$schoolId = auth()->user()->school_id;
@@ -85,34 +86,57 @@ class MealplanController extends Controller
 		}
 
 
-		$baseLineCondition = array(
+		$baseDri = array(
 			"energy" => 645 * $percentageOfEnergy, 
+			"protein" => 12.55 * $percentageOfEnergy, 
 			"fat" => 25.08 * $percentageOfEnergy , 
-			"protein" => 12.55 * $percentageOfEnergy);
+			"carbohydrate" => 110 * $percentageOfEnergy, 
+			"vitamin_a" => 250 * $percentageOfEnergy, 
+			"vitamin_b1" => 0.3 * $percentageOfEnergy, 
+			"vitamin_b2" => 0.4 * $percentageOfEnergy, 
+			"vitamin_c" => 50 * $percentageOfEnergy, 
+			"iron" => 9 * $percentageOfEnergy, 
+			"calcium" => 260 * $percentageOfEnergy, 
+			"phosphorus" => 275 * $percentageOfEnergy, 
+			"fiber" => 0 * $percentageOfEnergy, 
+			"sodium" => 0 * $percentageOfEnergy, 
+			"sugar" => 0 * $percentageOfEnergy, 
+		);
 
 		$energyCondition = array(
-			number_format($baseLineCondition["energy"] * 0.5, 0),  
-			number_format($baseLineCondition["energy"], 0),
-			number_format($baseLineCondition["energy"] * 1.5, 0),
-			number_format($baseLineCondition["energy"] * 2.0, 0)
+			number_format($baseDri["energy"] * 0.5, 0),  
+			number_format($baseDri["energy"], 0),
+			number_format($baseDri["energy"] * 1.5, 0),
+			number_format($baseDri["energy"] * 2.0, 0)
 		);
 		$proteinCondition = array(
-			number_format($baseLineCondition["protein"] * 0.5, 1),  
-			number_format($baseLineCondition["protein"], 1),
-			number_format($baseLineCondition["protein"] * 1.5, 1),
-			number_format($baseLineCondition["protein"] * 2.0, 1)
+			number_format($baseDri["protein"] * 0.5, 1),  
+			number_format($baseDri["protein"], 1),
+			number_format($baseDri["protein"] * 1.5, 1),
+			number_format($baseDri["protein"] * 2.0, 1)
 		);
 		$fatCondition = array(
-			number_format($baseLineCondition["fat"] * 0.5, 1),
-			number_format($baseLineCondition["fat"], 1),
-			number_format($baseLineCondition["fat"] * 1.5, 1),
-			number_format($baseLineCondition["fat"] * 2.0, 1)
+			number_format($baseDri["fat"] * 0.5, 1),
+			number_format($baseDri["fat"], 1),
+			number_format($baseDri["fat"] * 1.5, 1),
+			number_format($baseDri["fat"] * 2.0, 1)
 		);
 
 		$targetNutrition = array(
 			'energy' => $energyCondition,
 			'protein' => $proteinCondition,
 			'fat' => $fatCondition,
+			"carbohydrate" => array($baseDri["carbohydrate"] * 0.5, $baseDri["carbohydrate"]*1.5), 
+			"vitamin_a" => array($baseDri["vitamin_a"] * 0.5, $baseDri["vitamin_a"]*1.5),
+			"vitamin_b1" => array($baseDri["vitamin_b1"] * 0.5, $baseDri["vitamin_b1"]*1.5),
+			"vitamin_b2" => array($baseDri["vitamin_b2"] * 0.5, $baseDri["vitamin_b2"]*1.5),
+			"vitamin_c" => array($baseDri["vitamin_c"] * 0.5, $baseDri["vitamin_c"]*1.5),
+			"iron" => array($baseDri["iron"] * 0.5, $baseDri["iron"]*1.5),
+			"calcium" => array($baseDri["calcium"] * 0.5, $baseDri["calcium"]*1.5),
+			"phosphorus" => array($baseDri["phosphorus"] * 0.5, $baseDri["phosphorus"]*1.5),
+			"fiber" => array($baseDri["fiber"] * 0.5, $baseDri["fiber"]*1.5),
+			"sodium" => array($baseDri["sodium"] * 0.5, $baseDri["sodium"]*1.5),
+			"sugar" => array($baseDri["sugar"] * 0.5, $baseDri["sugar"]*1.5),
 		);
 
 
@@ -175,43 +199,38 @@ class MealplanController extends Controller
 		}
 
 
-		if($userSettingArray['is_for_small']){
-			foreach($setting_small_key as $value){
-				$setting_value = $settings_enable[$value];
-				if($setting_value['value'] == 1){
-					$temp = array();
-					$temp['food_type'] = $setting_value['food_type'];
-					$temp['setting_description_thai'] = '1-3 ปี ('.$setting_value['setting_description_thai'] . ')';
-					$setting_for_small[$value] = $temp;
-				}
-			}
-		}else{
-			$setting_for_small = array();
-		}
+		// if($userSettingArray['is_for_small']){
+		// 	foreach($setting_small_key as $value){
+		// 		$setting_value = $settings_enable[$value];
+		// 		if($setting_value['value'] == 1){
+		// 			$temp = array();
+		// 			$temp['food_type'] = $setting_value['food_type'];
+		// 			$temp['setting_description_thai'] = '1-3 ปี ('.$setting_value['setting_description_thai'] . ')';
+		// 			$setting_for_small[$value] = $temp;
+		// 		}
+		// 	}
+		// }else{
+		// 	$setting_for_small = array();
+		// }
 
-		if($userSettingArray['is_for_big']){
-			foreach($setting_big_key as $value){
-				$setting_value = $settings_enable[$value];
-				if($setting_value['value'] == 1){
-					$temp = array();
-					$temp['food_type'] = $setting_value['food_type'];
-					$temp['setting_description_thai'] = '1-3 ปี ('.$setting_value['setting_description_thai'] . ')';
-					$setting_for_big[$value] = $temp;
-				}
-			}
-		}else{
-			$setting_for_big = array();
-		}
+		// if($userSettingArray['is_for_big']){
+		// 	foreach($setting_big_key as $value){
+		// 		$setting_value = $settings_enable[$value];
+		// 		if($setting_value['value'] == 1){
+		// 			$temp = array();
+		// 			$temp['food_type'] = $setting_value['food_type'];
+		// 			$temp['setting_description_thai'] = '1-3 ปี ('.$setting_value['setting_description_thai'] . ')';
+		// 			$setting_for_big[$value] = $temp;
+		// 		}
+		// 	}
+		// }else{
+		// 	$setting_for_big = array();
+		// }
 
 	
-		$settings = array_merge($setting_for_small, $setting_for_big);
+		// $settings = array_merge($setting_for_small, $setting_for_big);
 		
-
-
-
-
-
-    return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'settings' => $settings,'targetNutrition' => $targetNutrition]);	
+    return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'settings' => $settings, 'mealSetting' => $mealSetting,'targetNutrition' => $targetNutrition]);	
     	// Return response to client
 	}
 	public function addFood(Request $request)
@@ -415,21 +434,52 @@ class MealplanController extends Controller
 
 	}
 
+	public function getNutritionData(Request $request)
+	{
+		$userId = auth()->user()->id;
+		$schoolId = auth()->user()->school_id;
+		$now = Carbon::now();
+		$input = $request->all();
+		$inputStartDate = $input['date']['startDate'];
+		$inputEndDate = $input['date']['endDate'];
+		$inputFoodType = $input['foodType'];
+
+		$logs = EnergyLogs::where([['school_id', "=", $schoolId],['food_type', "=", $inputFoodType]])->get();
+		$sumEnergy = $logs->sum('energy');
+		$sumProtein = $logs->sum('protein');
+		$sumFat = $logs->sum('fat');
+		$sumCarbohydrate = $logs->sum('carbohydrate');
+
+		// 1g of carbohydrates = 4 kCal · 1 g of protein = 4 kCal · 1 g of fat = 9 kCal ·
+
+		$nutritions = array(
+			"energy" => $sumEnergy,
+			"protein" => $sumProtein,
+			"fat" => $sumFat,
+			"carbohydrate" => $sumCarbohydrate,
+		);
+
+		return $nutritions;
+		
+	}
+
+
 	public function dateSelect(Request $request)
 	{
-		Debugbar::info("dateselect---");
+		// Debugbar::info("dateselect---");
 		$userId = auth()->user()->id;
-		$userSetting = Setting::find($userId);
+		$schoolId = auth()->user()->school_id;
+		$userSetting = Setting::find($schoolId);
 		$now = Carbon::now();
 
 
 		$input = $request->all();
-		$userId = auth()->user()->id;
 		$inputStartDate = $input['date']['startDate'];
 		$inputEndDate = $input['date']['endDate'];
 		//$inputFoodType = 8;
 		$inputFoodType = $input['foodType'];
-		Debugbar::info("dateselect".$inputFoodType);
+		$view = $input['view'];
+		// Debugbar::info("dateselect".$inputFoodType);
 
 		$startDate = new DateTime($inputStartDate);
 		$endDate = new DateTime($inputEndDate);
@@ -440,8 +490,8 @@ class MealplanController extends Controller
 		$request->session()->put('inputFoodType', $inputFoodType);
 
 		$in_groups = IngredientGroup::all();        
-		$schoolId = auth()->user()->school_id;
 		$foodLogs = getLastLogs($userId, $startDate, $endDate, $inputFoodType);
+		Debugbar::info($foodLogs);
 		$dayInweek = dateInweek($startDate);
 		$dateData = array(
 			array("monday", "จันทร์", $dayInweek[0]),
@@ -456,7 +506,9 @@ class MealplanController extends Controller
 			array(3, "กลางวัน", $userSetting->is_lunch), 
 			array(4, "ว่างบ่าย", $userSetting->is_afternoon_snack), 
 		);
-		return view('mealplan.mealpanel', ['logs' => $foodLogs, 'mealSetting' => $mealSetting, 'dateData' => $dateData,  'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
+
+		$returnView = ($view == "meal") ? "mealplan.mealpanel" : "report.mealpanel";
+		return view($returnView , ['logs' => $foodLogs, 'mealSetting' => $mealSetting, 'dateData' => $dateData,  'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
 	}
 
 	public function checkFoodType(Request $request){
@@ -464,22 +516,14 @@ class MealplanController extends Controller
 		$foodId = $input['foodId'];
 		$checkType = $input['checkType'];
 
-		$foodItem = Propertie::where('food_id', $foodId)->first();
-		$safe = true;
-		$allRules = array(
-			"is_s_muslim" => "has_pork", 
-			"is_s_shrimp" => "has_shirmp"
-		);
-		$rule = $allRules[$checkType];
-
-		if($foodItem[$rule] == 1){
-			$safe = false;
-		}
-
-
-		//$safe = (bool)rand(0,1);
-		//$safe = true;
-
+		$setting = SettingDescription::select('setting_property_name')->where('setting_id', $checkType)->get();
+		$setting_name = $setting[0]->setting_property_name;
+		// Debugbar::info("setting". $setting);
+		// Debugbar::info("property name".$setting[0]->setting_property_name);
+		$safeData = Propertie::select($setting_name)->where('food_id', $foodId)->get();
+		$safe = $safeData[0][$setting_name];
+	
+		
 		return $safe;
 
 	}
@@ -583,10 +627,10 @@ function getLastLogs($userId,$weekStartDate,$weekEndDate, $inputFoodType){
 		$foodTypeList = $inputFoodType == 8 ? range(8,21) : range(22,35);
 		//$foodTypeListQ = '('.implode(",", $foodTypeList).')';
 		$foodTypeListQ = implode(",", $foodTypeList);
-		Debugbar::info("foodTypeListQ". $foodTypeListQ);
+		//Debugbar::info("foodTypeListQ". $foodTypeListQ);
 		$lastLog = DB::select('
 			SELECT food_logs.food_id, food_logs.meal_code, food_logs.food_type, setting_description.setting_description_thai, foods.food_thai, food_logs.meal_date, 
-			nutritions.energy, nutritions.protein, nutritions.fat
+			nutritions.energy, nutritions.protein, nutritions.fat, nutritions.carbohydrate, nutritions.vitamin_a, nutritions.vitamin_b1, nutritions.vitamin_b2,nutritions.vitamin_c, nutritions.iron, nutritions.calcium, nutritions.phosphorus, nutritions.fiber, nutritions.sodium, nutritions.sugar 
 			FROM food_logs 
 			LEFT JOIN foods on food_logs.food_id = foods.id 
 			LEFT JOIN nutritions on food_logs.food_id = nutritions.food_id 

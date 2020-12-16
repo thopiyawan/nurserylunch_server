@@ -104,7 +104,7 @@ input[type=checkbox] {
     height: 62px;
 }
 #logo img{
-    height: 42px;
+    height: 40px;
 }
 #logo.light-version {
 	background: white;
@@ -148,9 +148,20 @@ input[type=checkbox] {
 .btn-primary i{
     color: white !important;
 }
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
-    background-color:var(--primary-fade);
-    border-color: var(--primary-fade);
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary{
+    background-color:var(--primary-fade) !important;
+    border-color: var(--primary-fade) !important;
+    color: white !important;
+}
+.btn-primary.btn-outline{
+    color: var(--primary) !important;
+    border-color: var(--primary);
+    background-color:transparent;
+}
+.btn-primary.btn-outline:hover, .btn-primary.btn-outline:focus, .btn-primary.btn-outline:active{
+    background-color:var(--primary-fade) !important;
+    border-color: var(--primary-fade) !important;
+    color: white !important;
 }
 .bold{
     font-weight: 400;
@@ -476,21 +487,29 @@ input[type=checkbox] {
     font-family: "Sarabun", "Open Sans";
 }
 .meal-panel .nut-labels{
-    margin-bottom: -7px;
-    font-size: var(--font-size-m2);
+    /*margin-bottom: -7px;*/
+    /*font-size: var(--font-size-m2);*/
 }
-.meal-panel .nut-bars{
+.meal-panel .nut-bars, .nutrition-report .nut-bars{
     margin-bottom: 10px;
 }
-.meal-panel .nut-bar{
-    background: #d8d8d8;
+.meal-panel .nut-bar, .nutrition-report .nut-bar{
+    background: #d0d0d0;
     border-radius: 8px;
     color: white !important;
     display: inline-block;
     font-size: 12px;
     text-align: center;
-    width: 19.7%;
-    margin-right: -1%;
+    width: 19.0%;
+    margin-right: -0.5%;
+}
+.meal-panel .btn-outline{
+    border-top-right-radius: 6px !important; 
+    border-bottom-right-radius: 6px !important;
+}
+.meal-panel .dropdown-menu{
+    padding: 16px 20px;
+    width: 180px;
 }
 .modal-content.success{
     padding: 40px 20px 0px 20px;
@@ -507,6 +526,19 @@ input[type=checkbox] {
 .nut-bar.ok.selected{background: #7ac943;}
 .plan-panel .nav-tab {
     border: none; 
+}
+
+.nutrition-report .nutrition-label{
+    height:  16px;
+    width: 16px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.nutrition-label.protein{background: #f7931e}
+.nutrition-label.fat{background: #7ac943}
+.nutrition-label.carb{background: #3fa6f2}
+.nutrition-legend{
+    padding-top: 80px;
 }
 .plan-panel .nav-tab>li{
     display: inline-block;
@@ -558,6 +590,9 @@ input[type=checkbox] {
 }
 .select-tag{
     width: 100%;
+}
+.section{
+    margin: 40px 0; 
 }
 .school-i{
     color: var(--lightgray);

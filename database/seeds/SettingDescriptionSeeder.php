@@ -19,6 +19,7 @@ class SettingDescriptionSeeder extends Seeder
             $setting->setting_id = $item[1];
             $setting->setting_description_english = $item[2];
             $setting->setting_description_thai = $item[3];
+            $setting->setting_property_name = $item[4];
             $setting->save();
         }
         

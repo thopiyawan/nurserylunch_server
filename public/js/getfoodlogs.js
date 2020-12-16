@@ -87,12 +87,16 @@ $("#week-picker").datepicker({
 });
 
 function getFoodLogs(startDate, endDate){
+    // console.log("getFoodLogs");
+    var pathname = window.location.pathname;
+    var view = pathname == "/" ? "meal" : "report";
+    console.log("pathname : ", view);
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
         }
     });
-    console.log("before select", startDate, endDate, foodType);
+    // console.log("before select", startDate, endDate, foodType);
     $.ajax({
         type: "POST",
         url: "/mealplan/dateselect",
@@ -102,12 +106,61 @@ function getFoodLogs(startDate, endDate){
                 endDate: endDate.toLocaleDateString(), 
             }, 
             foodType: foodType,
+            view : view,
         },
         success: function(data) {
+            //console.log(data);
             $("#meal-plan").html(data);
             // console.log("dateselect -success");
         }
     });
+
+    if(view == "report"){
+        $.ajax({
+            type: "POST",
+            url: "/mealplan/nutritiondata",
+            data: {
+                date: {
+                    startDate: startDate.toLocaleDateString(),
+                    endDate: endDate.toLocaleDateString(), 
+                }, 
+                foodType: foodType,
+                view : view,
+            },
+            success: function(data) {
+                updatePieChart(data);
+            }
+        });
+    }
+}
+
+function updatePieChart(data){
+    var energy = data["energy"];
+    var protein = (data["protein"]*4).toFixed();
+    var fat = (data["fat"]*9).toFixed();
+    var carbohydrate = (data["carbohydrate"]*4).toFixed();
+    // console.log(data["energy"], protein, fat, carbohydrate);
+
+    $("#protein-label").text((protein/energy*100).toFixed());
+    $("#fat-label").text((fat/energy*100).toFixed());
+    $("#carb-label").text((carbohydrate/energy*100).toFixed());
+
+    var doughnutData = {
+        labels: ["โปรตีน","ไขมัน", "คาร์โบไฮเดรต"],
+        datasets: [{
+            data: [protein, fat, carbohydrate],
+            backgroundColor: ["#f7931e","#7ac943","#3fa6f2"],
+            hoverBackgroundColor: ["#de7c0a","#5fb922","#1c89da"]
+        }]
+    }
+    var doughnutOptions = {
+        responsive: true, 
+        aspectRatio: 1.2,
+        legend: {display:false},
+    };
+    var ctx = document.getElementById("doughnutChart").getContext("2d");
+    new Chart(ctx, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
+
 }
 $.datepicker.regional["th"] = {
     closeText: "ปิด",
@@ -150,7 +203,6 @@ $(document).on(
 $(document).on("click", "button.ui-datepicker-current", function() {
     $(".ui-datepicker-today").click();
 });
-
 
 // ----- set up foodType 
 $('.age-tab').on('click', function(){
