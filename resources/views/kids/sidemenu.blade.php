@@ -69,6 +69,7 @@
     </div>
 </div>
 
+
 <div class="modal fade" id="newKidForm" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">

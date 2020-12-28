@@ -13,3 +13,4 @@ class PDFController extends Controller
     	return @$pdf->stream();
     }
 }
+

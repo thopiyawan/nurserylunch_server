@@ -17,6 +17,7 @@ use Debugbar;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Session;
+
 class MealplanController extends Controller			
 {
 	public function showPlan($startDate = null, $endDate = null)
@@ -329,7 +330,7 @@ class MealplanController extends Controller
 
 	public function getNutritionData(Request $request)
 	{
-		sleep(1);
+		// sleep(1);
 		$userId = auth()->user()->id;
 		$schoolId = auth()->user()->school_id;
 		$userSetting = Setting::find($schoolId);

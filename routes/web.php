@@ -21,7 +21,7 @@ Route::get('/', 'MealplanController@showPlan')->middleware('auth');
 Route::get('/mealplan/edit', 'MealplanController@editPlan')->middleware('auth');
 Route::get('/kids', 'KidController@showClassroom')->middleware('auth');
 Route::get('/report', 'ReportController@index')->middleware('auth');
-Route::get('/downloadreport', 'PDFController@downloadReport')->middleware('auth');
+Route::post('/downloadreport', 'ReportController@pdf')->middleware('auth');
 
 // Route::get('/download', function () {
 // return view('download');

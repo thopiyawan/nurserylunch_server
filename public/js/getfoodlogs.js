@@ -26,6 +26,9 @@ $("#week-picker").datepicker({
         startDate = new Date(date.getFullYear(),date.getMonth(),date.getDate() - date.getDay() + 1);
         endDate = new Date(date.getFullYear(),date.getMonth(),date.getDate() - date.getDay() + 7);
 
+        $("#startDateInput").val(startDate);
+        $("#endDateInput").val(endDate);
+
         var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
         $("#startDate").text(
             startDate.toLocaleDateString('th-TH', {
@@ -97,6 +100,7 @@ function getFoodLogs(startDate, endDate){
         }
     });
     // console.log("before select", startDate, endDate, foodType);
+    
     $.ajax({
         type: "POST",
         url: "/mealplan/dateselect",
@@ -161,13 +165,18 @@ function updateNutritionData(data){
 function updatePieChart(energy, protein, fat, carbohydrate){
     $("#doughnutChart").empty();
     $(".chartjs-size-monitor").empty();
+    var chart = null;
+    var ctx = null;
+    var doughnutData = null;
+    var doughnutOptions = null;
+
     if (energy){
         $(".nutrition-label").removeClass("none");
         $("#protein-label").text((protein/energy*100).toFixed());
         $("#fat-label").text((fat/energy*100).toFixed());
         $("#carb-label").text((carbohydrate/energy*100).toFixed());
 
-        var doughnutData = {
+        doughnutData = {
             labels: ["โปรตีน (กรัม)","ไขมัน (กรัม)", "คาร์โบไฮเดรต (กรัม)"],
             datasets: [{
                 data: [protein, fat, carbohydrate],
@@ -176,13 +185,12 @@ function updatePieChart(energy, protein, fat, carbohydrate){
             }]
         }
 
-        var doughnutOptions = {
+        doughnutOptions = {
             responsive: true, 
             aspectRatio: 1.2,
             legend: {display:false},
         };
-        var chart = null;
-        var ctx = document.getElementById("doughnutChart").getContext("2d");
+        ctx = document.getElementById("doughnutChart").getContext("2d");
         chart = new Chart(ctx, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
     }else{
         $("#protein-label").text(0);
@@ -190,7 +198,7 @@ function updatePieChart(energy, protein, fat, carbohydrate){
         $("#carb-label").text(0);
         $(".nutrition-label").addClass("none");
 
-        var doughnutData = {
+        doughnutData = {
             labels: ["ไม่มีข้อมูล"],
             datasets: [{
                 data: [1],
@@ -199,13 +207,12 @@ function updatePieChart(energy, protein, fat, carbohydrate){
             }]
         }
 
-        var doughnutOptions = {
+        doughnutOptions = {
             responsive: true, 
             aspectRatio: 1.2,
             legend: {display:false},
         };
-        var chart = null;
-        var ctx = document.getElementById("doughnutChart").getContext("2d");
+        ctx = document.getElementById("doughnutChart").getContext("2d");
         chart = new Chart(ctx, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
     }
 }
@@ -275,6 +282,7 @@ $('.age-tab').on('click', function(){
    $(this).addClass("active");
    foodType = $(this).attr('id');
    localStorage.setItem("foodType", foodType);
+   $("#foodTypeInput").val(foodType);
    getFoodLogs(startDate, endDate);
 });
 
