@@ -20,6 +20,7 @@
     --font-size-p3: 1.3rem;
     --font-size-p4: 1.4rem;
 }
+
 body{
     color: var(--dark);
     font-family: 'Kanit', sans-serif;
@@ -533,7 +534,9 @@ input[type=checkbox] {
     width: 16px;
     border-radius: 50%;
     display: inline-block;
+    background-color: #ccc;
 }
+.nutrition-label.none{background: #ddd !important}
 .nutrition-label.protein{background: #f7931e}
 .nutrition-label.fat{background: #7ac943}
 .nutrition-label.carb{background: #3fa6f2}
@@ -569,6 +572,9 @@ input[type=checkbox] {
 }
 .pull-left{
     float: left !important;
+}
+.readable-font{
+    font-family: "Sarabun", "Open Sans" !important;
 }
 .restriction-group{
     border: 1px solid var(--lightgray);

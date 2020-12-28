@@ -68,85 +68,13 @@ class MealplanController extends Controller
 		$foodLogs = getLastLogs($userId, $weekStartDate, $weekEndDate, $inputFoodType);
 		$dayInweek = dateInweek($weekStartDate);
 
-		#ratio of energy in each meal 
-		$condition_nutrition_calulation = array("breakfast" => 0.2, "morningSnack" => 0.1, "lunch" => 0.3, "lunchSnack" => 0.1);
-		$percentageOfEnergy = 0;
-		#check condition for calulation energy each day from user setting 
-		if($userSetting->is_breakfast == 1){
-			$percentageOfEnergy += $condition_nutrition_calulation['breakfast'];
-		}
-		if($userSetting->is_morning_snack == 1){
-			$percentageOfEnergy += $condition_nutrition_calulation['morningSnack'];
-		}
-		if($userSetting->is_lunch == 1){
-			$percentageOfEnergy += $condition_nutrition_calulation['lunch'];
-		}
-		if($userSetting->is_afternoon_snack == 1){
-			$percentageOfEnergy += $condition_nutrition_calulation['lunchSnack'];
-		}
-
-
-		$baseDri = array(
-			"energy" => 645 * $percentageOfEnergy, 
-			"protein" => 12.55 * $percentageOfEnergy, 
-			"fat" => 25.08 * $percentageOfEnergy , 
-			"carbohydrate" => 110 * $percentageOfEnergy, 
-			"vitamin_a" => 250 * $percentageOfEnergy, 
-			"vitamin_b1" => 0.3 * $percentageOfEnergy, 
-			"vitamin_b2" => 0.4 * $percentageOfEnergy, 
-			"vitamin_c" => 50 * $percentageOfEnergy, 
-			"iron" => 9 * $percentageOfEnergy, 
-			"calcium" => 260 * $percentageOfEnergy, 
-			"phosphorus" => 275 * $percentageOfEnergy, 
-			"fiber" => 0 * $percentageOfEnergy, 
-			"sodium" => 0 * $percentageOfEnergy, 
-			"sugar" => 0 * $percentageOfEnergy, 
-		);
-
-		$energyCondition = array(
-			number_format($baseDri["energy"] * 0.5, 0),  
-			number_format($baseDri["energy"], 0),
-			number_format($baseDri["energy"] * 1.5, 0),
-			number_format($baseDri["energy"] * 2.0, 0)
-		);
-		$proteinCondition = array(
-			number_format($baseDri["protein"] * 0.5, 1),  
-			number_format($baseDri["protein"], 1),
-			number_format($baseDri["protein"] * 1.5, 1),
-			number_format($baseDri["protein"] * 2.0, 1)
-		);
-		$fatCondition = array(
-			number_format($baseDri["fat"] * 0.5, 1),
-			number_format($baseDri["fat"], 1),
-			number_format($baseDri["fat"] * 1.5, 1),
-			number_format($baseDri["fat"] * 2.0, 1)
-		);
-
-		$targetNutrition = array(
-			'energy' => $energyCondition,
-			'protein' => $proteinCondition,
-			'fat' => $fatCondition,
-			"carbohydrate" => array($baseDri["carbohydrate"] * 0.5, $baseDri["carbohydrate"]*1.5), 
-			"vitamin_a" => array($baseDri["vitamin_a"] * 0.5, $baseDri["vitamin_a"]*1.5),
-			"vitamin_b1" => array($baseDri["vitamin_b1"] * 0.5, $baseDri["vitamin_b1"]*1.5),
-			"vitamin_b2" => array($baseDri["vitamin_b2"] * 0.5, $baseDri["vitamin_b2"]*1.5),
-			"vitamin_c" => array($baseDri["vitamin_c"] * 0.5, $baseDri["vitamin_c"]*1.5),
-			"iron" => array($baseDri["iron"] * 0.5, $baseDri["iron"]*1.5),
-			"calcium" => array($baseDri["calcium"] * 0.5, $baseDri["calcium"]*1.5),
-			"phosphorus" => array($baseDri["phosphorus"] * 0.5, $baseDri["phosphorus"]*1.5),
-			"fiber" => array($baseDri["fiber"] * 0.5, $baseDri["fiber"]*1.5),
-			"sodium" => array($baseDri["sodium"] * 0.5, $baseDri["sodium"]*1.5),
-			"sugar" => array($baseDri["sugar"] * 0.5, $baseDri["sugar"]*1.5),
-		);
-
-
+		$targetNutrition = getTargetNutrition($userSetting);
 		
 		$userSettingArray = $userSetting->toArray();
 		$userSettingArray = array_slice($userSettingArray, 11);
 		$settings_enable = array();
 
 	
-
 		foreach($settingDescription as $key => $val){
 			//[description id  for foodtype in food log, value]
 			if(isset($userSettingArray[$val->setting_description_english])){
@@ -154,9 +82,6 @@ class MealplanController extends Controller
 			}
 		}
 		
-
-		//define setting for less 1 year
-	
 
 		//$selectedAge = "is_for_small"; 
 		$settings = array();
@@ -197,42 +122,10 @@ class MealplanController extends Controller
 				}
 			}
 		}
-
-
-		// if($userSettingArray['is_for_small']){
-		// 	foreach($setting_small_key as $value){
-		// 		$setting_value = $settings_enable[$value];
-		// 		if($setting_value['value'] == 1){
-		// 			$temp = array();
-		// 			$temp['food_type'] = $setting_value['food_type'];
-		// 			$temp['setting_description_thai'] = '1-3 ปี ('.$setting_value['setting_description_thai'] . ')';
-		// 			$setting_for_small[$value] = $temp;
-		// 		}
-		// 	}
-		// }else{
-		// 	$setting_for_small = array();
-		// }
-
-		// if($userSettingArray['is_for_big']){
-		// 	foreach($setting_big_key as $value){
-		// 		$setting_value = $settings_enable[$value];
-		// 		if($setting_value['value'] == 1){
-		// 			$temp = array();
-		// 			$temp['food_type'] = $setting_value['food_type'];
-		// 			$temp['setting_description_thai'] = '1-3 ปี ('.$setting_value['setting_description_thai'] . ')';
-		// 			$setting_for_big[$value] = $temp;
-		// 		}
-		// 	}
-		// }else{
-		// 	$setting_for_big = array();
-		// }
-
-	
-		// $settings = array_merge($setting_for_small, $setting_for_big);
-		
     return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'settings' => $settings, 'mealSetting' => $mealSetting,'targetNutrition' => $targetNutrition]);	
     	// Return response to client
 	}
+
 	public function addFood(Request $request)
 	{
 
@@ -436,15 +329,27 @@ class MealplanController extends Controller
 
 	public function getNutritionData(Request $request)
 	{
+		sleep(1);
 		$userId = auth()->user()->id;
 		$schoolId = auth()->user()->school_id;
+		$userSetting = Setting::find($schoolId);
+
 		$now = Carbon::now();
 		$input = $request->all();
 		$inputStartDate = $input['date']['startDate'];
 		$inputEndDate = $input['date']['endDate'];
 		$inputFoodType = $input['foodType'];
 
-		$logs = EnergyLogs::where([['school_id', "=", $schoolId],['food_type', "=", $inputFoodType]])->get();
+		$startDate = (new Datetime($inputStartDate))->format('Y-m-d');
+		$endDate = (new Datetime($inputEndDate))->format('Y-m-d');
+		Debugbar::info($startDate, $endDate, $inputFoodType);
+
+		$logs = EnergyLogs::where([
+			['school_id', "=", $schoolId],
+			['food_type', "=", $inputFoodType],
+			['meal_date', ">=", $startDate],
+			['meal_date', "<=", $endDate]
+		])->get();
 		$sumEnergy = $logs->sum('energy');
 		$sumProtein = $logs->sum('protein');
 		$sumFat = $logs->sum('fat');
@@ -453,11 +358,45 @@ class MealplanController extends Controller
 		// 1g of carbohydrates = 4 kCal · 1 g of protein = 4 kCal · 1 g of fat = 9 kCal ·
 
 		$nutritions = array(
-			"energy" => $sumEnergy,
-			"protein" => $sumProtein,
-			"fat" => $sumFat,
-			"carbohydrate" => $sumCarbohydrate,
+			"energy" => array($sumEnergy, "none"),
+			"protein" => array($sumProtein, "none"),
+			"fat" => array($sumFat, "none"),
+			"carbohydrate" => array($sumCarbohydrate, "none"),
 		);
+
+		$multiplier = 5;
+		$targetNutrition = getTargetNutrition($userSetting, $multiplier);
+		// Debugbar::info("target---");
+		// Debugbar::info($targetNutrition);
+
+		
+		foreach ($nutritions as $key => $value) {
+			$grade = "none";
+			$sum = floatval($value[0]);
+			$driScale = ($key == "carbohydrate") ? $targetNutrition[$key."_full"] : $targetNutrition[$key];
+
+			// Debugbar::info($key);
+			// Debugbar::info($sum);
+			// Debugbar::info($driScale);
+			// Debugbar::info(floatval($driScale[3]));
+			// Debugbar::info($sum > $driScale[3]);
+
+			if ($sum >= floatval($driScale[3])){
+				Debugbar::info("in high");
+                $grade = "toohigh";
+            } else if ($sum >= (float)$driScale[2]) {
+                $grade = "high";
+            } else if ($sum >= (float)$driScale[1]) {
+                $grade = "ok";
+            } else if ($sum >= (float)$driScale[0]) {
+                $grade = "low";
+            } else{
+                $grade = "toolow";
+            }
+            Debugbar::info($grade);
+            
+            $nutritions[$key][1] = $grade;
+		}
 
 		return $nutritions;
 		
@@ -621,6 +560,89 @@ class MealplanController extends Controller
 		}
 		return view('mealplan.filterresult', ['foodList' => $foodFilter]);	
 	}
+}
+
+function getTargetNutrition($userSetting, $multiplier = 1){
+
+			#ratio of energy in each meal 
+	$condition_nutrition_calulation = array("breakfast" => 0.2, "morningSnack" => 0.1, "lunch" => 0.3, "lunchSnack" => 0.1);
+	$percentageOfEnergy = 0;
+	#check condition for calulation energy each day from user setting 
+	if($userSetting->is_breakfast == 1){
+		$percentageOfEnergy += $condition_nutrition_calulation['breakfast'];
+	}
+	if($userSetting->is_morning_snack == 1){
+		$percentageOfEnergy += $condition_nutrition_calulation['morningSnack'];
+	}
+	if($userSetting->is_lunch == 1){
+		$percentageOfEnergy += $condition_nutrition_calulation['lunch'];
+	}
+	if($userSetting->is_afternoon_snack == 1){
+		$percentageOfEnergy += $condition_nutrition_calulation['lunchSnack'];
+	}
+
+
+	$baseDri = array(
+		"energy" => 645 * $percentageOfEnergy * $multiplier, 
+		"protein" => 12.55 * $percentageOfEnergy * $multiplier,  
+		"fat" => 25.08 * $percentageOfEnergy * $multiplier, 
+		"carbohydrate" => 110 * $percentageOfEnergy * $multiplier, 
+		"vitamin_a" => 250 * $percentageOfEnergy * $multiplier, 
+		"vitamin_b1" => 0.3 * $percentageOfEnergy * $multiplier, 
+		"vitamin_b2" => 0.4 * $percentageOfEnergy * $multiplier, 
+		"vitamin_c" => 50 * $percentageOfEnergy * $multiplier, 
+		"iron" => 9 * $percentageOfEnergy * $multiplier, 
+		"calcium" => 260 * $percentageOfEnergy * $multiplier, 
+		"phosphorus" => 275 * $percentageOfEnergy * $multiplier, 
+		"fiber" => 0 * $percentageOfEnergy * $multiplier, 
+		"sodium" => 0 * $percentageOfEnergy * $multiplier, 
+		"sugar" => 0 * $percentageOfEnergy * $multiplier, 
+	);
+
+	$energyCondition = array(
+		number_format($baseDri["energy"] * 0.5, 0, '.',''),
+		number_format($baseDri["energy"], 0, '.',','),
+		number_format($baseDri["energy"] * 1.5, 0, '.',''),
+		number_format($baseDri["energy"] * 2.0, 0, '.','')
+	);
+	$proteinCondition = array(
+		number_format($baseDri["protein"] * 0.5, 1, '.',''),
+		number_format($baseDri["protein"], 1, '.',''),
+		number_format($baseDri["protein"] * 1.5, 1, '.',''),
+		number_format($baseDri["protein"] * 2.0, 1, '.','')
+	);
+	$fatCondition = array(
+		number_format($baseDri["fat"] * 0.5, 1, '.',''),
+		number_format($baseDri["fat"], 1, '.',''),
+		number_format($baseDri["fat"] * 1.5, 1, '.',''),
+		number_format($baseDri["fat"] * 2.0, 1, '.','')
+	);
+	$carbCondition = array(
+		number_format($baseDri["carbohydrate"] * 0.5, 1, '.',''),
+		number_format($baseDri["carbohydrate"], 1, '.',''),
+		number_format($baseDri["carbohydrate"] * 1.5, 1, '.',''),
+		number_format($baseDri["carbohydrate"] * 2.0, 1, '.','')
+	);
+
+	$targetNutrition = array(
+		'energy' => $energyCondition,
+		'protein' => $proteinCondition,
+		'fat' => $fatCondition,
+		"carbohydrate_full" => $carbCondition, 
+		"carbohydrate" => array($baseDri["carbohydrate"] * 0.5, $baseDri["carbohydrate"]*1.5), 
+		"vitamin_a" => array($baseDri["vitamin_a"] * 0.5, $baseDri["vitamin_a"]*1.5),
+		"vitamin_b1" => array($baseDri["vitamin_b1"] * 0.5, $baseDri["vitamin_b1"]*1.5),
+		"vitamin_b2" => array($baseDri["vitamin_b2"] * 0.5, $baseDri["vitamin_b2"]*1.5),
+		"vitamin_c" => array($baseDri["vitamin_c"] * 0.5, $baseDri["vitamin_c"]*1.5),
+		"iron" => array($baseDri["iron"] * 0.5, $baseDri["iron"]*1.5),
+		"calcium" => array($baseDri["calcium"] * 0.5, $baseDri["calcium"]*1.5),
+		"phosphorus" => array($baseDri["phosphorus"] * 0.5, $baseDri["phosphorus"]*1.5),
+		"fiber" => array($baseDri["fiber"] * 0.5, $baseDri["fiber"]*1.5),
+		"sodium" => array($baseDri["sodium"] * 0.5, $baseDri["sodium"]*1.5),
+		"sugar" => array($baseDri["sugar"] * 0.5, $baseDri["sugar"]*1.5),
+	);
+
+	return $targetNutrition;
 }
 
 function getLastLogs($userId,$weekStartDate,$weekEndDate, $inputFoodType){

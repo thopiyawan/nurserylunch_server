@@ -90,7 +90,7 @@ function getFoodLogs(startDate, endDate){
     // console.log("getFoodLogs");
     var pathname = window.location.pathname;
     var view = pathname == "/" ? "meal" : "report";
-    console.log("pathname : ", view);
+    // console.log("pathname : ", view);
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -111,11 +111,13 @@ function getFoodLogs(startDate, endDate){
         success: function(data) {
             //console.log(data);
             $("#meal-plan").html(data);
+            updateDate();
             // console.log("dateselect -success");
         }
     });
 
     if(view == "report"){
+        // console.log("js start date" + startDate);
         $.ajax({
             type: "POST",
             url: "/mealplan/nutritiondata",
@@ -128,40 +130,99 @@ function getFoodLogs(startDate, endDate){
                 view : view,
             },
             success: function(data) {
-                updatePieChart(data);
+                updateNutritionData(data);
             }
         });
     }
 }
-
-function updatePieChart(data){
-    var energy = data["energy"];
-    var protein = (data["protein"]*4).toFixed();
-    var fat = (data["fat"]*9).toFixed();
-    var carbohydrate = (data["carbohydrate"]*4).toFixed();
-    // console.log(data["energy"], protein, fat, carbohydrate);
-
-    $("#protein-label").text((protein/energy*100).toFixed());
-    $("#fat-label").text((fat/energy*100).toFixed());
-    $("#carb-label").text((carbohydrate/energy*100).toFixed());
-
-    var doughnutData = {
-        labels: ["โปรตีน","ไขมัน", "คาร์โบไฮเดรต"],
-        datasets: [{
-            data: [protein, fat, carbohydrate],
-            backgroundColor: ["#f7931e","#7ac943","#3fa6f2"],
-            hoverBackgroundColor: ["#de7c0a","#5fb922","#1c89da"]
-        }]
-    }
-    var doughnutOptions = {
-        responsive: true, 
-        aspectRatio: 1.2,
-        legend: {display:false},
-    };
-    var ctx = document.getElementById("doughnutChart").getContext("2d");
-    new Chart(ctx, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
-
+function updateDate(){
+    var dates = $(".report-date");
+    dates.each(function(){
+        var dateSpan = $(this);
+        var date = new Date(dateSpan.data('date'));
+        dateSpan.text(
+            date.toLocaleDateString('th-TH', {
+            year: '2-digit',
+            month: 'short',
+            day: 'numeric',})
+        );
+    });
 }
+function updateNutritionData(data){
+    var energy = data["energy"][0];
+    var protein = (data["protein"][0]*4).toFixed();
+    var fat = (data["fat"][0]*9).toFixed();
+    var carbohydrate = (data["carbohydrate"][0]*4).toFixed();
+    // console.log(data["energy"], protein, fat, carbohydrate);
+    updatePieChart(energy, protein, fat, carbohydrate);
+    updateNutritionBar(data);
+}
+
+function updatePieChart(energy, protein, fat, carbohydrate){
+    $("#doughnutChart").empty();
+    $(".chartjs-size-monitor").empty();
+    if (energy){
+        $(".nutrition-label").removeClass("none");
+        $("#protein-label").text((protein/energy*100).toFixed());
+        $("#fat-label").text((fat/energy*100).toFixed());
+        $("#carb-label").text((carbohydrate/energy*100).toFixed());
+
+        var doughnutData = {
+            labels: ["โปรตีน (กรัม)","ไขมัน (กรัม)", "คาร์โบไฮเดรต (กรัม)"],
+            datasets: [{
+                data: [protein, fat, carbohydrate],
+                backgroundColor: ["#f7931e","#7ac943","#3fa6f2"],
+                hoverBackgroundColor: ["#de7c0a","#5fb922","#1c89da"]
+            }]
+        }
+
+        var doughnutOptions = {
+            responsive: true, 
+            aspectRatio: 1.2,
+            legend: {display:false},
+        };
+        var chart = null;
+        var ctx = document.getElementById("doughnutChart").getContext("2d");
+        chart = new Chart(ctx, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
+    }else{
+        $("#protein-label").text(0);
+        $("#fat-label").text(0);
+        $("#carb-label").text(0);
+        $(".nutrition-label").addClass("none");
+
+        var doughnutData = {
+            labels: ["ไม่มีข้อมูล"],
+            datasets: [{
+                data: [1],
+                backgroundColor: ["#eee"],
+                hoverBackgroundColor: ["#ddd"]
+            }]
+        }
+
+        var doughnutOptions = {
+            responsive: true, 
+            aspectRatio: 1.2,
+            legend: {display:false},
+        };
+        var chart = null;
+        var ctx = document.getElementById("doughnutChart").getContext("2d");
+        chart = new Chart(ctx, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
+    }
+}
+
+function updateNutritionBar(data){
+    $(".nut-bar").removeClass("selected");
+    if(data["energy"][0] != 0){
+        for( var key in data){
+            var value = data[key][0];
+            var grade = data[key][1];
+            // console.log(grade);
+            $("."+key+" .nut-bars").find(".nut-bar."+grade).addClass("selected");
+            // console.log($("."+key+" .nut-bars").find(".nut-bar."+grade));
+        }
+    }
+}
+
 $.datepicker.regional["th"] = {
     closeText: "ปิด",
     prevText: "",

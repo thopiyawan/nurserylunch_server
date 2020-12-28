@@ -15,6 +15,7 @@
             </a>
         </div>
     </div>
+
     <div class="row nutrition-report">
         <div class="col-lg-5">
             <div class="m-b">
@@ -32,7 +33,7 @@
                 </div>
             </div>
             <div class="section">
-                <h2>สัดส่วนสารอาหารที่ได้รับรายสัปดาห์</h2>
+                <h2>สัดส่วนสารอาหารหลักที่ได้รับรายสัปดาห์</h2>
             </div>
             <div class="section m-b">
                 <div class="row">
@@ -109,7 +110,7 @@
             </div>
             <div class="">
                 <div class="col col-nutrition">  
-                    <div class="carb">
+                    <div class="carbohydrate">
                         <div class="nut-labels row">
                             <div class="col col-lg-3">คาร์โบไฮเดรต</div>
                         </div>

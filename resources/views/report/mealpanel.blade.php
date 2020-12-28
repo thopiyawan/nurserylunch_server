@@ -3,7 +3,7 @@
 		<div class="row m-b">
 			<div class="col col-lg-12">
 				<span>{{$date[1]}}</span>
-				<span id="{{$date[0]}}Date">{{ $date[2] }}</span>
+				<span id="{{$date[0]}}Date" data-date={{$date[2]}} class="report-date"></span>
 			</div>
 		</div>
 		@foreach ($mealSetting as $meal)
@@ -18,7 +18,7 @@
                                 @if($log->food_type != 8 && $log->food_type != 22)
                                     <span class="text-highlight">({{$log->setting_description_thai}})</span>
                                 @endif
-                                {{ $log->food_thai }} 
+                                <span class="readable-font">{{ $log->food_thai }} </span>
                             </div>
                         @endif
                     @endforeach
