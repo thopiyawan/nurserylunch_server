@@ -8,7 +8,7 @@
 <div id="wrapper" class="meal-plan">
     <div class="row fixed-info-box">
         <div class="col">
-            <h1 class="page-title"> รายการอาหาร </h1>
+            <h1 class="page-title"> รายการอาหาร N' Ball</h1>
         </div>
         <div class="col heading-p-t">
             <div>
