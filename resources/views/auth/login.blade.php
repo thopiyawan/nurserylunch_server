@@ -6,7 +6,7 @@
         <img src="{{ asset('images/login-img.png') }}" class="animate__animated animate__fadeInDown login-image">
         
         <div class="animate__animated animate__fadeInRight login-desc"> 
-            ผู้ช่วยระดับโภชนาการในการาแนะนำอาหารกลางวันเด็กเล็กแบบอัตโนมัติ
+            ผู้ช่วยระดับโภชนาการในการแนะนำอาหารกลางวันเด็กเล็กแบบอัตโนมัติ
         </div>
         <div class="animate__animated animate__fadeInLeft login-title">
             THAI NURSERY LUNCH

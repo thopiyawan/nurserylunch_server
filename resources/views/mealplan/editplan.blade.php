@@ -150,13 +150,13 @@
     </div>
 
     <div class="modal fade" id="savedModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+    <div class="modal-dialog wide">
         <div class="modal-content success">
             <div class="modal-body text-center">
                 <i class="far icon-success fa-check-circle fa-4x m-b"></i>
                 <!-- <h3 class="text-success modal-title m-b">บันทึกสำรับอาหารสำเร็จเรียบร้อย</h3> -->
                 <h1 class="text-success">บันทึกสำรับอาหารสำเร็จเรียบร้อย</h1>
-                <h1 class="text-danger">* The result is for reference only </h1>
+                <div class="text-danger m-t m-b">* ข้าพเจ้ารับทราบว่าอาหารที่จัดจากระบบแนะนำอาหารกลางวันสำหรับเด็กเล็กนี้ เพื่อให้ได้สารอาหารตามที่จัดไว้ ต้องเป็นไปตามสูตร ส่วนประกอบและวัตถุดิบ ที่ระบุจากระบบนี้เท่านั้น </div>
                 <div class="text-center">
                     <button type="button" class="btn success btn-default m-b" data-dismiss="modal"> OK </button>
                 </div>
@@ -672,8 +672,7 @@
                     filterSelected: fillterSelect,
                 },
                 success: function(data) {
-                    console.log("filterFoodList -> data", data)
-
+                    //console.log("filterFoodList -> data", data)
                     $("#filter-result").html(data);
                 }
             });

@@ -58,7 +58,6 @@ class MealplanController extends Controller
 			array(3, "กลางวัน", $userSetting->is_lunch, "lunch-meal"), 
 			array(4, "ว่างบ่าย", $userSetting->is_afternoon_snack, "lunch-snack-meal"), 
 		);
-
 		$in_groups = IngredientGroup::all();        
 		$schoolId = auth()->user()->school_id;
 		$foods = Food::orderBy('id', 'asc')->paginate(10);

@@ -513,6 +513,9 @@ input[type=checkbox] {
     padding: 16px 20px;
     width: 180px;
 }
+.modal-dialog.wide{
+    max-width: 800px;
+}
 .modal-content.success{
     padding: 40px 20px 0px 20px;
 }
@@ -652,8 +655,11 @@ input[type=checkbox] {
 }
 
 .ui-sortable .ui-state-warning{
-    border: #f7931e 1px solid;
-    box-shadow: 0 0 2px #f7931e;
+    border: #c0392b 2px solid;
+    box-shadow: 0 0 5px #c0392b;
+    color: #c0392b;
+    font-weight: 400;
+
 
 }
 .ui-datepicker .ui-datepicker-header{
