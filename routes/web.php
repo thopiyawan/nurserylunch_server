@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 // Route::get('/', function () {return view('welcome');});
 Route::get('user', 'UserController@index');
 
@@ -20,8 +19,11 @@ Auth::routes();
 Route::get('/', 'MealplanController@showPlan')->middleware('auth');
 Route::get('/mealplan/edit', 'MealplanController@editPlan')->middleware('auth');
 Route::get('/kids', 'KidController@showClassroom')->middleware('auth');
-Route::get('/report', 'ReportController@index')->middleware('auth');
+
+Route::get('/nutritionreport', 'ReportController@nutritionReport')->middleware('auth');
+Route::get('/materialreport', 'ReportController@materialReport')->middleware('auth');
 Route::post('/downloadreport', 'ReportController@pdf')->middleware('auth');
+Route::post('/report/getmaterial', 'ReportController@getMaterial');
 
 // Route::get('/download', function () {
 // return view('download');
@@ -29,7 +31,6 @@ Route::post('/downloadreport', 'ReportController@pdf')->middleware('auth');
 Route::get('/setting', 'UserController@setting')->middleware('auth');
 
 Route::post('/setting', 'UserController@updateSetting');
-
 Route::get('/classroom/{id}', 'KidController@showClassroom')->middleware('auth');
 Route::post('/classroom/create', 'KidController@createClassroom')->name('classroom.create');
 Route::post('/classroom/edit/{id}', 'KidController@editClassroom')->name('classroom.edit');

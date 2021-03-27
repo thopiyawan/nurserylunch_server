@@ -4,6 +4,7 @@
             <div class="mlabel">{{ $day_th }}</div>
             <div class="mdate {{ $day }}"><span id={{ $day }}></span></div>
         </div>
+        
         @foreach ($mealSetting as $meal)
              @if ($meal[2] == 1)
                 <div class="col col-meal" id="{{$meal[3]}}-{{$day}}">

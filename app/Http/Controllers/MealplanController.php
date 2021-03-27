@@ -38,6 +38,7 @@ class MealplanController extends Controller
 		
 		return view('mealplan.showplan', ['dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
 	}
+
 	public function editPlan(Request $request)							// Define the method name
     {
 		$userId = auth()->user()->id;
@@ -52,12 +53,8 @@ class MealplanController extends Controller
 		$inputFoodType = $request->session()->get('inputFoodType');
 		//Debugbar::info("food type".$inputFoodType);
 		//$inputFoodType = 8;
-		$mealSetting = array(
-			array(1, "เช้า", $userSetting->is_breakfast, "breakfast-meal"), 
-			array(2, "ว่างเช้า", $userSetting->is_morning_snack, "breakfast-snack-meal"), 
-			array(3, "กลางวัน", $userSetting->is_lunch, "lunch-meal"), 
-			array(4, "ว่างบ่าย", $userSetting->is_afternoon_snack, "lunch-snack-meal"), 
-		);
+
+		$mealSetting = $userSetting->getMealSettings();
 		$in_groups = IngredientGroup::all();        
 		$schoolId = auth()->user()->school_id;
 		$foods = Food::orderBy('id', 'asc')->paginate(10);
@@ -122,6 +119,8 @@ class MealplanController extends Controller
 				}
 			}
 		}
+
+
     return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'dayInweek'=> $dayInweek, 'userSetting' => $userSetting, 'settings' => $settings, 'mealSetting' => $mealSetting,'targetNutrition' => $targetNutrition]);	
     	// Return response to client
 	}
@@ -342,7 +341,7 @@ class MealplanController extends Controller
 
 		$startDate = (new Datetime($inputStartDate))->format('Y-m-d');
 		$endDate = (new Datetime($inputEndDate))->format('Y-m-d');
-		Debugbar::info($startDate, $endDate, $inputFoodType);
+		//Debugbar::info($startDate, $endDate, $inputFoodType);
 
 		$logs = EnergyLogs::where([
 			['school_id', "=", $schoolId],
@@ -365,9 +364,9 @@ class MealplanController extends Controller
 		);
 
 		$multiplier = 5;
+		// sleep(1);
 		$targetNutrition = getTargetNutrition($userSetting, $multiplier);
-		// Debugbar::info("target---");
-		// Debugbar::info($targetNutrition);
+		Debugbar::info($targetNutrition);
 
 		
 		foreach ($nutritions as $key => $value) {
@@ -382,13 +381,13 @@ class MealplanController extends Controller
 			// Debugbar::info($sum > $driScale[3]);
 
 			if ($sum >= floatval($driScale[3])){
-				Debugbar::info("in high");
                 $grade = "toohigh";
-            } else if ($sum >= (float)$driScale[2]) {
+            } else if ($sum >= floatval($driScale[2])){
                 $grade = "high";
-            } else if ($sum >= (float)$driScale[1]) {
+            } else if ($sum >= floatval($driScale[1])){
+            	Debugbar::info($sum);
                 $grade = "ok";
-            } else if ($sum >= (float)$driScale[0]) {
+            } else if ($sum >= floatval($driScale[0])){
                 $grade = "low";
             } else{
                 $grade = "toolow";
@@ -397,10 +396,9 @@ class MealplanController extends Controller
             
             $nutritions[$key][1] = $grade;
 		}
-
 		return $nutritions;
-		
 	}
+
 
 
 	public function dateSelect(Request $request)
@@ -416,10 +414,12 @@ class MealplanController extends Controller
 		$inputStartDate = $input['date']['startDate'];
 		$inputEndDate = $input['date']['endDate'];
 		//$inputFoodType = 8;
-		$inputFoodType = $input['foodType'];
 		$view = $input['view'];
-		// Debugbar::info("dateselect".$inputFoodType);
-
+		$inputFoodType = isset($input['foodType'])? $input['foodType'] : 0;
+		// if($view == "materialreport"){
+		// 	$inputFoodType = 0;
+		// }
+		
 		$startDate = new DateTime($inputStartDate);
 		$endDate = new DateTime($inputEndDate);
 		$startDate = $startDate->format('Y-m-d');
@@ -428,9 +428,10 @@ class MealplanController extends Controller
 		$request->session()->put('endDateOfWeek', $endDate);
 		$request->session()->put('inputFoodType', $inputFoodType);
 
+		
 		$in_groups = IngredientGroup::all();        
 		$foodLogs = getLastLogs($userId, $startDate, $endDate, $inputFoodType);
-		Debugbar::info($foodLogs);
+		//Debugbar::info($foodLogs);
 		$dayInweek = dateInweek($startDate);
 		$dateData = array(
 			array("monday", "จันทร์", $dayInweek[0]),
@@ -439,15 +440,20 @@ class MealplanController extends Controller
 			array("thursday", "พฤหัสบดี", $dayInweek[3]),
 			array("friday", "ศุกร์", $dayInweek[4]),
 		);
-		$mealSetting = array(
-			array(1, "เช้า", $userSetting->is_breakfast), 
-			array(2, "ว่างเช้า", $userSetting->is_morning_snack), 
-			array(3, "กลางวัน", $userSetting->is_lunch), 
-			array(4, "ว่างบ่าย", $userSetting->is_afternoon_snack), 
-		);
+		$mealSetting = $userSetting->getMealSettings();
 
-		$returnView = ($view == "meal") ? "mealplan.mealpanel" : "report.mealpanel";
-		return view($returnView , ['logs' => $foodLogs, 'mealSetting' => $mealSetting, 'dateData' => $dateData,  'dayInweek' => $dayInweek, 'userSetting' => $userSetting]);
+		$settings = getSettings($userSetting, $inputFoodType);
+		Debugbar::info($settings);
+
+		//$returnView = ($view == "meal") ? "mealplan.mealpanel" : "report.nutritionData";
+		$returnView = "mealplan.mealpanel";
+		if ($view == "nutritionreport"){
+			$returnView = "report.nutritionData";
+		}
+		if ($view == "materialreport"){
+			$returnView = "report.materialData";
+		}
+		return view($returnView , ['logs' => $foodLogs, 'mealSetting' => $mealSetting, 'dateData' => $dateData,  'dayInweek' => $dayInweek, 'userSetting' => $userSetting, 'settings' => $settings]);
 	}
 
 	public function checkFoodType(Request $request){
@@ -562,7 +568,72 @@ class MealplanController extends Controller
 	}
 }
 
-function getTargetNutrition($userSetting, $multiplier = 1){
+function getSettings($userSetting, $inputFoodType){
+	$settings = array();
+
+	if($inputFoodType ==0){
+		return $settings;
+	}
+
+	$userSettingArray = $userSetting->toArray();
+	$userSettingArray = array_slice($userSettingArray, 11);
+	$settings_enable = array();
+	$settingDescription = SettingDescription::all();
+
+
+	foreach($settingDescription as $key => $val){
+		//[description id  for foodtype in food log, value]
+		if(isset($userSettingArray[$val->setting_description_english])){
+			$settings_enable[$val->setting_description_english] = ["food_type" => $key + 1, "value" => $userSettingArray[$val->setting_description_english], "setting_description_thai" => $val->setting_description_thai];
+		}
+	}
+	
+
+	//$selectedAge = "is_for_small"; 
+	
+	$setting_small_key = array('is_s_muslim', 'is_s_vege', 
+	'is_s_vegan', 'is_s_milk', 'is_s_breastmilk', 'is_s_egg', 'is_s_wheat',
+	'is_s_shrimp', 'is_s_shell', 'is_s_crab', 'is_s_fish', 'is_s_peanut', 'is_s_soybean');
+
+	$setting_big_key = array('is_b_muslim', 'is_b_vege', 
+	'is_b_vegan', 'is_b_milk', 'is_b_breastmilk', 'is_b_egg', 'is_b_wheat',
+	'is_b_shrimp', 'is_b_shell', 'is_b_crab', 'is_b_fish', 'is_b_peanut', 'is_b_soybean');
+
+
+	$setting_for_small = array("is_for_small" => ["food_type" => 8, 'setting_description_thai' => "ต่ำกว่า 1 ปี (ปกติ)"]);
+	$setting_for_big = array("is_for_big" => ["food_type" => 22, 'setting_description_thai' => "1-3 ปี (ปกติ)"]);
+
+
+	if($inputFoodType == 8){
+		$settings = $setting_for_small;
+		foreach($setting_small_key as $value){
+			$setting_value = $settings_enable[$value];
+			if($setting_value['value'] == 1){
+				$temp = array();
+				$temp['food_type'] = $setting_value['food_type'];
+				$temp['setting_description_thai'] = 'ต่ำกว่า 1 ปี ('.$setting_value['setting_description_thai'] . ')';
+				$settings[$value] = $temp;
+				
+			}
+		}
+	}else if($inputFoodType == 22){
+		$settings = $setting_for_big;
+		foreach($setting_big_key as $value){
+			$setting_value = $settings_enable[$value];
+			if($setting_value['value'] == 1){
+				$temp = array();
+				$temp['food_type'] = $setting_value['food_type'];
+				$temp['setting_description_thai'] = '1-3 ปี ('.$setting_value['setting_description_thai'] . ')';
+				$settings[$value] = $temp;
+			}
+		}
+	}
+
+
+	return $settings;
+}
+
+function getTargetNutrition($userSetting, $multiplier = 1.0){
 
 			#ratio of energy in each meal 
 	$condition_nutrition_calulation = array("breakfast" => 0.2, "morningSnack" => 0.1, "lunch" => 0.3, "lunchSnack" => 0.1);
@@ -583,7 +654,7 @@ function getTargetNutrition($userSetting, $multiplier = 1){
 
 
 	$baseDri = array(
-		"energy" => 645 * $percentageOfEnergy * $multiplier, 
+		"energy" => 645.0 * $percentageOfEnergy * $multiplier, 
 		"protein" => 12.55 * $percentageOfEnergy * $multiplier,  
 		"fat" => 25.08 * $percentageOfEnergy * $multiplier, 
 		"carbohydrate" => 110 * $percentageOfEnergy * $multiplier, 
@@ -599,11 +670,12 @@ function getTargetNutrition($userSetting, $multiplier = 1){
 		"sugar" => 0 * $percentageOfEnergy * $multiplier, 
 	);
 
+	Debugbar::info("energy".$baseDri["energy"]);
 	$energyCondition = array(
-		number_format($baseDri["energy"] * 0.5, 0, '.',''),
-		number_format($baseDri["energy"], 0, '.',','),
-		number_format($baseDri["energy"] * 1.5, 0, '.',''),
-		number_format($baseDri["energy"] * 2.0, 0, '.','')
+		number_format($baseDri["energy"] * 0.5, 1, '.',''),
+		number_format($baseDri["energy"] * 1.0, 1, '.',''),
+		number_format($baseDri["energy"] * 1.5, 1, '.',''),
+		number_format($baseDri["energy"] * 2.0, 1, '.','')
 	);
 	$proteinCondition = array(
 		number_format($baseDri["protein"] * 0.5, 1, '.',''),

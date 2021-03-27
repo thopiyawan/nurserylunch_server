@@ -24,7 +24,6 @@ class Food extends Model
     public $fiber;
     public $sodium;
     public $sugar;
-
      public function init()
     {
     	$nutrition = $this->nutritions;

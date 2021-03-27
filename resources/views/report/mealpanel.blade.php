@@ -13,12 +13,13 @@
 				<div class="col col-lg-10">
 					@php $type =  empty($logs) ? 0 : $logs[0]->food_type @endphp
                     @foreach ($logs as $log)
-                        @if ($log->meal_code == $meal[0] && $log->meal_date == $date[2])
+                        @if ($log->meal_code == $meal[0] && $log->meal_date == $date[2] && $log->food_type == $setting['food_type'])
                             <div class=""> 
                                 @if($log->food_type != 8 && $log->food_type != 22)
                                     <span class="text-highlight">({{$log->setting_description_thai}})</span>
                                 @endif
                                 <span class="readable-font">{{ $log->food_thai }} </span>
+                                <span class="readable-font"> </span>
                             </div>
                         @endif
                     @endforeach

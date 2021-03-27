@@ -1,14 +1,16 @@
 @extends('layouts.app')
 @section('content')
-<aside id="aside-menu" class="">
-    <!-- SER|ARCH SECTION  -->
-    @include('mealplan.showsidemenu')
+<div class="sidebar-scroll">
+    <aside id="aside-menu" class="">
+        <!-- SER|ARCH SECTION  -->
+        @include('mealplan.showsidemenu')
 
-</aside>
+    </aside>
+</div>
 <div id="wrapper" class="meal-plan">
     <div class="row fixed-info-box">
         <div class="col">
-            <h1 class="page-title"> รายการอาหาร N' Ball</h1>
+            <h1 class="page-title"> รายการอาหาร</h1>
         </div>
         <div class="col heading-p-t">
             <div>
@@ -27,10 +29,7 @@
             </div>
         </div>
         <div class="col heading-p-t">
-            <!-- <span><i class="fas fa-utensils color-gray"></i></span>
-            <span id="food-type-span" class="food-type normal"> อาหารปกติ </span>
- -->
-          
+  
         </div>
 
         <div class="col-lg-3 pull-right">

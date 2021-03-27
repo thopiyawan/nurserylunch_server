@@ -42,6 +42,18 @@ $("#week-picker").datepicker({
             month: 'short',
             day: 'numeric',})
         );
+        // $(".startDate").text(
+        //     startDate.toLocaleDateString('th-TH', {
+        //     year: '2-digit',
+        //     month: 'short',
+        //     day: 'numeric',})
+        // );
+        // $(".endDate").text(
+        //     endDate.toLocaleDateString('th-TH', {
+        //     year: '2-digit',
+        //     month: 'short',
+        //     day: 'numeric',})
+        // );
         var mondayDate = new Date(date.getFullYear(),date.getMonth(),date.getDate() - date.getDay() + 1);
         var tuesdayDate = new Date(date.getFullYear(),date.getMonth(),date.getDate() - date.getDay() + 2);
         var wednesdayDate = new Date(date.getFullYear(),date.getMonth(),date.getDate() - date.getDay() + 3);
@@ -91,16 +103,47 @@ $("#week-picker").datepicker({
 
 function getFoodLogs(startDate, endDate){
     // console.log("getFoodLogs");
-    var pathname = window.location.pathname;
-    var view = pathname == "/" ? "meal" : "report";
-    // console.log("pathname : ", view);
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
         }
     });
-    // console.log("before select", startDate, endDate, foodType);
-    
+
+    var pathname = window.location.pathname;
+    if (pathname == "/"){
+        var view = "meal";
+        callFoodLogs(view);
+    }
+    if (pathname == "/nutritionreport"){
+        var view = "nutritionreport";
+        callFoodLogs(view);
+        callNutritionLogs(view);
+    }
+    if (pathname == "/materialreport"){
+        var view = "materialreport";
+        callMaterialData(view);
+    }
+}
+
+function callMaterialData(view){
+    console.log("in callMaterialData");
+    $.ajax({
+        type: "POST",
+        url: "/report/getmaterial",
+        data: {
+            date: {
+                startDate: startDate.toLocaleDateString(),
+                endDate: endDate.toLocaleDateString(), 
+            }
+        },
+        success: function(data) {
+            $("#meal-plan").html(data);
+            updateDate();
+            console.log("materialdata-success");
+        }
+    });
+}
+function callFoodLogs(view){
     $.ajax({
         type: "POST",
         url: "/mealplan/dateselect",
@@ -113,15 +156,15 @@ function getFoodLogs(startDate, endDate){
             view : view,
         },
         success: function(data) {
-            //console.log(data);
             $("#meal-plan").html(data);
             updateDate();
-            // console.log("dateselect -success");
+            console.log("dateselect -success");
         }
     });
-
+}
+function callNutritionLogs(view){
     if(view == "report"){
-        // console.log("js start date" + startDate);
+        console.log("js start date" + startDate);
         $.ajax({
             type: "POST",
             url: "/mealplan/nutritiondata",
@@ -139,6 +182,7 @@ function getFoodLogs(startDate, endDate){
         });
     }
 }
+
 function updateDate(){
     var dates = $(".report-date");
     dates.each(function(){
@@ -151,6 +195,29 @@ function updateDate(){
             day: 'numeric',})
         );
     });
+    var dates = $(".short-date");
+    dates.each(function(){
+        var dateSpan = $(this);
+        var date = new Date(dateSpan.data('date'));
+        dateSpan.text(
+            date.toLocaleDateString('th-TH', {
+            format: "dd-MM",
+            month: 'short',
+            day: 'numeric',})
+        );
+    });
+    $(".startDate").text(
+            startDate.toLocaleDateString('th-TH', {
+            year: '2-digit',
+            month: 'short',
+            day: 'numeric',})
+    );
+    $(".endDate").text(
+        endDate.toLocaleDateString('th-TH', {
+        year: '2-digit',
+        month: 'short',
+        day: 'numeric',})
+    );
 }
 function updateNutritionData(data){
     var energy = data["energy"][0];
@@ -277,6 +344,7 @@ $('.age-tab').on('click', function(){
    var age = $(this).data("age");
    var text = age == "is_for_small" ? "ต่ำกว่า 1 ปี":"1-3 ปี";
    $("#age-range-span").text(text);
+   $(".age-range-span").text(text);
 
    $(".age-tab").removeClass("active");
    $(this).addClass("active");

@@ -6,7 +6,6 @@
         $date_in_week = $dayInweek;
     @endphp
     <div class="sidebar-scroll">
-
         <aside id="aside-menu" class="">
 
             <div id="navigation" style="overflow: hidden; width: auto; height: 100%;">
@@ -67,6 +66,7 @@
             </div>
         </aside>
     </div>
+
     <div id="wrapper" class="meal-plan">
         <div class="row fixed-info-box">
             <div class="col">
@@ -132,6 +132,7 @@
                                     'date_in_week' => $date_in_week[$key], 'setting_id' => $setting_value['food_type']])
                                    <!--  <p>--- {{ $setting_value['setting_description_thai'] . 'setting' }} ----</p> -->
                                 @endforeach
+                                
                             </div>
                         </div>
                     </div>

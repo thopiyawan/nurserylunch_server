@@ -10,6 +10,9 @@ class School extends Model
     use HasSettings;
 
 
+
+
+
     public function setting(){
         return $this->hasOne(Setting::class);
     }
@@ -24,6 +27,10 @@ class School extends Model
 
     public function kids(){
         return $this->hasMany(Kid::class);
+    }
+
+    public function foodLogห(){
+        return $this->hasMany(FoodLogs::class);
     }
 
     public function energyLog(){

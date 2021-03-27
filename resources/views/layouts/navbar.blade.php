@@ -26,11 +26,30 @@
                         <span>ข้อมูลเด็ก</span>
                     </a>
                 </li>
-                <li class="">
+                <!-- <li class="">
                     <a class="nav-link  {{ Request::is('report') ? 'active' : '' }}" href="{{ url('/report')}}" >
                         <i class="fas fa-file-download"></i>
                         <span>รายงาน</span>
                     </a>
+                </li> -->
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle {{ Request::is('nutritionreport') || Request::is('materialreport') ? 'active' : '' }}" 
+                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <i class="fas fa-file-download"></i>
+                        <span>รายงาน</span> 
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url('/nutritionreport')}}">
+                            <span>รายงานสารอาหาร</span>
+                        </a>
+                        <a class="dropdown-item" href="{{ url('/materialreport')}}">
+                           <span>รายงานวัตถุดิบ</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle {{ Request::is('setting') ? 'active' : '' }}" 
