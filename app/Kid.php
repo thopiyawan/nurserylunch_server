@@ -1,13 +1,12 @@
 <?php
 
 namespace App;
-
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 
 class Kid extends Model
 {
-
 
     //
     protected $fillable = [
@@ -24,8 +23,13 @@ class Kid extends Model
     }
     public function getAge()
     {
+
 		$age = \Carbon\Carbon::parse($this->birthday)->diff(\Carbon\Carbon::now())->format('%y ปี %m เดือน %d วัน');
     	return $age;
+    }
+    public function isSmall(){
+        //$age = Carbon::parse($kid->birthday)->diffInMonths(Carbon::now());
+        return Carbon::parse($this->birthday)->diffInMonths(Carbon::now())<12? true:false;
     }
     public function getBirthYear()
     {
@@ -46,6 +50,9 @@ class Kid extends Model
     	// 	$day = '0'.$day;
     	// }
     	return $day;
+    }
+    public function getRestrictionList(){
+        return $this->food_restrictions;
     }
     public function getRestrictions(){
     	$temp = array();
@@ -128,42 +135,25 @@ class Kid extends Model
     }
     public function getMilk($type)
     {
-    	if($type == "ml")
-    	{
+    	if($type == "ml"){
     		return number_format($this->milk_oz*29.574, 0);
-
-    	}
-    	elseif($type == "box")
-    	{
+    	}elseif($type == "box"){
     		return number_format($this->milk_oz*29.574/180, 1);
-
     	}
     	return $this->milk_oz;
     }
-    public function getMilkUpdate()
-    {
+    public function getMilkUpdate(){
         //$milk_update = \Carbon\Carbon::parse($this->milk_update)->diff(\Carbon\Carbon::now())->format('%y ปี %m เดือน %d วัน');
         \Carbon\Carbon::setLocale('th');
-        if ($this->milk_update == null)
-        {
+        if ($this->milk_update == null){
             return "ไม่มีข้อมูลการอัพเดท";
-        }
-        else
-        {
+        }else{
             $milk_update = \Carbon\Carbon::parse($this->milk_update)->diffForHumans();
             return "อัพเดทล่าสุดเมื่อ ".$milk_update;
         }
 
     }
-    public function getSex()
-    {
-    	if ($this->sex == "male")
-    	{
-    		return "ชาย";
-    	}
-    	else
-    	{
-    		return "หญิง";
-    	}
+    public function getSex(){
+    	return $this->sex == "male" ? "ชาย" : "หญิง";
     }
 }

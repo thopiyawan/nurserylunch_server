@@ -10,4 +10,5 @@ class FoodRestriction extends Model
     protected $fillable = [
         'type', 'detail',
     ];
+    
 }

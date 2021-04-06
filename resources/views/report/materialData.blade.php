@@ -14,52 +14,83 @@
                 <span class="endDate"></span>
             </div>
         </div>
-        
         <div class="row report-material">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <table style="width:100%">
                   <tr>
+                    <th>ลำดับที่</th>
                     <th>ประเภท</th>
                     <th>รายการ</th>
                     <th>จำนวน</th>
                     <th>หมายเหตุ</th>
                   </tr>
-                  <tr>
-                    <td>เครื่องปรุง</td>
-                    <td>เกลือ</td>
-                    <td>1 กก.</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>เครื่องปรุง</td>
-                    <td>น้ำตาล</td>
-                    <td>10 กก.</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>เครื่องปรุง</td>
-                    <td>น้ำตาล</td>
-                    <td>10 กก.</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>เครื่องปรุง</td>
-                    <td>น้ำตาล</td>
-                    <td>10 กก.</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>เครื่องปรุง</td>
-                    <td>น้ำตาล</td>
-                    <td>10 กก.</td>
-                    <td></td>
-                  </tr>
+                  @php $count = 0; @endphp
+                  @php $max = count($materials); @endphp
+                  @foreach (range($count, $count+20) as $i)
+                    @if ($count < $max)
+                    <tr>
+                      <td>{{$count+1}}</td>
+                      <td></td>
+                      <td>{{$materials[$i]->getCompositionName()}}</td>
+                      <td>{{$materials[$i]->pur_quantity.' '.$materials[$i]->unit}}</td>
+                      <td></td>
+                    </tr>
+                    @php $count +=1; @endphp
+                    @endif
+                  @endforeach
                 </table>
             </div>
+            
         </div>
     </div>
 </div>
+@if ($count < $max)
+<div class="row report-nutrition report-a4" style="height:1200px">
+  <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-title">รายงานวัตถุดิบซื้อ (ศูนย์อนามัยที่ 5 / วัดเทพประสิทธิ์คณาวาส) </span></h1>
+            </div>
+        </div>
+        <div class="row m-b">
+            <div class="col-lg-12 ">
+                <i class="fas fa-calendar-alt color-gray"></i>
+                <span>สำหรับเมนูอาหาร วันที่</span>
+                <span class="startDate"></span>
+                <span> - </span>
+                <span class="endDate"></span>
+            </div>
+        </div>
+        
+        <div class="row report-material">
+            <div class="col-lg-12">
+                <table style="width:100%">
+                  <tr>
+                    <th>ลำดับที่</th>
+                    <th>ประเภท</th>
+                    <th>รายการ</th>
+                    <th>จำนวน</th>
+                    <th>หมายเหตุ</th>
+                  </tr>
+                    @foreach (range($count, $count+20) as $i)
+                      @if ($count < $max)
+                      <tr>
+                        <td>{{$count+1}}</td>
+                        <td></td>
+                        <td>{{$materials[$i]->getCompositionName()}}</td>
+                        <td>{{$materials[$i]->pur_quantity.' '.$materials[$i]->unit}}</td>
+                        <td></td>
+                      </tr>
+                      @php $count +=1; @endphp
+                      @endif
+                    @endforeach
+                </table>
+            </div>
 
+        </div>
+    </div>
+</div>
+@endif
 <div class="row report-nutrition report-a4" style="height:1200px">
     <div class="col-lg-12">
         <div class="row">

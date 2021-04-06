@@ -27,22 +27,12 @@ class FoodLogs extends Model
     	$logs = getLogsByDates($schoolId, $startDate,$endDate);
         return $logs;
     }
-    public static function getServingsBySchool($schoolId)
-    {	
-    	$selectedFoodTypes = Setting::getSelectedFoodTypes($schoolId);
-    	$servings = [];
-    	foreach ($selectedFoodTypes as $key) {
-            $servings[$key] = 0;
-        }
 
-    	return $servings;
-    	//return [8=>0, 14=>0, 22=>0, 23=>0];
-    }
-    public static function getMinMaxAge($food_type)
-    {
-    	$min_max = ['min'=>6, 'min'=>12];
-    	return $min_max;
-    }
+    // public static function getMinMaxAge($food_type)
+    // {
+    // 	$min_max = ['min'=>6, 'min'=>12];
+    // 	return $min_max;
+    // }
     public function getFoodTypeAgeThai(){
     	return Setting::getFoodTypeAgeThai($this->food_type);
     }
