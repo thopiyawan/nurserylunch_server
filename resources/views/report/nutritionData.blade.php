@@ -1,5 +1,5 @@
 @foreach ($selectedFoodTypes as $key => $setting)
-    <div class="report-nutrition report-a4">
+    <div class="report-nutrition report-a4" id="{{$setting['id']}}">
         <div class="row">
             <div class="col-lg-12">
                     <h1 class="page-title">รายงานเมนูรายการอาหาร <span>ศูนย์อนามัยที่ 5 / วัดเทพประสิทธิ์คณาวาส</span></h1>
@@ -9,9 +9,9 @@
             <div class="col-lg-5">
                 <div class="m-b">
                     <i class="fas fa-calendar-alt color-gray"></i>
-                    <span class="report-date startDate"> {{$selectedDates[0]['date']}}</span>
+                    <span class="report-date startDate"> </span>
                     <span> - </span>
-                    <span class="report-date endDate"> {{$selectedDates[4]['date']}} </span>
+                    <span class="report-date endDate"></span>
                 </div>
                 <div class="m-b">
                     <div>

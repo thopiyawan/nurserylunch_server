@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Collection;
 use App\Setting;
+use App\EnergyLogs;
 use App\PurUnit;
 use App\School;
 use App\FoodLogs;
@@ -40,6 +41,16 @@ class ReportController extends Controller
         return view('report.nutritionReport', ['school' => $school]);
     }
     public function getNutrition(Request $request){
+        $schoolId = auth()->user()->school_id;
+        $school = School::find($schoolId);
+        $inputs = $request->all();
+        $startDate = (new DateTime($inputs['date']['startDate']))->format('Y-m-d');
+        $endDate = (new DateTime($inputs['date']['endDate']))->format('Y-m-d');
+        $inputFoodType = $inputs['foodType'];
+        $selectedAge = $inputFoodType == 8? 'small' : 'big'; 
+
+        $data = EnergyLogs::getNutritionData($schoolId, $startDate,$endDate, $selectedAge);
+        return $data;
     }
 
     public function materialReport(){

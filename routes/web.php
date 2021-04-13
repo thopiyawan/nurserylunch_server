@@ -24,6 +24,7 @@ Route::get('/nutritionreport', 'ReportController@nutritionReport')->middleware('
 Route::get('/materialreport', 'ReportController@materialReport')->middleware('auth');
 Route::post('/downloadreport', 'ReportController@pdf')->middleware('auth');
 Route::post('/report/getmaterial', 'ReportController@getMaterial');
+Route::post('/report/getnutrition', 'ReportController@getNutrition');
 
 // Route::get('/download', function () {
 // return view('download');
@@ -61,7 +62,7 @@ Route::get('/kid/deletegrowth/{id}', 'KidController@deleteGrowth')->name('kid.de
 Route::post('/mealplan/foodlogs', 'MealplanController@addFood');
 
 Route::post('/mealplan/dateselect', 'MealplanController@dateSelect');
-Route::post('/mealplan/nutritiondata', 'MealplanController@getNutritionData');
+
 
 
 Route::post('/mealplan/checkFoodType', 'MealplanController@checkFoodType');

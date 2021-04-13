@@ -278,72 +278,6 @@ class MealplanController extends Controller
 
 	}
 
-	public function getNutritionData(Request $request)
-	{
-		// sleep(1);
-		$userId = auth()->user()->id;
-		$schoolId = auth()->user()->school_id;
-		$school = School::find($schoolId);
-
-		$now = Carbon::now();
-		$input = $request->all();
-		$inputStartDate = $input['date']['startDate'];
-		$inputEndDate = $input['date']['endDate'];
-		$inputFoodType = $input['foodType'];
-
-		$startDate = (new Datetime($inputStartDate))->format('Y-m-d');
-		$endDate = (new Datetime($inputEndDate))->format('Y-m-d');
-		//Debugbar::info($startDate, $endDate, $inputFoodType);
-
-		$logs = EnergyLogs::where([
-			['school_id', "=", $schoolId],
-			['food_type', "=", $inputFoodType],
-			['meal_date', ">=", $startDate],
-			['meal_date', "<=", $endDate]
-		])->get();
-		$sumEnergy = $logs->sum('energy');
-		$sumProtein = $logs->sum('protein');
-		$sumFat = $logs->sum('fat');
-		$sumCarbohydrate = $logs->sum('carbohydrate');
-
-		// 1g of carbohydrates = 4 kCal · 1 g of protein = 4 kCal · 1 g of fat = 9 kCal ·
-
-		$nutritions = array(
-			"energy" => array($sumEnergy, "none"),
-			"protein" => array($sumProtein, "none"),
-			"fat" => array($sumFat, "none"),
-			"carbohydrate" => array($sumCarbohydrate, "none"),
-		);
-
-		// $multiplier = 5;
-		$isForFullWeek = true;
-		$targetNutrition = getTargetNutrition($school, "small", $isForFullWeek);
-		Debugbar::info($targetNutrition);
-
-		
-		foreach ($nutritions as $key => $value) {
-			$grade = "none";
-			$sum = floatval($value[0]);
-			$driScale = ($key == "carbohydrate") ? $targetNutrition[$key."_full"] : $targetNutrition[$key];
-
-			if ($sum >= floatval($driScale[3])){
-                $grade = "toohigh";
-            } else if ($sum >= floatval($driScale[2])){
-                $grade = "high";
-            } else if ($sum >= floatval($driScale[1])){
-            	Debugbar::info($sum);
-                $grade = "ok";
-            } else if ($sum >= floatval($driScale[0])){
-                $grade = "low";
-            } else{
-                $grade = "toolow";
-            }
-            Debugbar::info($grade);
-            
-            $nutritions[$key][1] = $grade;
-		}
-		return $nutritions;
-	}
 
 	public function checkFoodType(Request $request){
 		$input = $request->all();
@@ -391,6 +325,7 @@ class MealplanController extends Controller
 function getTargetNutrition($school, $age, $isForFullWeek = false){
 
 	$targetNutrition = Nutrition::getDriByAge($school, $age, $isForFullWeek);
+	return $targetNutrition;
 
 			#ratio of energy in each meal 
 	// $condition_nutrition_calulation = array("breakfast" => 0.2, "morningSnack" => 0.1, "lunch" => 0.3, "lunchSnack" => 0.1);
@@ -469,8 +404,4 @@ function getTargetNutrition($school, $age, $isForFullWeek = false){
 	// 	"sodium" => array("low" => $baseDri["sodium"] * 0.5, "ok" => $baseDri["sodium"]*1.5),
 	// 	"sugar" => array("low" => $baseDri["sugar"] * 0.5, "ok" => $baseDri["sugar"]*1.5),
 	// );
-
-	
-
-	return $targetNutrition;
 }
