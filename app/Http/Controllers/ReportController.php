@@ -15,6 +15,7 @@ use PDF;
 use Debugbar;
 use Datetime;
 
+
 class ReportController extends Controller
 {
     /**
@@ -35,9 +36,10 @@ class ReportController extends Controller
 
     public function nutritionReport($startDate = null, $endDate = null)
     {
-        $schoolId = auth()->user()->school_id;
-        $userSetting = Setting::where('school_id', $schoolId)->first();
-        return view('report.nutritionReport', ['userSetting' => $userSetting]);
+        $school = School::find(auth()->user()->school_id);
+        return view('report.nutritionReport', ['school' => $school]);
+    }
+    public function getNutrition(Request $request){
     }
 
     public function materialReport(){

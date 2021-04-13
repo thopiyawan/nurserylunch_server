@@ -42,18 +42,6 @@ $("#week-picker").datepicker({
             month: 'short',
             day: 'numeric',})
         );
-        // $(".startDate").text(
-        //     startDate.toLocaleDateString('th-TH', {
-        //     year: '2-digit',
-        //     month: 'short',
-        //     day: 'numeric',})
-        // );
-        // $(".endDate").text(
-        //     endDate.toLocaleDateString('th-TH', {
-        //     year: '2-digit',
-        //     month: 'short',
-        //     day: 'numeric',})
-        // );
         var mondayDate = new Date(date.getFullYear(),date.getMonth(),date.getDate() - date.getDay() + 1);
         var tuesdayDate = new Date(date.getFullYear(),date.getMonth(),date.getDate() - date.getDay() + 2);
         var wednesdayDate = new Date(date.getFullYear(),date.getMonth(),date.getDate() - date.getDay() + 3);
@@ -163,24 +151,21 @@ function callFoodLogs(view){
     });
 }
 function callNutritionLogs(view){
-    if(view == "report"){
-        console.log("js start date" + startDate);
-        $.ajax({
-            type: "POST",
-            url: "/mealplan/nutritiondata",
-            data: {
-                date: {
-                    startDate: startDate.toLocaleDateString(),
-                    endDate: endDate.toLocaleDateString(), 
-                }, 
-                foodType: foodType,
-                view : view,
-            },
-            success: function(data) {
-                updateNutritionData(data);
-            }
-        });
-    }
+    $.ajax({
+        type: "POST",
+        url: "/mealplan/nutritiondata",
+        data: {
+            date: {
+                startDate: startDate.toLocaleDateString(),
+                endDate: endDate.toLocaleDateString(), 
+            }, 
+            foodType: foodType,
+            view : view,
+        },
+        success: function(data) {
+            updateNutritionData(data);
+        }
+    });
 }
 
 function updateDate(){

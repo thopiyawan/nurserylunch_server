@@ -43,6 +43,7 @@
     <div class="">
         <div id="meal-plan">
         </div>
+        
     </div>
 </div>
 <script src="{{ asset('js/getfoodlogs.js') }}"></script>

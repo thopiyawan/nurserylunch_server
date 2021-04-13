@@ -24,7 +24,7 @@ class Food extends Model
     public $fiber;
     public $sodium;
     public $sugar;
-     public function init()
+    public function init()
     {
     	$nutrition = $this->nutritions;
     	$this->energy = $nutrition->energy;
@@ -43,9 +43,6 @@ class Food extends Model
         $this->sugar = $nutrition->sugar;
     }
 
-    public function food_logs(){
-        return $this->hasMany(FoodLogs::class);
-    }
 
     public function nutritions(){
         return $this->hasOne(Nutrition::class);

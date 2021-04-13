@@ -4,11 +4,11 @@
             <div class="mlabel">{{$date['thDay']}} </div>
             <div class="mdate"><span id="{{$date['engDay']}}Date">{{ date('d', strtotime($date['date'])) }}</span></div>
         </div>
-        @foreach ($school->setting->getMealSettings() as $meal)
+        @foreach ($mealSetting as $meal)
             @if ($meal[2] == 1)
                 <div class="col">
                     <div class="mlabel">{{$meal[1]}}</div>
-                        
+                        @php $type =  empty($logs) ? 0 : $logs[0]->food_type @endphp
                         @foreach ($logs as $log)
                             @if ($log->meal_code == $meal[0] && $log->meal_date == $date['date'])
                                 <div class="mrecipe"> 
@@ -22,7 +22,6 @@
                                     </ul>
                                 </div>
                             @endif
-                            
                         @endforeach
                 </div>
             @endif

@@ -4,9 +4,23 @@
     <div class="">
         @foreach ($foodList as $food)
             <div class="ui-sortable food-list">
-                <div class="menu-body">
-                    <div class="col col-food-name" data-energy="{{ $food->getEnergy() }}"
-                        data-protein="{{ $food->getProtein() }}" data-fat="{{ $food->getFat() }}" id="{{ $food->id }}">
+                <div class="menu-body food">
+                    <div class="col col-food-name" 
+                        data-energy="{{ $food->energy }}"
+                        data-protein="{{ $food->protein }}" 
+                        data-fat="{{ $food->fat }}" 
+                        data-carbohydrate="{{ $food->carbohydrate }}"
+                        data-vitamin_a="{{ $food->vitamin_a }}"
+                        data-vitamin_b1="{{ $food->vitamin_b1 }}"
+                        data-vitamin_b2="{{ $food->vitamin_b2 }}"
+                        data-vitamin_c="{{ $food->vitamin_c }}"
+                        data-iron="{{ $food->iron }}"
+                        data-calcium="{{ $food->calcium }}"
+                        data-phosphorus="{{ $food->phosphorus }}"
+                        data-fiber="{{ $food->fiber }}"
+                        data-sodium="{{ $food->sodium }}"
+                        data-sugar="{{ $food->sugar }}"
+                        id="{{ $food->id }}">
                         {{ $food->food_thai }}
                     </div>
                     <div class="col col-delete">
@@ -19,6 +33,7 @@
         @endforeach
     </div>
 @endif
+
 
 <script type="application/javascript">
     $(".ui-sortable").sortable({
