@@ -209,6 +209,8 @@ class MealplanController extends Controller
 			$mealDate = $logPerDate['mealdate'];
 			$foodType = $logPerDate['foodtype'];
 
+			EnergyLogs::where([['meal_date', $mealDate], ['food_type', $foodType]])->delete();
+
 			if(isset($logPerDate['breakfast'])){
 				$data = $logPerDate['breakfast']; 
 				$data['meal_code'] = 1;
@@ -319,89 +321,8 @@ class MealplanController extends Controller
 	}
 }
 
-// ->whereIn('food_ingredient.ingredient_id', $filters)
-// ->paginate(10);
-
 function getTargetNutrition($school, $age, $isForFullWeek = false){
 
 	$targetNutrition = Nutrition::getDriByAge($school, $age, $isForFullWeek);
 	return $targetNutrition;
-
-			#ratio of energy in each meal 
-	// $condition_nutrition_calulation = array("breakfast" => 0.2, "morningSnack" => 0.1, "lunch" => 0.3, "lunchSnack" => 0.1);
-	// $percentageOfEnergy = 0;
-	// #check condition for calulation energy each day from user setting 
-	// if($userSetting->is_breakfast == 1){
-	// 	$percentageOfEnergy += $condition_nutrition_calulation['breakfast'];
-	// }
-	// if($userSetting->is_morning_snack == 1){
-	// 	$percentageOfEnergy += $condition_nutrition_calulation['morningSnack'];
-	// }
-	// if($userSetting->is_lunch == 1){
-	// 	$percentageOfEnergy += $condition_nutrition_calulation['lunch'];
-	// }
-	// if($userSetting->is_afternoon_snack == 1){
-	// 	$percentageOfEnergy += $condition_nutrition_calulation['lunchSnack'];
-	// }
-
-
-	// $baseDri = array(
-	// 	"energy" => 645.0 * $percentageOfEnergy * $multiplier, 
-	// 	"protein" => 12.55 * $percentageOfEnergy * $multiplier,  
-	// 	"fat" => 25.08 * $percentageOfEnergy * $multiplier, 
-	// 	"carbohydrate" => 110 * $percentageOfEnergy * $multiplier, 
-	// 	"vitamin_a" => 250 * $percentageOfEnergy * $multiplier, 
-	// 	"vitamin_b1" => 0.3 * $percentageOfEnergy * $multiplier, 
-	// 	"vitamin_b2" => 0.4 * $percentageOfEnergy * $multiplier, 
-	// 	"vitamin_c" => 50 * $percentageOfEnergy * $multiplier, 
-	// 	"iron" => 9 * $percentageOfEnergy * $multiplier, 
-	// 	"calcium" => 260 * $percentageOfEnergy * $multiplier, 
-	// 	"phosphorus" => 275 * $percentageOfEnergy * $multiplier, 
-	// 	"fiber" => 0 * $percentageOfEnergy * $multiplier, 
-	// 	"sodium" => 0 * $percentageOfEnergy * $multiplier, 
-	// 	"sugar" => 0 * $percentageOfEnergy * $multiplier, 
-	// );
-	// Debugbar::info("energy".$baseDri["energy"]);
-	// $energyCondition = array(
-	// 	"toolow" => number_format($baseDri["energy"] * 0.5, 1, '.',''),
-	// 	"low" => number_format($baseDri["energy"] * 1.0, 1, '.',''),
-	// 	"ok" => number_format($baseDri["energy"] * 1.5, 1, '.',''),
-	// 	"high" => number_format($baseDri["energy"] * 2.0, 1, '.','')
-	// );
-	// $proteinCondition = array(
-	// 	"toolow" => number_format($baseDri["protein"] * 0.5, 1, '.',''),
-	// 	"low" => number_format($baseDri["protein"], 1, '.',''),
-	// 	"ok" => number_format($baseDri["protein"] * 1.5, 1, '.',''),
-	// 	"high" => number_format($baseDri["protein"] * 2.0, 1, '.','')
-	// );
-	// $fatCondition = array(
-	// 	"toolow" => number_format($baseDri["fat"] * 0.5, 1, '.',''),
-	// 	"low" => number_format($baseDri["fat"], 1, '.',''),
-	// 	"ok" => number_format($baseDri["fat"] * 1.5, 1, '.',''),
-	// 	"high" => number_format($baseDri["fat"] * 2.0, 1, '.','')
-	// );
-	// $carbCondition = array(
-	// 	"toolow" => number_format($baseDri["carbohydrate"] * 0.5, 1, '.',''),
-	// 	"low" => number_format($baseDri["carbohydrate"], 1, '.',''),
-	// 	"ok" => number_format($baseDri["carbohydrate"] * 1.5, 1, '.',''),
-	// 	"high" => number_format($baseDri["carbohydrate"] * 2.0, 1, '.','')
-	// );
-
-	// $targetNutrition = array(
-	// 	'energy' => $energyCondition,
-	// 	'protein' => $proteinCondition,
-	// 	'fat' => $fatCondition,
-	// 	"carbohydrate_full" => $carbCondition, 
-	// 	"carbohydrate" => array("low" => $baseDri["carbohydrate"] * 0.5, "ok" => $baseDri["carbohydrate"]*1.5), 
-	// 	"vitamin_a" => array("low" => $baseDri["vitamin_a"] * 0.5, "ok" => $baseDri["vitamin_a"]*1.5),
-	// 	"vitamin_b1" => array("low" => $baseDri["vitamin_b1"] * 0.5, "ok" => $baseDri["vitamin_b1"]*1.5),
-	// 	"vitamin_b2" => array("low" => $baseDri["vitamin_b2"] * 0.5, "ok" => $baseDri["vitamin_b2"]*1.5),
-	// 	"vitamin_c" => array("low" => $baseDri["vitamin_c"] * 0.5, "ok" => $baseDri["vitamin_c"]*1.5),
-	// 	"iron" => array("low" => $baseDri["iron"] * 0.5, "ok" => $baseDri["iron"]*1.5),
-	// 	"calcium" => array("low" => $baseDri["calcium"] * 0.5, "ok" => $baseDri["calcium"]*1.5),
-	// 	"phosphorus" => array("low" => $baseDri["phosphorus"] * 0.5, "ok" => $baseDri["phosphorus"]*1.5),
-	// 	"fiber" => array("low" => $baseDri["fiber"] * 0.5, "ok" => $baseDri["fiber"]*1.5),
-	// 	"sodium" => array("low" => $baseDri["sodium"] * 0.5, "ok" => $baseDri["sodium"]*1.5),
-	// 	"sugar" => array("low" => $baseDri["sugar"] * 0.5, "ok" => $baseDri["sugar"]*1.5),
-	// );
 }

@@ -33,22 +33,25 @@
                 <div class="section m-b">
                     <div class="row">
                         <div class="col-lg-7 pull-left">
-                            <canvas id="doughnutChart"></canvas>
+                            <canvas class="doughnutChart"  width="210" height="210"></canvas>
                         </div>
                         <div class="col-lg-5 nutrition-legend">
                             <div>
                                 <span class="nutrition-label protein"></span>
-                                <span id="protein-label">50</span>
+                                <span class="nutrition-span protein"></span>
+                                <!-- <span id="protein-label">50</span> -->
                                 <span>% โปรตีน</span>
                             </div>
                             <div>
                                 <span class="nutrition-label fat"></span>
-                                <span id="fat-label">50</span>
+                                <span class="nutrition-span fat"></span>
+                                <!-- <span id="fat-label">50</span> -->
                                 <span>% ไขมัน</span>
                             </div>
                             <div>
                                 <span class="nutrition-label carb"></span>
-                                <span id="carb-label">50</span>
+                                <span class="nutrition-span carbohydrate"></span>
+                                <!-- <span id="carb-label">50</span> -->
                                 <span>% คาร์โบไฮเดรต</span>
                             </div>
                         </div>

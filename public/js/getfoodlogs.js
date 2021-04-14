@@ -171,61 +171,36 @@ function callNutritionLogs(view){
     });
 }
 function updateNutritionData(data){
-    console.log("updateNutritionData", data);
+    // console.log("updateNutritionData", data);
     var energyLogs = data['energy_logs'];
     var targetNutrition = data['target_nutrition'];
-    var keys = ["energy", "fat", "carbohydrate", "protein"];
-
     var reports = $('.report-nutrition');
 
     $.each(reports, function(){
         var report = $(this);
-        console.log("report", report);
         var type = report.attr('id'); 
-        //console.log(type);
-        $.each(keys, function(){
+        var covertedLogs = {"energy":1, "fat":9, "carbohydrate":4, "protein":4.1};
+        // var energySum = energyLogs[type]['energy'];
+        //updateNutritionLabel(report, energyLogs[type], keys);
+        $.each(covertedLogs, function(key, value){
             if(energyLogs[type] != null){
-                var key = this;
-                //console.log(key);
+                // var key = this;
                 var sum = energyLogs[type][key];
-                //var sum = 0;
                 var scale = targetNutrition[key];
-                // report.find("." + key).find(".nut-bar").removeClass("selected");
-                var grade = "";
-                report.find("." + key).find(".nut-bar").removeClass("selected");
-                if( sum < scale["toolow"]){
-                    grade = "toolow";
-                }else if(sum < scale["low"]){
-                    grade = "low";
-                }else if (sum < scale["ok"]){
-                    grade = "ok";
-                }else if(sum < scale["high"]){
-                    grade = "high";
-                }else{
-                    grade = "toohigh";
-                }
-                if (grade != ""){
-                    report.find("." + key).find(".nut-bar." + grade).addClass("selected");
-                }
+                updateNutritionBar(report, key, scale, sum);
+                covertedLogs[key] *= sum;
             }
-
         });
-
+        updateNutritionLabel(report, covertedLogs);
+        // console.log(covertedLogs);
     });
-
-
-    // var energy = data["energy"][0];
-    // var protein = (data["protein"][0]*4).toFixed();
-    // var fat = (data["fat"][0]*9).toFixed();
-    // var carbohydrate = (data["carbohydrate"][0]*4).toFixed();
-    // // console.log(data["energy"], protein, fat, carbohydrate);
-    // updatePieChart(energy, protein, fat, carbohydrate);
-    // updateNutritionBar(data);
 }
 
-function updatePieChart(energy, protein, fat, carbohydrate){
-    // $("#doughnutChart").empty();
-    // $(".chartjs-size-monitor").empty();
+function updatePieChart(report, key, sum, energySum){
+    // console.log(report, key, sum, energySum);
+    var cahrt = report.find('.doughnutChart');
+    // console.log(cahrt);
+
     // var chart = null;
     // var ctx = null;
     // var doughnutData = null;
@@ -278,17 +253,67 @@ function updatePieChart(energy, protein, fat, carbohydrate){
     // }
 }
 
-function updateNutritionBar(data){
-    // $(".nut-bar").removeClass("selected");
-    // if(data["energy"][0] != 0){
-    //     for( var key in data){
-    //         var value = data[key][0];
-    //         var grade = data[key][1];
-    //         // console.log(grade);
-    //         $("."+key+" .nut-bars").find(".nut-bar."+grade).addClass("selected");
-    //         // console.log($("."+key+" .nut-bars").find(".nut-bar."+grade));
-    //     }
-    // }
+function updateNutritionBar(report, key, scale, sum){
+    var grade = "";
+    report.find("." + key).find(".nut-bar").removeClass("selected");
+    if( sum < scale["toolow"]){
+        grade = "toolow";
+    }else if(sum < scale["low"]){
+        grade = "low";
+    }else if (sum < scale["ok"]){
+        grade = "ok";
+    }else if(sum < scale["high"]){
+        grade = "high";
+    }else{
+        grade = "toohigh";
+    }
+    if (grade != ""){
+        report.find("." + key).find(".nut-bar." + grade).addClass("selected");
+    }
+}
+
+function updateNutritionLabel(report, covertedLogs){
+    var energy = covertedLogs["energy"];
+    $.each(covertedLogs, function(key, value){
+        if(key != "energy"){
+            if (energy == 1){
+                report.find(".nutrition-span." + key).text(0);
+            }else{
+                var percentage = (value/energy*100).toFixed();
+                report.find(".nutrition-span." + key).text(percentage);
+            }
+        }
+    });
+
+
+    // var doughnutData = null;
+    // var doughnutOptions = null;
+    var doughnutData = {
+        labels: ["ไม่มีข้อมูล"],
+            datasets: [{
+                data: [1],
+                backgroundColor: ["#eee"],
+                hoverBackgroundColor: ["#ddd"]
+        }]
+    }
+
+    if (energy > 1){
+        var doughnutData = {
+            labels: ["โปรตีน (กรัม)","ไขมัน (กรัม)", "คาร์โบไฮเดรต (กรัม)"],
+            datasets: [{
+                data: [covertedLogs['protein'].toFixed(), covertedLogs['fat'].toFixed(), covertedLogs['carbohydrate'].toFixed()],
+                backgroundColor: ["#f7931e","#7ac943","#3fa6f2"],
+                hoverBackgroundColor: ["#de7c0a","#5fb922","#1c89da"]
+            }]
+        }
+    }
+    var doughnutOptions = {
+        responsive: false, 
+        aspectRatio: 1.2,
+        legend: {display:false},
+    };
+    var ctx = report.find('.doughnutChart')[0].getContext("2d");
+    var chart = new Chart(ctx, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
 }
 
 function updateDate(){
