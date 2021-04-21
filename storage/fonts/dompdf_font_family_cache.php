@@ -105,4 +105,10 @@
     'bold' => $fontDir . '/kanit-bold_746ac2a75ae64201d2d967623018e962',
     '800' => $fontDir . '/kanit-800_7e2c34624e34b5e08ce52102d99a8c5e',
   ),
+  'thsarabunnew' => array(
+    'normal' => $fontDir . '/thsarabunnew-normal_5392965ef74717c2ff6af41db9145f2e',
+    'bold' => $fontDir . '/thsarabunnew-bold_96c955647bd50ec05e096626116bede1',
+    'italic' => $fontDir . '/thsarabunnew-italic_025333ba9a861dbecdf50f7fb6468a89',
+    'bold_italic' => $fontDir . '/thsarabunnew-bold-italic_a05c032855c4f648ab4af58c4dc0d377',
+  ),
 ) ?>

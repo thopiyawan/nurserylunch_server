@@ -80,6 +80,8 @@ class MealplanController extends Controller
 		return view($returnView , ['logs'=>$foodLogs, 'school'=>$school, 'selectedDates'=>$selectedDates, 'selectedFoodTypes' => $selectedFoodTypes]);
 	}
 
+	
+
 	public function addFood(Request $request)
 	{
 

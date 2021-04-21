@@ -27,6 +27,7 @@
                     </div>
                 </div>
 
+
                 <div class="section">
                     <h2>สัดส่วนสารอาหารหลักที่ได้รับรายสัปดาห์</h2>
                 </div>
@@ -39,19 +40,16 @@
                             <div>
                                 <span class="nutrition-label protein"></span>
                                 <span class="nutrition-span protein"></span>
-                                <!-- <span id="protein-label">50</span> -->
                                 <span>% โปรตีน</span>
                             </div>
                             <div>
                                 <span class="nutrition-label fat"></span>
                                 <span class="nutrition-span fat"></span>
-                                <!-- <span id="fat-label">50</span> -->
                                 <span>% ไขมัน</span>
                             </div>
                             <div>
                                 <span class="nutrition-label carb"></span>
                                 <span class="nutrition-span carbohydrate"></span>
-                                <!-- <span id="carb-label">50</span> -->
                                 <span>% คาร์โบไฮเดรต</span>
                             </div>
                         </div>
@@ -65,11 +63,11 @@
                                 <div class="col col-lg-3">พลังงาน</div>
                             </div>
                             <div class="nut-bars">
-                                <div class="nut-bar toolow danger">น้อยเกิน</div>
-                                <div class="nut-bar low warning">น้อย</div>
-                                <div class="nut-bar ok">พอดี</div>
-                                <div class="nut-bar high warning">มาก</div>
-                                <div class="nut-bar toohigh danger">มากเกิน</div>
+                                <div class="nut-bar toolow danger" data-grade="toolow">น้อยเกิน</div>
+                                <div class="nut-bar low warning" data-grade="low">น้อย</div>
+                                <div class="nut-bar ok" data-grade="ok">พอดี</div>
+                                <div class="nut-bar high warning" data-grade="high">มาก</div>
+                                <div class="nut-bar toohigh danger" data-grade="toohigh">มากเกิน</div>
                             </div>
                         </div>
                     </div>
@@ -81,11 +79,11 @@
                                 <div class="col col-lg-3">โปรตีน</div>
                             </div>
                             <div class="nut-bars">
-                                <div class="nut-bar toolow danger">น้อยเกิน</div>
-                                <div class="nut-bar low warning">น้อย</div>
-                                <div class="nut-bar ok">พอดี</div>
-                                <div class="nut-bar high warning">มาก</div>
-                                <div class="nut-bar toohigh danger">มากเกิน</div>
+                                <div class="nut-bar toolow danger" data-grade="toolow">น้อยเกิน</div>
+                                <div class="nut-bar low warning" data-grade="low">น้อย</div>
+                                <div class="nut-bar ok" data-grade="ok">พอดี</div>
+                                <div class="nut-bar high warning" data-grade="high">มาก</div>
+                                <div class="nut-bar toohigh danger" data-grade="toohigh">มากเกิน</div>
                             </div>
                         </div>
                     </div>
@@ -97,11 +95,11 @@
                                 <div class="col col-lg-3">ไขมัน</div>
                             </div>
                             <div class="nut-bars">
-                                <div class="nut-bar toolow danger">น้อยเกิน</div>
-                                <div class="nut-bar low warning">น้อย</div>
-                                <div class="nut-bar ok">พอดี</div>
-                                <div class="nut-bar high warning">มาก</div>
-                                <div class="nut-bar toohigh danger">มากเกิน</div>
+                                <div class="nut-bar toolow danger" data-grade="toolow">น้อยเกิน</div>
+                                <div class="nut-bar low warning" data-grade="low">น้อย</div>
+                                <div class="nut-bar ok" data-grade="ok">พอดี</div>
+                                <div class="nut-bar high warning" data-grade="high">มาก</div>
+                                <div class="nut-bar toohigh danger" data-grade="toohigh">มากเกิน</div>
                             </div>
                         </div>
                     </div>
@@ -113,12 +111,13 @@
                                 <div class="col col-lg-3">คาร์โบไฮเดรต</div>
                             </div>
                             <div class="nut-bars">
-                                <div class="nut-bar toolow danger">น้อยเกิน</div>
-                                <div class="nut-bar low warning">น้อย</div>
-                                <div class="nut-bar ok">พอดี</div>
-                                <div class="nut-bar high warning">มาก</div>
-                                <div class="nut-bar toohigh danger">มากเกิน</div>
+                                <div class="nut-bar toolow danger" data-grade="toolow">น้อยเกิน</div>
+                                <div class="nut-bar low warning" data-grade="low">น้อย</div>
+                                <div class="nut-bar ok" data-grade="ok">พอดี</div>
+                                <div class="nut-bar high warning" data-grade="high">มาก</div>
+                                <div class="nut-bar toohigh danger" data-grade="toohigh">มากเกิน</div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

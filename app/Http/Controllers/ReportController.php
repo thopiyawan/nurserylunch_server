@@ -35,6 +35,30 @@ class ReportController extends Controller
 
     }
 
+    public function downloadPdf(Request $request){
+        $data = $request->all();
+
+        $schoolId = auth()->user()->school_id;
+        $school = School::find($schoolId);
+        // $userSetting = $school->setting;
+        $startDate = (new DateTime($data['startDate']))->format('Y-m-d');
+        $endDate = (new DateTime($data['endDate']))->format('Y-m-d');
+        $inputFoodType = $data['foodType'];
+        $selectedAge = $inputFoodType == 8? 'small' : 'big'; 
+        $foodLogs = FoodLogs::getLogsByDatesAndAge($schoolId, $startDate,$endDate, $selectedAge);
+        $selectedDates = $school->getSelectedDates($startDate);
+        // $selectedFoodTypes = $school->getSelectedFoodTypesByAge($selectedAge);
+        
+
+
+        $data['kelly'] = 'kelly';
+        $data['selectedDates'] = $selectedDates;
+        $data['school'] = $school;
+        $data['logs'] = $foodLogs;
+        $pdf = PDF::loadView('report.nutritionPdf', $data);     
+        return $pdf->stream('medium.pdf');
+    }
+
     public function nutritionReport($startDate = null, $endDate = null)
     {
         $school = School::find(auth()->user()->school_id);

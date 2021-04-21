@@ -25,6 +25,8 @@ Route::get('/materialreport', 'ReportController@materialReport')->middleware('au
 Route::post('/downloadreport', 'ReportController@pdf')->middleware('auth');
 Route::post('/report/getmaterial', 'ReportController@getMaterial');
 Route::post('/report/getnutrition', 'ReportController@getNutrition');
+Route::post('/report/pdf', 'ReportController@downloadPdf');
+Route::get('/report/test', 'ReportController@testPdf');
 
 // Route::get('/download', function () {
 // return view('download');
