@@ -84,7 +84,6 @@ class MealplanController extends Controller
 
 	public function addFood(Request $request)
 	{
-
 			date_default_timezone_set("Asia/Bangkok");
 			$userId = auth()->user()->id;
 			$schoolId = auth()->user()->school_id;
