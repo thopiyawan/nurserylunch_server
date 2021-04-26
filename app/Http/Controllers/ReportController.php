@@ -28,41 +28,11 @@ class ReportController extends Controller
     {
         $this->middleware('auth');
     }
-
-
-    public function index()
-    {
-
-    }
-
-    public function downloadPdf(Request $request){
-        $data = $request->all();
-
-        $schoolId = auth()->user()->school_id;
-        $school = School::find($schoolId);
-        // $userSetting = $school->setting;
-        $startDate = (new DateTime($data['startDate']))->format('Y-m-d');
-        $endDate = (new DateTime($data['endDate']))->format('Y-m-d');
-        $inputFoodType = $data['foodType'];
-        $selectedAge = $inputFoodType == 8? 'small' : 'big'; 
-        $foodLogs = FoodLogs::getLogsByDatesAndAge($schoolId, $startDate,$endDate, $selectedAge);
-        $selectedDates = $school->getSelectedDates($startDate);
-        // $selectedFoodTypes = $school->getSelectedFoodTypesByAge($selectedAge);
-        
-
-
-        $data['kelly'] = 'kelly';
-        $data['selectedDates'] = $selectedDates;
-        $data['school'] = $school;
-        $data['logs'] = $foodLogs;
-        $pdf = PDF::loadView('report.nutritionPdf', $data);     
-        return $pdf->stream('medium.pdf');
-    }
-
     public function nutritionReport($startDate = null, $endDate = null)
     {
         $school = School::find(auth()->user()->school_id);
-        return view('report.nutritionReport', ['school' => $school]);
+        $daysCount = count($school->getSelectedDates($startDate));
+        return view('report.nutritionReport', ['school' => $school, 'daysCount'=> $daysCount]);
     }
     public function getNutrition(Request $request){
         $schoolId = auth()->user()->school_id;
@@ -77,16 +47,20 @@ class ReportController extends Controller
         return $data;
     }
 
-    public function materialReport(){
+    public function materialReport($startDate = null, $endDate = null){
         $schoolId = auth()->user()->school_id;
         $userSetting = Setting::where('school_id', $schoolId)->first();
-        return view('report.materialReport', ['userSetting' => $userSetting]);
+
+        $school = School::find(auth()->user()->school_id);
+        $daysCount = count($school->getSelectedDates($startDate));
+        return view('report.materialReport', ['userSetting' => $userSetting, 'daysCount'=> $daysCount]);
     }
 
 
     public function getMaterial(Request $request){
         $schoolId = auth()->user()->school_id;
         $school = School::find($schoolId);
+
         $inputs = $request->all();
         $startDate = (new DateTime($inputs['date']['startDate']))->format('Y-m-d');
         $endDate = (new DateTime($inputs['date']['endDate']))->format('Y-m-d');
@@ -115,9 +89,48 @@ class ReportController extends Controller
         }
         $temp = collect($materials);
         $sortedMaterials = $temp->sortBy('composition_id')->values();
+        $selectedDates = $school->getSelectedDates($startDate);
         // $sortedMaterials->values()->all();
-        return view('report.materialData' , ['logs' => $foodLogs, 'materials'=>$sortedMaterials]);
+        return view('report.materialData' , ['logs' => $foodLogs, 'materials'=>$sortedMaterials, 'selectedDates'=>$selectedDates]);
     }
+
+    public function downloadPdf(Request $request){
+        $data = $request->all();
+
+        $schoolId = auth()->user()->school_id;
+        $school = School::find($schoolId);
+        // $userSetting = $school->setting;
+        $startDate = (new DateTime($data['startDate']))->format('Y-m-d');
+        $endDate = (new DateTime($data['endDate']))->format('Y-m-d');
+        $inputFoodType = $data['foodType'];
+        $selectedAge = $inputFoodType == 8? 'small' : 'big'; 
+        $foodLogs = FoodLogs::getLogsByDatesAndAge($schoolId, $startDate,$endDate, $selectedAge);
+        $selectedDates = $school->getSelectedDates($startDate);
+        // $selectedFoodTypes = $school->getSelectedFoodTypesByAge($selectedAge);
+        
+
+
+        $data['kelly'] = 'kelly';
+        $data['selectedDates'] = $selectedDates;
+        $data['school'] = $school;
+        $data['logs'] = $foodLogs;
+        $pdf = PDF::loadView('report.nutritionPdf', $data);     
+        return $pdf->stream('medium.pdf');
+    }
+
+    public function downloadMaterialPdf(Request $request){
+        $data = $request->all();
+        // $startDate = (new DateTime($data['startDate']))->format('Y-m-d');
+        // $endDate = (new DateTime($data['endDate']))->format('Y-m-d');
+
+        
+        // $data['kelly'] = 'kelly';
+
+        $pdf = PDF::loadView('report.materialPdf', $data);     
+        return $pdf->stream('medium.pdf');
+
+    }
+
 
 }
 

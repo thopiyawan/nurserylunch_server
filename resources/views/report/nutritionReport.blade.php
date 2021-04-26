@@ -8,6 +8,7 @@
 </div>
 <div id="wrapper">
     <!-- <div id="pdfwrapper"> -->
+        <div id="day-count" data-daycount="{{$daysCount}}"></div>
         <div class="row m-b">
             <div class="col-lg-12 pull-right">
                 <a href="#" id="downloadBtn" class="btn btn-primary pull-right" type="" name="" value="">
@@ -49,15 +50,14 @@
                 }
             });
         }
-
         function gatherData(){
             var reports = [];
-            var start = startDate.toLocaleDateString('th-TH', {
+            var start = startLogDate.toLocaleDateString('th-TH', {
                                 year: '2-digit',
                                 month: 'short',
                                 day: 'numeric',
                             });
-            var end = endDate.toLocaleDateString('th-TH', {
+            var end = endLogDate.toLocaleDateString('th-TH', {
                                 year: '2-digit',
                                 month: 'short',
                                 day: 'numeric',
@@ -84,8 +84,8 @@
                 reports.push(report);
             });
             var data = {
-                startDate: startDate.toLocaleDateString(),
-                endDate: endDate.toLocaleDateString(), 
+                startDate: startLogDate.toLocaleDateString(),
+                endDate: endLogDate.toLocaleDateString(), 
                 foodType: reports[0]['id'],
                 reports: reports,
             }

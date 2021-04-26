@@ -21,6 +21,7 @@
     --font-size-p4: 1.4rem;
 }
 
+
 body{
     color: var(--dark);
     font-family: 'Kanit', sans-serif;
@@ -64,7 +65,7 @@ input[type=checkbox] {
 }
 
 .report-material table, .report-material th, .report-material td {
-  border: 1px solid var(--lightgray);
+  /*border: 1px solid var(--lightgray);*/
 }
 
 .report-material th, .report-material td{
@@ -467,6 +468,8 @@ input[type=checkbox] {
 .meal-panel.wednesday{border-left: 5px solid #7ac943;}
 .meal-panel.thursday{border-left: 5px solid #f7931e;}
 .meal-panel.friday{border-left: 5px solid #3fa6f2;}
+.meal-panel.saturday{border-left: 5px solid #a880ce;}
+.meal-panel.sunday{border-left: 5px solid #e44f4f;}
 .meal-panel>.col{
     /*float: left !important;
     flex-basis: unset;
@@ -734,7 +737,7 @@ input[type=checkbox] {
     background-color: transparent; 
 }
 #week-picker .ui-state-hover{
-    background-color: transparent;
+    background-color: var(--primary-bg);
     border: none; 
 }
 #week-picker .ui-state-active{

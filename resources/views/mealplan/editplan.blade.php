@@ -68,12 +68,12 @@
                 <h1 class="page-title"> แก้ไขเมนูอาหาร </h1>
             </div>
             <div class="col heading-p-t">
+                <div id="day-count" data-daycount="{{count($selectedDates)}}"></div>
                 <div>
                     <i class="fas fa-calendar-alt"></i>
-                    <span id="startDate"></span>
-                    <span id="startDate"></span>
+                    <span id="startDate" data-date="{{$selectedDates[0]['date']}}" data-daycount="{{count($selectedDates)}}"></span>
                     <span> - </span>
-                    <span id="endDate"></span>
+                    <span id="endDate" data-date="{{end($selectedDates)['date']}}"></span>
                 </div>
             </div>
             <div class="col heading-p-t">
@@ -159,6 +159,22 @@
 @section('script')
     <script type="application/javascript">
         // your code
+        var start = new Date($("#startDate").data("date"));
+        var end = new Date($("#endDate").data("date"));
+        var dayCount = new Date($("#startDate").data("daycount"));
+        $("#startDate").text(
+            start.toLocaleDateString('th-TH', {
+            year: '2-digit',
+            month: 'short',
+            day: 'numeric',})
+        );
+        $("#endDate").text(
+            end.toLocaleDateString('th-TH', {
+            year: '2-digit',
+            month: 'short',
+            day: 'numeric',})
+        );
+
         localStorage.setItem("weekHandle", 1)
         let foodType = localStorage.getItem('foodType');
         var text = foodType == 8 ? "เด็กอายุต่ำกว่า 1 ปี" : "เด็กอายุ 1-3 ปี";
@@ -191,7 +207,13 @@
 
         function saveLogs() {
             $(document).ready(function() {
-                let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+                // let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+                let day_in_week = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+                if( dayCount == 6 ){
+                    day_in_week.push("saturday");
+                }else if(dayCount == 7){
+                    day_in_week.push("sunday");
+                }
 
                 let mealPlanData = [];
                 var panels = $(".tab-pane");
@@ -212,7 +234,6 @@
                             ' > .ui-sortable .col-food-name')
                         let breakfastSnack = $(this).find('#breakfast-snack-meal-' + day +
                             ' > .ui-sortable .col-food-name')
-                        //console.log("breakfastSnack", breakfastSnack);
                         let lunch = $(this).find('#lunch-meal-' + day +
                             ' > .ui-sortable .col-food-name')
                         let lunchSnack = $(this).find('#lunch-snack-meal-' + day +
@@ -308,7 +329,6 @@
             });
 
             var normalPlans = normalPanel.find(".ui-sortable-meal");
-            //console.log(normalPlans);
             $.each(normalPlans, function() {
                 var meal = $(this).data("meal");
                 var day = $(this).data("day");
@@ -319,8 +339,6 @@
 
                 $.each(foods, function() {
                     var foodItem = $(this);
-                    console.log(foodItem);
-
                     var foodId = foodItem.children(":first").attr("id");
                     var targetType = activePanel.data("type");
 
@@ -338,7 +356,6 @@
         }
 
         function checkMealType(id, type, cloneItem) {
-            console.log("checktype", type);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -353,7 +370,6 @@
                     age: "age6_8mo"
                 },
                 success: function(result) {
-                    //console.log(id, type, result)
                     var safe = result == 1 ? true : false;
                     if (safe) {
                         //cloneItem.addClass("ui-state-disabled"); // safe to eat
@@ -373,7 +389,6 @@
             var dayPanel = $(this).parents('.meal-panel');
             var mealPanel = $(this).parents('.ui-sortable-meal');
             var foodId = $(this).prev().attr("id");
-            console.log(foodId);
 
             $(this).parent().remove();
             calculateNutrition(dayPanel);
@@ -394,7 +409,6 @@
                 }
 
                 var type = $(this).data("type");
-                console.log("init cal" + type);
                 if(type != 8 && type != 22){
                     var foods = $(this).find(".menu-body").not(".ui-sortable-placeholder");
                     $.each(foods, function() {
@@ -451,10 +465,8 @@
 
         function updateNutritionBar(parent, key, sum) {
             var scale = targetNutrition[key];
-            console.log("update nutirion bar : ", scale);
 
             if($(parent).find(".menu-body.food").length == 0){
-                // console.log("zero");
                 if (key == "protein" || key == "fat" || key == "energy"){
                     parent.find("." + key).find(".nut-bar").removeClass("selected");
                 }else{
@@ -505,16 +517,13 @@
         $('#searchMenu').on('keyup', updateFoodResult);
 
         function updateFoodResult(){
-            // console.log("hello updateFoodResult");
             var filters = [];
             var query = $('#searchMenu').val();
             $.each($('.in-group-select'), function() {
                 $.merge(filters, $(this).val())
             });
 
-            console.log("hello updateFoodResult", query, filters);
-
-             $.ajaxSetup({
+            $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -527,7 +536,6 @@
                     filters: filters,
                 },
                 success: function(data) {
-                    console.log("filterFoodList - success")
                     $("#filter-result").html(data);
                 }
             });

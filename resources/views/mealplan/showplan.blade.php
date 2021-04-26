@@ -13,9 +13,9 @@
             <h1 class="page-title"> รายการอาหาร</h1>
         </div>
         <div class="col heading-p-t">
+            <div id="day-count" data-daycount="{{$daysCount}}"></div>
             <div>
                 <i class="fas fa-calendar-alt color-gray"></i>
-                <span id="startDate"></span>
                 <span id="startDate"></span>
                 <span> - </span>
                 <span id="endDate"></span>

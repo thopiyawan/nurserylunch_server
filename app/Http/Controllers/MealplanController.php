@@ -25,7 +25,9 @@ class MealplanController extends Controller
 	public function showPlan($startDate = null, $endDate = null)
 	{
 		$school = School::find(auth()->user()->school_id);
-		return view('mealplan.showplan', ['school' => $school]);
+		$daysCount = count($school->getSelectedDates($startDate));
+
+		return view('mealplan.showplan', ['school' => $school, 'daysCount'=> $daysCount]);
 	}
 
 	public function editPlan(Request $request)					
@@ -49,7 +51,6 @@ class MealplanController extends Controller
 		$foodLogs = FoodLogs::getLogsByDatesAndAge($schoolId, $startDate,$endDate, $selectedAge);
 
 		$selectedDates = $school->getSelectedDates($startDate);
-
 
     return view('mealplan.editplan', ['in_groups' => $in_groups, 'foodList' => $foods, 'food_logs' => $foodLogs, 'selectedDates'=> $selectedDates,  'selectedFoodTypes' => $selectedFoodTypes, 'school' => $school,'targetNutrition' => $targetNutrition]);	
 	}

@@ -9,9 +9,9 @@
             <div class="col-lg-5">
                 <div class="m-b">
                     <i class="fas fa-calendar-alt color-gray"></i>
-                    <span class="report-date startDate"> </span>
+                    <span class="report-date start-date" data-date="{{$selectedDates[0]['date']}}"> </span>
                     <span> - </span>
-                    <span class="report-date endDate"></span>
+                    <span class="report-date end-date" data-date="{{end($selectedDates)['date']}}"></span>
                 </div>
                 <div class="m-b">
                     <div>

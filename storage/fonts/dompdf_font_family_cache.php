@@ -111,4 +111,10 @@
     'italic' => $fontDir . '/thsarabunnew-italic_025333ba9a861dbecdf50f7fb6468a89',
     'bold_italic' => $fontDir . '/thsarabunnew-bold-italic_a05c032855c4f648ab4af58c4dc0d377',
   ),
+  'fontawesome' => array(
+    'normal' => $fontDir . '/fontawesome-normal_79b165604c2795cff5e31845780a7600',
+  ),
+  'fontawesome3' => array(
+    'normal' => $fontDir . '/fontawesome3-normal_79b165604c2795cff5e31845780a7600',
+  ),
 ) ?>

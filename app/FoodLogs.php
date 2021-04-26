@@ -51,7 +51,6 @@ class FoodLogs extends Model
 }
 
 
-
 function getLogsByDates($schoolId, $startDate,$endDate, $age){
     $foodTypeList = range(8,35);
     if($age == 'all'){

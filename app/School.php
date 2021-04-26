@@ -68,7 +68,6 @@ class School extends Model
         }
 
         return $selectedDates;
-
     }
     public function getServings(){
         $selectedTypes = $this->getSelectedFoodTypes();
@@ -129,7 +128,6 @@ class School extends Model
                  $selectedTypes[$key] = $type;
             }
         }
-        //$selectedTypes = $setting;
         return $selectedTypes;
     }
 
@@ -154,7 +152,8 @@ function addDatesToLists($startDate, $selectedDates, $number){
     $selectedDates[] = array(
         'engDay'=>strtolower($d->isoFormat('dddd')), 
         'thDay'=>$d->locale('th')->getTranslatedDayName('dddd'), 
-        'date'=>$d->format('Y-m-d')
+        'date'=>$d->format('Y-m-d'),
+        'dateText'=>$d->locale('th')->translatedFormat('d M y')
     );
     return $selectedDates;
 }

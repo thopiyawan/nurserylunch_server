@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+    
     <style type="text/css">
         @font-face {
             font-family: 'THSarabunNew';
@@ -15,32 +16,71 @@
             font-weight: bold;
             src: url("{{ public_path('fonts/THSarabunNew Bold.ttf') }}") format('truetype');
         }
-        * {
-          box-sizing: border-box;
+        @font-face {
+          font-family: 'fontawesome3';
+          src: url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.ttf?v=4.6.1') format('truetype');
+          font-weight: normal;
+          font-style: normal;
         }
+        .fa3 {
+          display: inline-block;
+          font: normal normal normal 14px/1 fontawesome3;
+          text-rendering: auto;
 
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+        @page { margin: 20px 40px 20px 40px; }
+      
         body{
             color: #343a40;
             font-family: "THSarabunNew";
-            font-size: 22px;
+            font-size: 20px;
             font-weight: normal;
             text-align: left;
-            margin-top: -20px;
             line-height: 22px;
         }
         span{
             font-family: "THSarabunNew";
         }
-        h1.page-title{font-size: 26px;}
-        h2{font-size: 24px;}
-        div{display: block;}
-
+        h1.page-title{
+            font-size: 26px; 
+            margin: 0px; 
+            margin-bottom: 20px; 
+            padding: 0px;
+        }
+        h2{font-size: 21px;}
+        .fa{
+            font-family: 'FontAwesome', sans-serif;
+            color: #909090;
+        }
+        .fas {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+        }
+   /*     .fa, .fas {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+            color: #909090;
+        }*/
+    /*    .fa-calendar-alt:before {
+            content: "\F073";
+        }
+        .fa-user-friends:before {
+            content: "\F500";
+        }*/
         .nut-bar{
             background: #d0d0d0;
             border-radius: 10px;
             color: white !important;
             display: inline-block;
-            font-size: 18px;
+            font-size: 15px;
             height: 20px;
             line-height: 14px;
             margin-right: -0.5%;
@@ -48,32 +88,36 @@
             text-align: center;
             width: 19.0%;
         }
+        .nut-bars{
+            margin-top: -10px;
+        }
         .nut-bar.danger.selected{background: #c0392b;}
         .nut-bar.warning.selected{background: #f7931e;}
         .nut-bar.ok.selected{background: #7ac943;}
         .row {
-            
-            margin-right: -15px;
-            margin-left: -15px;
+            width: 100%;
+            /*margin-right: -12px;
+            margin-left: -12px;*/
         }
         .col{
-            
-            padding-right: 15px;
-            padding-left: 15px;
+            display: inline-block;
+            vertical-align: top;
+            padding: 0px;
+            margin: 0px; 
         }
-        .col-lg-1{flex: 8%; width: 8%;}
-        .col-lg-2 {flex: 16%; width:16%;}
-        .col-lg-3{flex: 24%; width: 24%;}
-        .col-lg-4{flex: 32%; width: 32%;}
-        .col-lg-5{flex: 40%; width: 40%;}
-        .col-lg-6{flex: 48%; width: 48%;}
-        .col-lg-7{flex: 56%; width: 56%;}
-        .col-lg-8{flex: 64%; width: 64%;}
-        .col-lg-9{flex: 72%; width: 72%;}
-        .col-lg-10{flex: 80%; width: 80%;}
-        .col-lg-11{flex: 88%; width: 88%;}
-        .col-lg-12{flex: 96%; width: 96%;}
-        .page_break { page-break-after: always; }
+        .col-lg-1{width: 8.2%;}
+        .col-lg-2{width:16.4%;}
+        .col-lg-3{width: 24.6%;}
+        .col-lg-4{width: 32.8%;}
+        .col-lg-5{width: 41%;}
+        .col-lg-6{width: 49.2%;}
+        .col-lg-7{width: 57.4%;}
+        .col-lg-8{width: 65.6%;}
+        .col-lg-9{width: 73.8%;}
+        .col-lg-10{width: 82%;}
+        .col-lg-11{width: 90.2%;}
+        .col-lg-12{width: 98.4%;}
+        .page-break { page-break-after: always; }
         .nutrition-label{
             height:  16px;
             width: 16px;
@@ -85,42 +129,62 @@
         .nutrition-label.protein{background: #f7931e}
         .nutrition-label.fat{background: #7ac943}
         .nutrition-label.carb{background: #3fa6f2}
+        .meal-panel{
+            background: white;
+            border: 1px solid #dee2e6;  
+            padding: 3px 12px 12px 12px;
+            line-height: 17px;
+            margin: 0px 0px 7px 40px;             
+        }
+        .meal-panel span{
+            padding-top: 20px;
+        }
+        /*.meal-panel .row{margin-top: -6px;}*/
+        .meal-panel.monday{border-left: 5px solid #f9dc06;}
+        .meal-panel.tuesday{border-left: 5px solid #ff6663;}
+        .meal-panel.wednesday{border-left: 5px solid #7ac943;}
+        .meal-panel.thursday{border-left: 5px solid #f7931e;}
+        .meal-panel.friday{border-left: 5px solid #3fa6f2;}
+        .meal-panel.saturday{border-left: 5px solid #a880ce;}
+        .meal-panel.sunday{border-left: 5px solid #e44f4f;}
+        .text-highlight{color: #EE5A24;}
     </style>
 </head>
 
 <body>
+    @php $count = count($reports) @endphp
     @foreach ($reports as $report)
         <h1 class="page-title">รายงานเมนูรายการอาหาร <span>ศูนย์อนามัยที่ 5 / วัดเทพประสิทธิ์คณาวาส</span></h1>
         <div class="row">
             <div class="col col-lg-5">
-                <div class="row">
-                    <div class="">
-                        <i class="fas fa-calendar-alt color-gray"></i>
+                <div>
+                     <div class="">
+                        <span class="fa">&#xf073;</span>
+                        <span class="fa fa-calendar-alt"></span>
                         <span>{{$startDate}}</span>
                         <span>-</span>
                         <span>{{$endDate}}</span>
                     </div>
                     <div class="">
                         <div>
-                            <span><i class="fas fa-user-friends color-gray"></i></span>
+                            <span class="fa">&#xf007;</span>
+                            <span><i class="fas fa-user-friends"></i></span>
                             <span> เด็กอายุ</span>
                             <span class="age-range-span"> {{$report['age-range-span']}}</span>
                         </div>
                     </div>
                     <div class="m-b">
                         <div>
-                            <span><i class="fas fa-utensils color-gray"></i></span>
+                            <!-- <span class="fa">&#xf2e7;</span> -->
+                            <span>อาหาร</span>
                             <span id="food-type-span" class="food-type "> {{$report['food-type-span']}}</span>
                         </div>
                     </div>
                 </div>
-                <h2>สัดส่วนสารอาหารหลักที่ได้รับรายสัปดาห์</h2>
-                <div class="section">
-                    <div class="row">
-                        <div class="col col-lg-7 pull-left">
-                            <canvas class="doughnutChart"  width="210" height="210"></canvas>
-                        </div>
-                        <div class="col col-lg-5 nutrition-legend">
+                <div>
+                    <h2>สัดส่วนสารอาหารหลักที่ได้รับรายสัปดาห์</h2>
+                    <div class="">
+                        <div class="nutrition-legend">
                             <div>
                                 <span class="nutrition-label protein"></span>
                                 <span class="nutrition-span protein">{{$report['nutrition-span-protein']}}</span>
@@ -137,9 +201,11 @@
                                 <span>% คาร์โบไฮเดรต</span>
                             </div>
                         </div>
+                        <div class="">
+                            <canvas class="doughnutChart"  width="210" height="210"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div id="nutrition-report"></div>
                 <div class="energy">
                     <div class="">พลังงาน</div>
                     <div class="nut-bars">
@@ -183,40 +249,45 @@
             </div>
 
             <div class="col col-lg-7">
+                <div>
                 @foreach ($selectedDates as $date)
-                    <div class="meal-panel  {{$date['engDay']}}">
-                        <div class="row m-b">
+                    <div class="meal-panel {{$date['engDay']}}">
+                        <div class="row">
                             <div class="col col-lg-12">
                                 <span>{{$date['thDay']}}</span>
-                                <span id="{{$date['engDay']}}Date" data-date="{{$date['date']}}" class="report-date"></span>
+                                <span id="{{$date['engDay']}}Date" data-date="{{$date['date']}}" class="report-date">
+                                    {{$date['dateText']}}
+                                </span>
                             </div>
                         </div>
-                    </div>
-                    @foreach ($school->setting->getMealsettings() as $meal)
-                        @if ($meal[2] == 1)
-                        <div class="row m-b">
-                            <div class="col col-lg-2">{{$meal[1]}}</div>
-                            <div class="col col-lg-10">
-                                @foreach ($logs as $log)
-                                    @if ($log->meal_code == $meal[0] && $log->meal_date == $date['date'] && $log->food_type == $report['id'])
-                                        <div class=""> 
-                                            @if($log->food_type != 8 && $log->food_type != 22)
+                        @foreach ($school->setting->getMealsettings() as $meal)
+                            @if ($meal[2] == 1)
+                            <div class="row">
+                                <div class="col col-lg-2"><span>{{$meal[1]}}</span></div>
+                                <div class="col col-lg-9">
+                                    @foreach ($logs as $log)
+                                        @if ($log->meal_code == $meal[0] && $log->meal_date == $date['date'] && $log->food_type == $report['id'])
+                                        <div>
+                                           @if($log->food_type != 8 && $log->food_type != 22)
                                                 <span class="text-highlight">({{$log->setting_description_thai}})</span>
-                                            @endif
-                                            <span class="readable-font">{{ $log->food_thai }} </span>
-                                            <span class="readable-font"> </span>
+                                            @endif 
+                                                <span>{{ $log->food_thai }}</span>
                                         </div>
-                                    @endif
-                                @endforeach
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                        @endif
-                    @endforeach
+                            @endif
+                        @endforeach
+                    </div>
                 @endforeach
+                </div>
             </div>
         </div>
-        <div class="page_break"></div>
+        @php $count -= 1 @endphp
+        @if($count > 0)
+            <div class="page-break"></div>    
+        @endif
     @endforeach 
-</body>
 
-</html>
+</body></html>
