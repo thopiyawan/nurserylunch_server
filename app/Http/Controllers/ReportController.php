@@ -83,6 +83,7 @@ class ReportController extends Controller
                 }
             }
         }
+
         $materials = [];
         foreach($ouputs as $id => $output){
             $materials[] = $output;
@@ -91,7 +92,7 @@ class ReportController extends Controller
         $sortedMaterials = $temp->sortBy('composition_id')->values();
         $selectedDates = $school->getSelectedDates($startDate);
         // $sortedMaterials->values()->all();
-        return view('report.materialData' , ['logs' => $foodLogs, 'materials'=>$sortedMaterials, 'selectedDates'=>$selectedDates]);
+        return view('report.materialData' , ['logs' => $foodLogs, 'materials'=>$sortedMaterials, 'selectedDates'=>$selectedDates, 'school'=>$school]);
     }
 
     public function downloadPdf(Request $request){
@@ -107,7 +108,6 @@ class ReportController extends Controller
         $foodLogs = FoodLogs::getLogsByDatesAndAge($schoolId, $startDate,$endDate, $selectedAge);
         $selectedDates = $school->getSelectedDates($startDate);
         // $selectedFoodTypes = $school->getSelectedFoodTypesByAge($selectedAge);
-        
 
 
         $data['kelly'] = 'kelly';
@@ -120,6 +120,9 @@ class ReportController extends Controller
 
     public function downloadMaterialPdf(Request $request){
         $data = $request->all();
+        $schoolId = auth()->user()->school_id;
+        $school = School::find($schoolId);
+        $data['school'] = $school;
         // $startDate = (new DateTime($data['startDate']))->format('Y-m-d');
         // $endDate = (new DateTime($data['endDate']))->format('Y-m-d');
 

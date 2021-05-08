@@ -34,7 +34,6 @@
     </div>
 @endif
 
-
 <script type="application/javascript">
     $(".ui-sortable").sortable({
         cancel: ".ui-state-disabled",

@@ -536,8 +536,10 @@
                     filters: filters,
                 },
                 success: function(data) {
+                    // console.log(data);
                     $("#filter-result").html(data);
                 }
+
             });
         }
 

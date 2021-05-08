@@ -17,6 +17,7 @@ var selectCurrentWeek = function() {
     }, 1);
 };
 
+
 $("#week-picker").datepicker({
     showOtherMonths: true,
     selectOtherMonths: true,
@@ -144,6 +145,8 @@ function updateNutritionData(data){
     $.each(reports, function(){
         var report = $(this);
         var type = report.attr('id'); 
+        var ageTxt = report.data("age") == "small" ? "ต่ำกว่า 1 ปี":"1-3 ปี";
+        $(".age-range-span").text(ageTxt);
         var covertedLogs = {"energy":1, "fat":9, "carbohydrate":4, "protein":4.1};
         // var energySum = energyLogs[type]['energy'];
         //updateNutritionLabel(report, energyLogs[type], keys);
@@ -301,7 +304,8 @@ $('.age-tab').on('click', function(){
    var age = $(this).data("age");
    var text = age == "is_for_small" ? "ต่ำกว่า 1 ปี":"1-3 ปี";
    $("#age-range-span").text(text);
-   $(".age-range-span").text(text);
+   // $(".age-range-span").text(text);
+   
 
    $(".age-tab").removeClass("active");
    $(this).addClass("active");

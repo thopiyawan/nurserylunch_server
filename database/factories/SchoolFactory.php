@@ -20,7 +20,7 @@ use Illuminate\Support\Str;
 $factory->define(School::class, function (Faker $faker) {
     return [
         // 'name' => $faker->name,
-        'name' => 'ศูนย์อนามัยท่ี 5/ วัดเทพประสิทธิ์คณาวาส',
+        'name' => 'ศูนย์อนามัยที่ 5/ วัดเทพประสิทธิ์คณาวาส',
         'school_number' => '4-66-192-2201',
         'address' => '15/6',
         'tumbol' => 'omnoi',

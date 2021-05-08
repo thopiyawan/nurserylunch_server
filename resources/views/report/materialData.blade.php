@@ -2,7 +2,7 @@
   <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-title">รายงานวัตถุดิบซื้อ (ศูนย์อนามัยที่ 5 / วัดเทพประสิทธิ์คณาวาส) </span></h1>
+                <h1 class="page-title">รายงานวัตถุดิบซื้อ ( <span class="shcool-name">{{$school->name}}</span> ) </h1>
             </div>
         </div>
         
@@ -11,11 +11,10 @@
                 <i class="fas fa-calendar-alt color-gray"></i>
                 <span>สำหรับเมนูอาหาร วันที่</span>
                 <span class="report-date start-date" data-date="{{$selectedDates[0]['date']}}"> </span>
-                    <span> - </span>
-                    <span class="report-date end-date" data-date="{{end($selectedDates)['date']}}"></span>
+                <span> - </span>
+                <span class="report-date end-date" data-date="{{end($selectedDates)['date']}}"></span>
             </div>
         </div>
-
 
         <div class="row report-material">
             <div class="col-lg-12">
@@ -54,7 +53,7 @@
   <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-title">รายงานวัตถุดิบซื้อ (ศูนย์อนามัยที่ 5 / วัดเทพประสิทธิ์คณาวาส) </span></h1>
+                <h1 class="page-title">รายงานวัตถุดิบซื้อ ({{$school->name}}) </span></h1>
             </div>
         </div>
         <div class="row m-b">
@@ -104,7 +103,7 @@
       <div class="col-lg-12">
           <div class="row">
               <div class="col-lg-12">
-                  <h1 class="page-title">รายการอาหาร (ศูนย์อนามัยที่ 5 / วัดเทพประสิทธิ์คณาวาส) </span></h1>
+                  <h1 class="page-title">รายการอาหาร ({{$school->name}}) </span></h1>
               </div>
           </div>
           <div class="row m-b">

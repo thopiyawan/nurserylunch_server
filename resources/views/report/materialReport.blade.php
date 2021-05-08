@@ -44,7 +44,8 @@
                     var blob = new Blob([response]);
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(blob);
-                    link.download = "Sample.pdf";
+                    var file_name = "รายงานวัตถุดิบ " + data["dateTxt"] + data["schoolTxt"] + ".pdf";
+                    link.download = file_name;
                     link.click();
                 }
             });
@@ -76,16 +77,18 @@
                     };
                     reportData.push(log);
                 });
+
                 var returnData = {
                     date : report.find('.log-date').first().text(),
                     dateth : report.find('.log-date-th').first().text(),
-                    data : reportData,
+                    data : reportData.length == 0 ? "none" : reportData,
                 }
                 logsReports.push(returnData);
             });
 
             var data = {
-                kelly: "kelly",
+                dateTxt: $(".report-date.start-date").first().text() + " - " + $(".report-date.end-date").first().text(),
+                schoolTxt: $(".shcool-name").first().text(),
                 startDate: startLogDate.toLocaleDateString(),
                 endDate: endLogDate.toLocaleDateString(), 
                 materials: materials,

@@ -57,10 +57,16 @@
                 </button>
             </div>
         </form>
+
         <div class="hr-line-dashed"></div>
-        <div>
+        <div class="m-b">
             <p class="text-center">ยังไม่มีบัญชีผู้ใช้งาน?</p>
-            <a class="btn btn-default btn-block" href="https://school.kiddiary.in.th/registers" target="_blank">สร้างบัญชีใหม่</a>
+            <a class="btn btn-default btn-block" href="{{ url('/register')}}" target="_blank">สร้างบัญชีใหม่</a>
+        </div>
+        <div class="text-center row">
+            <div class="col-lg-3"></div>
+            <img class="col-lg-3 logo-img" src="{{ asset('images/nectec_logo.png') }}">
+            <img class="col-lg-3 logo-img" src="{{ asset('images/nstda_logo.png') }}">
         </div>
     </div>
 </div>

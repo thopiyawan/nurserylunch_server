@@ -299,27 +299,51 @@ class MealplanController extends Controller
 
 	public function filterIngredient(Request $request)
 	{
-		$input= $request -> all();
+		$input= $request->all();
 		$query = $request->get('query');
 		$filters = $request->get('filters');
 		
 		$results = Food::leftJoin('food_ingredient', function($join) {
 				      $join->on('foods.id', '=', 'food_ingredient.food_id');
 				    })->where('foods.food_thai', 'like','%'.$query.'%');
+		
 		if(isset($filters)){
 			$results = $results->whereIn('food_ingredient.ingredient_id', $filters);
 		}
-
-		$results = $results->paginate(10);
-					
+		
+		$results = $results->get();
+				
 		foreach($results as $food){
 			$food->init();
 		}
 
-		if($results->isEmpty()){
-			$results = "ไม่พบรายการอาหารที่ค้นหา";
+		
+		$size = count($results);
+		$count = 0;
+		$index = 0;
+		$current_id = 0;
+		$prev_id = -1;
+
+
+		while ($size>0 && $count<=10){
+			if (!empty($results[$index]))
+			{
+				$current_id = $results[$index]->id;
+				if ($current_id != $prev_id )
+				{
+					$foodlist[] = $results[$index];
+					$prev_id = $current_id;
+					$count +=1;
+				}	
+			}
+			$size -=1;
+			$index +=1;
 		}
-		return view('mealplan.filterresult', ['foodList' => $results]);	
+
+		if(empty($foodlist)){
+			$foodlist = "ไม่พบรายการอาหารที่ค้นหา";
+		}
+		return view('mealplan.filterresult', ['foodList' => $foodlist]);	
 	}
 }
 

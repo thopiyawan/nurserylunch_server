@@ -24,6 +24,7 @@
         }
         @page { margin: 20px 40px 20px 40px; }
       
+
         body{
             color: #343a40;
             font-family: "THSarabunNew";
@@ -68,7 +69,7 @@
 
 <body>
     <div id="material-section">
-        <h1 class="page-title">รายงานวัตถุดิบซื้อ (ศูนย์อนามัยที่ 5 / วัดเทพประสิทธิ์คณาวาส) </span></h1>
+        <h1 class="page-title">รายงานวัตถุดิบซื้อ  ({{$school['name']}}) </span></h1>
         <div class="">
             <span class="fa">&#xf073;</span>
              <span>สำหรับเมนูอาหาร วันที่</span>
@@ -103,7 +104,7 @@
     @php $count = count($logsReports) @endphp  
     @foreach($logsReports as $report)
         <div id="log-section">
-            <h1 class="page-title">รายการอาหาร (ศูนย์อนามัยที่ 5 / วัดเทพประสิทธิ์คณาวาส) </span></h1>
+            <h1 class="page-title">รายการอาหาร ({{$school['name']}}) </span></h1>
         </div>
         <div class="">
             <span class="fa">&#xf073;</span>
@@ -124,16 +125,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($report['data'] as $log)
-                      <tr>
-                        <td>{{$log['date']}}</td>
-                        <td>{{$log['meal']}}</td>
-                        <td>{{$log['age']}}</td>
-                        <td>{{$log['food-type']}}</td>
-                        <td>{{$log['food-name']}}</td>
-                        <td>{{$log['serving']}}</td>
-                      </tr>
-                  @endforeach
+                    
+                    @if($report['data']=="none")
+                        <tr>
+                            <td colspan="6">ไม่พบข้อมูล</td>
+                        </tr>
+                    @else
+                        @foreach ($report['data'] as $log)
+                            <tr>
+                                <td>{{$log['date']}}</td>
+                                <td>{{$log['meal']}}</td>
+                                <td>{{$log['age']}}</td>
+                                <td>{{$log['food-type']}}</td>
+                                <td>{{$log['food-name']}}</td>
+                                <td>{{$log['serving']}}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>

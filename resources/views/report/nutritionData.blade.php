@@ -1,8 +1,8 @@
 @foreach ($selectedFoodTypes as $key => $setting)
-    <div class="report-nutrition report-a4" id="{{$setting['id']}}">
+    <div class="report-nutrition report-a4" id="{{$setting['id']}}" data-age="{{$setting['age']}}">
         <div class="row">
             <div class="col-lg-12">
-                    <h1 class="page-title">รายงานเมนูรายการอาหาร <span>ศูนย์อนามัยที่ 5 / วัดเทพประสิทธิ์คณาวาส</span></h1>
+                    <h1 class="page-title">รายงานเมนูรายการอาหารee <span class="school-name"> {{$school->name}}</span></h1>
                 </div>
         </div>
         <div class="row">
@@ -17,16 +17,16 @@
                     <div>
                         <span><i class="fas fa-user-friends color-gray"></i></span>
                         <span> เด็กอายุ</span>
-                        <span class="age-range-span"> ต่ำกว่า 1 ปี</span>
+                        <span class="age-range-span"> </span>
                     </div>
                 </div>
+
                 <div class="m-b">
                     <div>
                         <span><i class="fas fa-utensils color-gray"></i></span>
                         <span id="food-type-span" class="food-type {{$setting['id']==8 || $setting['id']==22? 'normal':'special'}}"> {{ $setting['name_thai'] }} </span>
                     </div>
                 </div>
-
 
                 <div class="section">
                     <h2>สัดส่วนสารอาหารหลักที่ได้รับรายสัปดาห์</h2>

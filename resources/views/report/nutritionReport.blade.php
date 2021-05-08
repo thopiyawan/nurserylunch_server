@@ -21,7 +21,6 @@
         </div>
     <!-- </div> -->
 </div>
-
 @endsection
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -45,7 +44,8 @@
                     var blob = new Blob([response]);
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(blob);
-                    link.download = "Sample.pdf";
+                    var file_name = "รายงานสารอาหาร " + data["dateTxt"] + data["schoolTxt"] + ".pdf";
+                    link.download = file_name;
                     link.click();
                 }
             });
@@ -84,6 +84,8 @@
                 reports.push(report);
             });
             var data = {
+                dateTxt: $(".report-date.start-date").first().text() + " - " + $(".report-date.end-date").first().text(),
+                schoolTxt: $(".shcool-name").first().text(),
                 startDate: startLogDate.toLocaleDateString(),
                 endDate: endLogDate.toLocaleDateString(), 
                 foodType: reports[0]['id'],
@@ -115,25 +117,6 @@
         function downloadReport_jspdf(){
             // $('#downloadBtn').hide();
             var report = $('.report-nutrition')[0];
-            // console.log("pdf", pdf);
-            // domtoimage.toPng(report, {
-            //      width: $(report).width(), 
-            //      height: $(report).height(),
-            //      style:{background: 'white'},
-            // }).then(function (blob) {
-            //     //window.saveAs(blob, 'my-node.png');
-            //     var pdf = new jsPDF('p', 'mm', "a4");
-            //     // var width = pdf.internal.pageSize.getWidth();
-            //     // var height = pdf.internal.pageSize.getHeight();
-
-            //     pdf.addImage(blob, 'PNG', 0, 0, 190, 287);
-            //     pdf.save("test.pdf");
-
-            //     // that.options.api.optionsChanged();
-            //     // $('#downloadBtn').show();
-            // });
-
-
             var doc = new jsPDF();
             var specialElementHandlers = {
                 '#editor': function (element, renderer) {
