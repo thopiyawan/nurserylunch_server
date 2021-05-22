@@ -2,7 +2,7 @@
     <div class="report-nutrition report-a4" id="{{$setting['id']}}" data-age="{{$setting['age']}}">
         <div class="row">
             <div class="col-lg-12">
-                    <h1 class="page-title">รายงานเมนูรายการอาหารee <span class="school-name"> {{$school->name}}</span></h1>
+                    <h1 class="page-title">รายงานเมนูรายการอาหาร <span class="school-name"> {{$school->name}}</span></h1>
                 </div>
         </div>
         <div class="row">
@@ -20,7 +20,6 @@
                         <span class="age-range-span"> </span>
                     </div>
                 </div>
-
                 <div class="m-b">
                     <div>
                         <span><i class="fas fa-utensils color-gray"></i></span>

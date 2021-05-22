@@ -67,6 +67,11 @@
                 var reportData = [];
                 $.each(report.find(".log-row"), function(){
                     var row = $(this);
+                    var recipes = [];
+                    $.each(row.find(".log-recipes"), function(){
+                        var txt = $(this).find(".log-recipes-name").first().text() + $(this).find(".log-recipes-quantity").first().text();
+                        recipes.push(txt);
+                    });
                     var log = {
                         'date' : row.find(".report-date").first().text(),
                         'meal' : row.find(".log-meal").first().text(),
@@ -74,6 +79,7 @@
                         'food-type' : row.find(".log-food-type").first().text(),
                         'food-name' : row.find(".log-food-name").first().text(),
                         'serving' : row.find(".log-serving").first().text(),
+                        'recipes' : recipes.length == 0 ? "none" : recipes,
                     };
                     reportData.push(log);
                 });

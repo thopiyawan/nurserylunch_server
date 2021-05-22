@@ -18,7 +18,7 @@ class IngredientSeeder extends Seeder
         $allIngredients = array(
             "meat" => array("หมู", "ไก่", "ปลา", "กุ้ง", "ตับ", "เนื้อ"), 
             "protein" => array("ไข่", "เต้าหู้", "ถั่ว", "นม"),
-            "vegetable" => array("ผักใบเขียว", "ฝักทอง", "แครอท"),
+            "vegetable" => array("ผักใบเขียว", "ฟักกทอง", "แครอท"),
             "fruit" => array("ผลไม้เนื้อนิ่ม", "ผลไม้เนื้อแข็ง")
         );
 

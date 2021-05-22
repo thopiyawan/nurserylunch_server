@@ -7,6 +7,7 @@
 
     </aside>
 </div>
+@php $hasAge = $school->isForSmall() || $school->isForBig() @endphp
 <div id="wrapper" class="meal-plan">
     <div class="row fixed-info-box">
         <div class="col">
@@ -25,7 +26,7 @@
             <div>
                 <span><i class="fas fa-user-friends color-gray"></i></span>
                 <span> เด็กอายุ</span>
-                <span id="age-range-span"> ต่ำกว่า 1 ปี</span>
+                <span id="age-range-span"></span>
             </div>
         </div>
         <div class="col heading-p-t">
@@ -33,17 +34,23 @@
         </div>
 
         <div class="col-lg-3 pull-right">
-             <a href="/mealplan/edit" class="btn btn-primary pull-right" type="" name="" value="">
-                <i class="fas fa-edit"></i>
-                จัดการรายการอาหาร
-            </a>
+            @if ($hasAge == 1)
+                 <a href="/mealplan/edit" class="btn btn-primary pull-right" type="" name="" value="">
+                    <i class="fas fa-edit"></i>
+                    จัดการรายการอาหาร 
+                </a>
+            @else
+                
+            @endif
         </div>
     </div>
 
     <div class="">
-        <div id="meal-plan">
-        </div>
-        
+        @if ($hasAge == 1)
+            <div id="meal-plan"></div>
+        @else
+            <div class="text-center">กรุณาเลือกช่วงอายุเด็กสำหรับจัอาหาร</div>
+        @endif
     </div>
 </div>
 <script src="{{ asset('js/getfoodlogs.js') }}"></script>

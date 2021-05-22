@@ -31,7 +31,6 @@
           -moz-osx-font-smoothing: grayscale;
         }
         @page { margin: 20px 40px 20px 40px; }
-      
         body{
             color: #343a40;
             font-family: "THSarabunNew";

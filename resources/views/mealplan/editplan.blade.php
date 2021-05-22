@@ -133,7 +133,7 @@
 
         <div class="form-group">
             <div class="text-center">
-                <button class="btn btn-default" type="">ยกเลิก</button>
+                <button class="btn btn-default" type="" onclick="cancelButtonClick()">ยกเลิก</button>
                 <button class="btn btn-primary" type="submit" name="update" value="school"
                     onclick="saveLogs()">บันทึกข้อมูล</button>
             </div>
@@ -173,7 +173,7 @@
             year: '2-digit',
             month: 'short',
             day: 'numeric',})
-        );
+        );   
 
         localStorage.setItem("weekHandle", 1)
         let foodType = localStorage.getItem('foodType');
@@ -182,20 +182,22 @@
         $("#copy-normal-btn").hide();
         $("#copy-normal-btn").on("click", copyFood);
         $('.type-tab').on('click', function() {
+            console.log("tab on click");
             var type = $(this).data("type");
             foodType = type;
 
             var target = $("#food-type-span");
-            var detail = $(this).data("detail");
-            var start = detail.indexOf("(");
-            var end = detail.indexOf(")");
-            var text = detail.substring(start + 1, end);
+            var text = $(this).data("detail");
+            // var start = detail.indexOf("(");
+            // var end = detail.indexOf(")");
+            // var text = detail.substring(start + 1, end);
 
             $("#food-type-span").text("อาหาร" + text);
 
             if (text == "ปกติ") {
                 target.removeClass("special");
                 target.addClass("normal");
+
                 $("#copy-normal-btn").hide();
             } else {
                 target.removeClass("normal");
@@ -203,7 +205,9 @@
                 $("#copy-normal-btn").show();
             }
         });
-
+        function cancelButtonClick(){
+            window.history.back();
+        }
 
         function saveLogs() {
             $(document).ready(function() {

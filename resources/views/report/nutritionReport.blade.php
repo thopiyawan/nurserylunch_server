@@ -19,6 +19,7 @@
         </div>
         <div id="meal-plan">
         </div>
+        
     <!-- </div> -->
 </div>
 @endsection

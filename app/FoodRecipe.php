@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Composition;
+use App\PurUnit;
 
 class FoodRecipe extends Model
 {
@@ -21,6 +22,15 @@ class FoodRecipe extends Model
     public static function getRecipes($food_id){
     	$recipes = FoodRecipe::where('food_id', $food_id)->get();
         return $recipes;
+    }
+
+    public function getUnit(){
+        return PurUnit::getUnitByID($this->pur_unit_id);
+
+    }
+    public function getCookUnit(){
+        return PurUnit::getUnitByID($this->cook_unit_id);
+
     }
     
 }

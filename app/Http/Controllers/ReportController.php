@@ -16,7 +16,6 @@ use PDF;
 use Debugbar;
 use Datetime;
 
-
 class ReportController extends Controller
 {
     /**
@@ -64,11 +63,29 @@ class ReportController extends Controller
         $inputs = $request->all();
         $startDate = (new DateTime($inputs['date']['startDate']))->format('Y-m-d');
         $endDate = (new DateTime($inputs['date']['endDate']))->format('Y-m-d');
+        $selectedDates = $school->getSelectedDates($startDate);
+
+        //food-logs
+        
+        $logsByDates = [];
+        $allServings = $school->getServings();
+        foreach ($selectedDates as $sdate) {
+            $date = $sdate['date'];
+            $logs = getMaterialLogs($schoolId, $date, $date);
+            foreach($logs as $log){
+                $serving = $allServings[$log->food_type];
+                $recipes = getRecipe($log->food_id);
+
+                $log->serving = $serving;
+                $log->recipes = $recipes;
+            }
+            $logsByDates[$date] = $logs;
+        }
+        
+
+        //---old logs
         $foodLogs = getMaterialLogs($schoolId, $startDate, $endDate);
         $ouputs = []; 
-        //$materials = getMaterialData($schoolId);
-        $allServings = $school->getServings();
-        // $allServings = getServingsBySchool($schoolId);
         foreach($foodLogs as $log){
             $serving = $allServings[$log->food_type];
             $log->serving = $serving;
@@ -84,15 +101,16 @@ class ReportController extends Controller
             }
         }
 
+
+        // material
         $materials = [];
         foreach($ouputs as $id => $output){
             $materials[] = $output;
         }
         $temp = collect($materials);
         $sortedMaterials = $temp->sortBy('composition_id')->values();
-        $selectedDates = $school->getSelectedDates($startDate);
         // $sortedMaterials->values()->all();
-        return view('report.materialData' , ['logs' => $foodLogs, 'materials'=>$sortedMaterials, 'selectedDates'=>$selectedDates, 'school'=>$school]);
+        return view('report.materialData' , ['logs' => $foodLogs, 'logsByDates' => $logsByDates, 'materials'=>$sortedMaterials, 'selectedDates'=>$selectedDates, 'school'=>$school]);
     }
 
     public function downloadPdf(Request $request){
@@ -108,7 +126,6 @@ class ReportController extends Controller
         $foodLogs = FoodLogs::getLogsByDatesAndAge($schoolId, $startDate,$endDate, $selectedAge);
         $selectedDates = $school->getSelectedDates($startDate);
         // $selectedFoodTypes = $school->getSelectedFoodTypesByAge($selectedAge);
-
 
         $data['kelly'] = 'kelly';
         $data['selectedDates'] = $selectedDates;

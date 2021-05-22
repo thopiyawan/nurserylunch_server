@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    
     <style type="text/css">
         @font-face {
             font-family: 'THSarabunNew';
@@ -137,7 +136,14 @@
                                 <td>{{$log['meal']}}</td>
                                 <td>{{$log['age']}}</td>
                                 <td>{{$log['food-type']}}</td>
-                                <td>{{$log['food-name']}}</td>
+                                <td>
+                                    <div>{{$log['food-name']}}</div>
+                                    @if($log['recipes'] != "none")
+                                        @foreach ($log['recipes'] as $recipe)
+                                            <div>{{$recipe}}</div>
+                                        @endforeach
+                                    @endif
+                                </td>
                                 <td>{{$log['serving']}}</td>
                             </tr>
                         @endforeach

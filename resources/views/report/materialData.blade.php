@@ -5,7 +5,6 @@
                 <h1 class="page-title">รายงานวัตถุดิบซื้อ ( <span class="shcool-name">{{$school->name}}</span> ) </h1>
             </div>
         </div>
-        
         <div class="row m-b">
             <div class="col-lg-12 ">
                 <i class="fas fa-calendar-alt color-gray"></i>
@@ -30,6 +29,11 @@
                   <tbody>
                     @php $count = 0; @endphp
                     @php $max = count($materials); @endphp
+                    @if ($max ==0)
+                      <tr class="material-row">
+                        <td colspan="4">ไม่พบรายการอาหาร</td>
+                      </tr>
+                    @endif
                     @foreach (range($count, $count+20) as $i)
                       @if ($count < $max)
                       <tr class="material-row">
@@ -114,7 +118,6 @@
                   <span class="log-date-th">({{$date['thDay']}})</span>
               </div>
           </div>
-          
           <div class="row report-material">
               <div class="col-lg-12">
                   <table style="width:100%" class="table table-striped">
@@ -129,29 +132,38 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($logs as $log)
-                        @if($date['date'] == $log->meal_date)
+                      @php $logs = $logsByDates[$date['date']] @endphp
+                      @if(count($logs) == 0)
+                          <tr class="log-row">
+                            <td colspan="6">ไม่พบรายการอาหาร</td>
+                          </tr>
+                      @else
+                        @foreach($logs as $log)
                           <tr class="log-row">
                             <td class="short-date report-date" style="width:15%" data-date="{{$log->meal_date}}"></td>
-                            <td><span class="log-meal">{{$log->getMealName()}}</span></td>
-                            <td class=""><span class="log-age">{{$log->getFoodTypeAgeThai()}}  </span></td>
-                            <td class="{{$log->food_type == 8 || $log->food_type == 22 ? '' : 'text-highlight'}} log-food-type">
-                              <span> {{$log->getFoodTypeName()}}</span>
-                            </td>
-                            <td class="">
-                                <div>
-                                  <span class="readable-font log-food-name">{{ $log->food_thai}} </span>
-                                </div>
-                            </td>
-                            <td class="log-serving"> {{ $log->serving}} ชุด</td>
+                              <td><span class="log-meal">{{$log->getMealName()}}</span></td>
+                              <td class=""><span class="log-age">{{$log->getFoodTypeAgeThai()}}  </span></td>
+                              <td class="{{$log->food_type == 8 || $log->food_type == 22 ? '' : 'text-highlight'}} log-food-type">
+                                <span> {{$log->getFoodTypeName()}}</span>
+                              </td>
+                              <td class="">
+                                  <div><span class="readable-font log-food-name">{{ $log->food_thai}} </span></div>
+                                  @foreach($log->recipes as $material)
+                                    <div class="log-recipes">
+                                      <span class="log-recipes-name">*{{$material->getCompositionName()}}</span>
+                                      <span class="log-recipes-quantity"> {{$material->pur_quantity*$log->serving.' '.$material->getUnit()}} </span>
+                                    </div>
+                                  @endforeach
+                              </td>
+                              <td class="log-serving"> {{ $log->serving}} ชุด</td>
                           </tr>
-                        @endif
-                      @endforeach
+                        @endforeach
+                      @endif
                     </tbody>
-
                   </table>
               </div>
           </div>
+        
       </div>
 
   </div>

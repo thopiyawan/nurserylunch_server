@@ -149,12 +149,14 @@ function addDatesToLists($startDate, $selectedDates, $number){
     // $returnDates = $selectedDates;
     $date = new Carbon($startDate);
     $d = $date->addDays($number);
-    $selectedDates[] = array(
+    $dateArray = array(
         'engDay'=>strtolower($d->isoFormat('dddd')), 
         'thDay'=>$d->locale('th')->getTranslatedDayName('dddd'), 
         'date'=>$d->format('Y-m-d'),
         'dateText'=>$d->locale('th')->translatedFormat('d M y')
     );
+
+    $selectedDates[] = $dateArray;
     return $selectedDates;
 }
 

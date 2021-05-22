@@ -139,7 +139,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <select  value="" name="b-year" class="form-control {{$errors->hasBag('createkid')? 'is-invalid':''}}">
-                                @for ($x = 2020; $x >= 2000; $x--)
+                                @for ($x = date("Y"); $x > date("Y")-10; $x--)
                                     <option value="{{$x}}"> {{$x}} </option>
                                 @endfor
                             </select>

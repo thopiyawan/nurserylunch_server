@@ -451,12 +451,12 @@
                                     <option value="vege" {{$rest->detail == 'vege' ? 'selected' : ''}}> อาหารมังสวิรัติ </option>
                                     <option value="vegan" {{$rest->detail == 'vegan' ? 'selected' : ''}}> อาหารเจ </option>
                                     <option value="milk" {{$rest->detail == 'milk' ? 'selected' : ''}}> แพ้อาหาร - แพ้นมวัว</option>
-                                    <option value="breastmilk" {{$rest->detail == 'breastmilk' ? 'selected' : ''}}> แพ้อาหาร - แพ้นมแม่ </option>
+                                    <!-- <option value="breastmilk" {{$rest->detail == 'breastmilk' ? 'selected' : ''}}> แพ้อาหาร - แพ้นมแม่ </option> -->
                                     <option value="egg"{{$rest->detail == 'egg' ? 'selected' : ''}}> แพ้อาหาร - แพ้ไข่ไก่ </option>
                                     <option value="wheat" {{$rest->detail == 'wheat' ? 'selected' : ''}}> แพ้อาหาร - แพ้แป้งสาลี </option>
                                     <option value="shrimp" {{$rest->detail == 'shrimp' ? 'selected' : ''}}> แพ้อาหาร - แพ้กุ้ง </option>
-                                    <option value="shell" {{$rest->detail == 'shell' ? 'selected' : ''}}> แพ้อาหาร - แพ้หอย </option>
-                                    <option value="crab" {{$rest->detail == 'crab' ? 'selected' : ''}}> แพ้อาหาร - แพ้ปู </option>
+                                    <!-- <option value="shell" {{$rest->detail == 'shell' ? 'selected' : ''}}> แพ้อาหาร - แพ้หอย </option> -->
+                                    <!-- <option value="crab" {{$rest->detail == 'crab' ? 'selected' : ''}}> แพ้อาหาร - แพ้ปู </option> -->
                                     <option value="fish" {{$rest->detail == 'fish' ? 'selected' : ''}}> แพ้อาหาร - แพ้ปลา </option>
                                     <option value="peanut" {{$rest->detail == 'peanut' ? 'selected' : ''}}> แพ้อาหาร - แพ้ถั่วลิสง </option>
                                     <option value="soybean" {{$rest->detail == 'soybean' ? 'selected' : ''}}> แพ้อาหาร - แพ้ถั่วเหลือง </option>
@@ -490,12 +490,12 @@
                                 <option value="vege"> อาหารมังสวิรัติ </option>
                                 <option value="vegan"> อาหารเจ </option>
                                 <option value="milk"> แพ้อาหาร - แพ้นมวัว </option>
-                                <option value="breastmilk"> แพ้อาหาร - แพ้นมแม่ </option>
+                                <!-- <option value="breastmilk"> แพ้อาหาร - แพ้นมแม่ </option> -->
                                 <option value="egg"> แพ้อาหาร - แพ้ไข่ไก่ </option>
                                 <option value="wheat"> แพ้อาหาร - แพ้แป้งสาลี </option>
                                 <option value="shrimp"> แพ้อาหาร - แพ้กุ้ง </option>
-                                <option value="shell"> แพ้อาหาร - แพ้หอย </option>
-                                <option value="crab"> แพ้อาหาร - แพ้ปู </option>
+                                <!-- <option value="shell"> แพ้อาหาร - แพ้หอย </option> -->
+                                <!-- <option value="crab"> แพ้อาหาร - แพ้ปู </option> -->
                                 <option value="fish"> แพ้อาหาร - แพ้ปลา </option>
                                 <option value="peanut"> แพ้อาหาร - แพ้ถั่วลิสง </option>
                                 <option value="soybean"> แพ้อาหาร - แพ้ถั่วเหลือง </option>

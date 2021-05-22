@@ -275,7 +275,20 @@ $.datepicker.regional["th"] = {
 };
 $.datepicker.setDefaults($.datepicker.regional["th"]);
 
-$(".ui-datepicker-current-day").click();
+initPicker();
+function initPicker(){
+    $(".ui-datepicker-current-day").click();
+   
+
+    var age = $(".age-tab.active").first().data("age");
+       var text = ""
+   if (age == "is_for_small"){
+        text = "ต่ำกว่า 1 ปี";
+   }else if (age == "is_for_big"){
+        text = "1-3 ปี";
+   }
+   $("#age-range-span").text(text);
+}
 
 $(document).on(
     "mousemove",
@@ -302,7 +315,12 @@ $(document).on("click", "button.ui-datepicker-current", function() {
 // ----- set up foodType 
 $('.age-tab').on('click', function(){
    var age = $(this).data("age");
-   var text = age == "is_for_small" ? "ต่ำกว่า 1 ปี":"1-3 ปี";
+   var text = ""
+   if (age == "is_for_small"){
+        text = "ต่ำกว่า 1 ปี";
+   }else if (age == "is_for_big"){
+        text = "1-3 ปี";
+   }
    $("#age-range-span").text(text);
    // $(".age-range-span").text(text);
    
